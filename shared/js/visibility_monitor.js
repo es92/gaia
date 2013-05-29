@@ -109,6 +109,16 @@ function monitorChildVisibility(
   offscreenCallback
 ) {
 
+  //compatability mode
+  if (offscreenCallback === undefined &&
+      typeof maxDepth === 'function') {
+    offscreenCallback = onscreenCallback;
+    onscreenCallback = maxDepth;
+    maxDepth = 1;
+    console.warn('MonitorChildVisibility is using compatibility mode.' +
+                 ' See the new api at /shared/js/visibility_monitor.js');
+  }
+
   if (container.style.position === 'static' || container.style.position === '')
     throw "'position: static' containers not supported," +
           " maybe use 'position: relative'?";
