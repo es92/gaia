@@ -140,6 +140,7 @@ function monitorChildVisibility(
     updateVisibility();
   }
 
+  // NOTE: if there was to be a bug, it would be in this function's helpers
   function mutationHandler(mutations) {
     if (container.clientHeight === 0) { //container hidden
       return;
@@ -172,15 +173,14 @@ function monitorChildVisibility(
   }
 
   function childAdded(child) {
-    //TODO
     if (
-        g.lastOnscreen !== null && 
-        after(child, g.lastOnscreen) && //after last onscreen child
+        g.deepestLastOnscreen !== null && 
+        after(child, g.deepestLastOnscreen) && //after last onscreen child
         child.offsetTop > container.clientHeight + scrollMargin //not on first page
     ) {
       return;
     }
-    else if (g.firstOnScreen === null || after(child, g.firstOnscreen)) {
+    else if (g.deepestFirstOnScreen === null || after(child, g.deepestFirstOnscreen)) {
       safeOnscreenCallback(child);
     }
     recomputeFirstAndLastOnscreen();
@@ -188,31 +188,29 @@ function monitorChildVisibility(
   }
 
   function childRemoved(child, prev, next) {
-    //TODO
-    if (container.firstElementChild === null) { //container empty
-      g.firstOnscreen = g.lastOnscreen = null;
-      g.last.firstOnscreen = g.last.lastOnscreen = null;
+    if (container.firstElementChild === null) {
+      reset();
       return;
     }
     else if (
-      g.lastOnscreen !== child && 
-      prev !== null && after(prev, g.lastOnscreen)
+      g.deepestLastOnscreen !== child && 
+      prev !== null && after(prev, g.deepestLastOnscreen)
     ) { //after last onscreen child
       return;
     }
     else {
-      if (child === g.firstOnscreen) {
-        g.firstOnscreen = next;
-      }
-      if (child === g.last.firstOnscreen) {
-        g.last.firstOnscreen = next;
-      }
-      if (child === g.lastOnscreen) {
-        g.lastOnscreen = prev;
-      }
-      if (child === g.last.lastOnscreen) {
-        g.last.lastOnscreen = prev;
-      }
+      var wasUpdate = false;
+      wasUpdate |= updateOnscreen(g.firstOnscreen, child, next);
+      wasUpdate |= updateOnscreen(g.lastOnscreen, child, prev);
+      if (wasUpdate)
+        calcDeepestOnscreen();
+
+      wasUpdate = false;
+      wasUpdate |= updateOnscreen(g.last.firstOnscreen, child, next);
+      wasUpdate |= updateOnscreen(g.last.lastOnscreen, child, prev);
+      if (wasUpdate)
+        calcDeepestLastOnscreen();
+
       recomputeFirstAndLastOnscreen();
       callCallbacks();
     }
@@ -334,6 +332,7 @@ function monitorChildVisibility(
     }
 
     calcDeepestOnscreen();
+
 
     if (g.deepestFirstOnscreen === null || g.deepestLastOnscreen === null) {
 
@@ -537,6 +536,10 @@ function monitorChildVisibility(
     return child;
   }
 
+  //====================================
+  //  onscreen datastructure helpers
+  //====================================
+
   function calcDeepestOnscreen(){
     var firstOnscreenDepth = getOnscreenDepth(g.firstOnscreen);
     var lastOnscreenDepth = getOnscreenDepth(g.lastOnscreen);
@@ -545,11 +548,33 @@ function monitorChildVisibility(
     g.deepestLastOnscreen = g.lastOnscreen[lastOnscreenDepth-1];
   }
 
+  function calcDeepestLastOnscreen(){
+    var firstOnscreenDepth = getOnscreenDepth(g.last.firstOnscreen);
+    var lastOnscreenDepth = getOnscreenDepth(g.last.lastOnscreen);
+
+    g.last.deepestFirstOnscreen = g.last.firstOnscreen[firstOnscreenDepth-1];
+    g.last.deepestLastOnscreen = g.last.lastOnscreen[lastOnscreenDepth-1];
+  }
+
   function getOnscreenDepth(onscreen){
     var depth = 1;
     while (depth < onscreen.length && onscreen[depth] !== null)
       depth += 1;
     return depth;
+  }
+
+  //returns true if update took place
+  function updateOnscreen(onscreen, oldNode, newNode) {
+    for (var i = 0; i < onscreen.length; i++) {
+      if (onscreen[i] == oldNode) {
+        onscreen[i] = newNode;
+        for (var j = i+1; j < onscreen.length; j++) {
+          onscreen[j] = null;
+        }
+        return true;
+      }
+    }
+    return false;
   }
 
   //====================================
@@ -574,6 +599,21 @@ function monitorChildVisibility(
         console.warn('monitorChildVisiblity: Exception in onscreenCallback:',
                      e, e.stack);
       }
+  }
+
+  function reset(){
+    g.firstOnscreen = new Array(maxDepth);
+    g.lastOnscreen = new Array(maxDepth);
+    g.deepestFirstOnscreen = null;
+    g.deepestLastOnscreen = null;
+    for (var i = 0; i < maxDepth; i++){
+      g.firstOnscreen[i] = null;
+      g.lastOnscreen[i] = null;
+    }
+    g.last.firstOnscreen = g.firstOnscreen.slice(0);
+    g.last.lastOnscreen = g.lastOnscreen.slice(0);
+    g.deepestFirstOnscreen = null;
+    g.deepestLastOnscreen = null;
   }
 
   //====================================
