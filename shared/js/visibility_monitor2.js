@@ -1,5 +1,9 @@
 'use strict';
 
+//====================================
+//  useful implementations / examples
+//====================================
+
 function monitorGrandchildWithTagVisibility(
   container,
   scrollMargin,
@@ -50,7 +54,27 @@ function monitorChildWithTagVisibility(
     });
 }
 
-//returns object containing stop function
+function monitorDirectChildVisibility(
+  container,
+  scrollMargin,
+  scrollDelta,
+  onscreenCallback,
+  offscreenCallback
+) {
+  monitorChildVisibility( container, 
+                          scrollMargin, 
+                          scrollDelta, 
+                          1, 
+                          onscreenCallback, 
+                          offscreenCallbach);
+}
+
+//====================================
+//  MonitorChildVisibility
+//    generalized function to watch children of a container at any depth level
+//    returns object containing stop function
+//====================================
+
 function monitorChildVisibility(
   container, 
   scrollMargin, // how close an element needs to be to the container edge to be 
@@ -62,33 +86,6 @@ function monitorChildVisibility(
   offscreenCallback // called with the element that is now offscreen
 ) {
 
-  //onscreenCallback = function(elem) {
-  //  console.log('on', arguments);
-  //  elem.style.background = 'blue';
-  //}
-
-  //offscreenCallback = function(elem) {
-  //  console.log('off', arguments);
-  //  elem.style.background = 'red';
-  //}
-
-  //var divs = document.getElementsByTagName('div');
-  //for (var i = 0; i < divs.length; i++) {
-  //  var div = divs[i];
-  //  div.onclick = function(e) {
-  //    var child = e.target;
-
-  //    var scrollTop = container.scrollTop;
-  //    var screenTop = scrollTop - C.scrollMargin;
-  //    var screenBottom = scrollTop + container.clientHeight + C.scrollMargin;
-
-
-  //    var childTop = child.offsetTop;
-  //    var childBottom = childTop + child.offsetHeight;
-  //    console.log(screenTop, screenBottom, childTop, childBottom);
-  //  }
-  //}
-
   if (container.style.position === 'static' || container.style.position === '')
     throw "'position: static' containers not supported, maybe use 'position: relative'?";
 
@@ -96,20 +93,28 @@ function monitorChildVisibility(
   //  init
   //====================================
 
-  const C = {
+  var C = {
     scrollDelta: scrollDelta,
     scrollMargin: scrollMargin
   }
   var g = {}; //global state
 
   function init() {
-    g.firstOnscreen = null;
-    g.lastOnscreen = null;
+    g.firstOnscreen = new Array(maxDepth);
+    g.lastOnscreen = new Array(maxDepth);
+    g.deepestFirstOnscreen = null;
+    g.deepestLastOnscreen = null;
+    for (var i = 0; i < maxDepth; i++){
+      g.firstOnscreen[i] = null;
+      g.lastOnscreen[i] = null;
+    }
     g.pendingCallCallbacksTimeoutId;
     g.last = {
       scrollTop: -1,
-      firstOnscreen: null,
-      lastOnscreen: null
+      firstOnscreen: g.firstOnscreen.slice(0),
+      lastOnscreen: g.lastOnscreen.slice(0),
+      deepestFirstOnscreen: null,
+      deepestLastOnscreen: null,
     }
 
     //add events that could trigger an element to go onscreen or offscreen
@@ -160,7 +165,6 @@ function monitorChildVisibility(
             childRemoved(child,
                          mutation.previousSibling,
                          mutation.nextSibling);
-            
           }
         }
       }
@@ -168,6 +172,7 @@ function monitorChildVisibility(
   }
 
   function childAdded(child) {
+    //TODO
     if (
         g.lastOnscreen !== null && 
         after(child, g.lastOnscreen) && //after last onscreen child
@@ -183,6 +188,7 @@ function monitorChildVisibility(
   }
 
   function childRemoved(child, prev, next) {
+    //TODO
     if (container.firstElementChild === null) { //container empty
       g.firstOnscreen = g.lastOnscreen = null;
       g.last.firstOnscreen = g.last.lastOnscreen = null;
@@ -217,7 +223,6 @@ function monitorChildVisibility(
     if (container.clientHeight === 0) {
       return;
     }
-
     recomputeFirstAndLastOnscreen();
 
     if (callImmediately || scrollDelta >= 1) {
@@ -234,19 +239,46 @@ function monitorChildVisibility(
 
   function recomputeFirstAndLastOnscreen() {
     if (container.firstElementChild === null) { //container empty
-      g.firstOnscreen = g.lastOnscreen = null;
+      for (var i = 0; i < maxDepth; i++){
+        g.firstOnscreen[i] = null;
+        g.lastOnscreen[i] = null;
+      }
       return; 
     }
 
-    if (g.firstOnscreen === null) {
-      g.firstOnscreen = container.firstElementChild;
+    var currentContainer = container;
+    for (var i = 0; i < maxDepth; i++){
+      if (g.firstOnscreen[i] === null) {
+        g.firstOnscreen[i] = currentContainer.firstElementChild;
+        if (g.firstOnscreen[i] === null)
+          break;
+      }
+      var nextFirstOnscreen = recomputeFirstOnscreenSibling(container, g.firstOnscreen[i]);
+      if (nextFirstOnscreen !== g.firstOnscreen[i]){
+        g.firstOnscreen[i] = nextFirstOnscreen;
+        for (var j = i+1; j < maxDepth; j++){
+          g.firstOnscreen[j] = null;
+        }
+      }
+      currentContainer = g.firstOnscreen[i];
     }
-    g.firstOnscreen = recomputeFirstOnscreenSibling(container, g.firstOnscreen);
 
-    if (g.lastOnscreen == null) {
-      g.lastOnscreen = g.firstOnscreen;
+    currentContainer = container;
+    for (var i = 0; i < maxDepth; i++) {
+      if (g.lastOnscreen[i] === null) {
+        g.lastOnscreen[i] = currentContainer.firstElementChild;
+        if (g.lastOnscreen[i] === null)
+          break;
+      }
+      var nextLastOnscreen = recomputeLastOnscreenSibling(container, g.lastOnscreen[i]);
+      if (nextLastOnscreen !== g.lastOnscreen[i]) {
+        g.lastOnscreen[i] = nextLastOnscreen;
+        for (var j = i+1; j < maxDepth; j++){
+          g.lastOnscreen[j] = null;
+        }
+      }
+      currentContainer = g.lastOnscreen[i];
     }
-    g.lastOnscreen = recomputeLastOnscreenSibling(container, g.lastOnscreen);
   }
 
   function recomputeFirstOnscreenSibling(container, guessOfFirstOnscreen) {
@@ -301,69 +333,110 @@ function monitorChildVisibility(
       g.pendingCallCallbacksTimeoutId = null;
     }
 
-    if (g.firstOnscreen == null || g.lastOnscreen == null) {
+    calcDeepestOnscreen();
+
+    if (g.deepestFirstOnscreen === null || g.deepestLastOnscreen === null) {
 
     }
-    else if (g.last.firstOnscreen == null || g.last.lastOnscreen == null) {
-      notifyOnscreenInRange(g.firstOnscreen, g.lastOnscreen);
+    else if (g.last.deepestFirstOnscreen === null || g.last.deepestLastOnscreen === null) {
+      notifyOnscreenInRange(g.deepestFirstOnscreen, g.deepestLastOnscreen, ON);
     }
     else if (
-      before(g.lastOnscreen, g.last.firstOnscreen) ||
-      after(g.firstOnscreen, g.last.lastOnscreen)
+      before(g.deepestLastOnscreen, g.last.deepestFirstOnscreen) ||
+      after(g.deepestFirstOnscreen, g.last.deepestLastOnscreen)
     ) { //disjoint
-      notifyOnscreenInRange(g.firstOnscreen, g.lastOnscreen);
-      notifyOffscreenInRange(g.last.firstOnscreen, g.last.lastOnscreen);
+      notifyOnscreenInRange(g.deepestFirstOnscreen, g.deepestLastOnscreen, ON);
+      notifyOffscreenInRange(g.last.deepestFirstOnscreen, g.last.deepestLastOnscreen, ON);
     }
     else { //overlapping
-      if (before(g.firstOnscreen, g.last.firstOnscreen)) { //onscreen at top
-        notifyOnscreenInRange(g.firstOnscreen, g.last.firstOnscreen.previousElementSibling);
+      if (before(g.deepestFirstOnscreen, g.last.deepestFirstOnscreen)) { //onscreen at top
+        var cousin = prevElementCousin(g.last.deepestFirstOnscreen);
+        notifyOnscreenInRange(g.deepestFirstOnscreen, cousin, BEFORE);
+        var closestPrev = prevElement(g.last.deepestFirstOnscreen);
+        if (closestPrev !== cousin)
+          notifyOnscreenInRange(cousin, closestPrev, BEFORE);
       }
 
-      if (after(g.lastOnscreen, g.last.lastOnscreen)) { //onscreen at bottom
-        notifyOnscreenInRange(g.last.lastOnscreen.nextElementSibling, g.lastOnscreen);
+      if (after(g.deepestLastOnscreen, g.last.deepestLastOnscreen)) { //onscreen at bottom
+        var cousin = nextElementCousin(g.last.deepestLastOnscreen)
+        notifyOnscreenInRange(cousin, g.deepestLastOnscreen, AFTER);
+        var closestNext = nextElement(g.last.deepestLastOnscreen);
+        if (closestNext !== cousin)
+          notifyOnscreenInRange(closestNext, cousin, AFTER);
       }
 
-      if (after(g.firstOnscreen, g.last.firstOnscreen)) { //offscreen at top
-        notifyOffscreenInRange(g.last.firstOnscreen, g.firstOnscreen.previousElementSibling);
+      if (after(g.deepestFirstOnscreen, g.last.deepestFirstOnscreen)) { //offscreen at top
+        var cousin = prevElementCousin(g.deepestFirstOnscreen);
+        notifyOffscreenInRange(g.last.deepestFirstOnscreen, cousin, BEFORE);
+        var closestPrev = prevElement(g.deepestFirstOnscreen);
+        if (closestPrev !== cousin)
+          notifyOffscreenInRange(cousin, closestPrev, BEFORE);
       }
 
-      if (before(g.lastOnscreen, g.last.lastOnscreen)) { //offscreen at bottom
-        notifyOffscreenInRange(g.lastOnscreen.nextElementSibling, g.last.lastOnscreen);
+      if (before(g.deepestLastOnscreen, g.last.deepestLastOnscreen)) { //offscreen at bottom
+        var cousin = nextElementCousin(g.deepestLastOnscreen)
+        notifyOffscreenInRange(cousin, g.last.deepestLastOnscreen, AFTER);
+        var closestNext = nextElement(g.deepestLastOnscreen);
+        if (closestNext !== cousin)
+          notifyOffscreenInRange(closestNext, cousin, AFTER);
       }
 
     }
 
-    //g.firstOnscreen.style.background = 'black';
-    //g.lastOnscreen.style.background = 'black';
-    g.last.firstOnscreen = g.firstOnscreen;
-    g.last.lastOnscreen = g.lastOnscreen;
+    g.last.firstOnscreen = g.firstOnscreen.slice(0);
+    g.last.lastOnscreen = g.lastOnscreen.slice(0);
+    g.last.deepestFirstOnscreen = g.deepestFirstOnscreen;
+    g.last.deepestLastOnscreen = g.deepestLastOnscreen;
   }
 
-  function notifyOnscreenInRange(start, stop) {
-      var curr = start;
-      while (curr !== null) {
-        safeOnscreenCallback(curr);
-        if (curr == stop)
-          break;
-        curr = curr.nextElementSibling;
-      }
+  function notifyOnscreenInRange(start, stop, boundDir) {
+    runInRange(start, stop, boundDir, safeOnscreenCallback);
   }
 
-  function notifyOffscreenInRange(start, stop) {
-      var curr = start;
-      while (curr !== null) {
-        safeOffscreenCallback(curr);
-        if (curr == stop)
-          break;
-        curr = curr.nextElementSibling;
+  function notifyOffscreenInRange(start, stop, boundDir) {
+    runInRange(start, stop, boundDir, safeOffscreenCallback);
+  }
+
+  function runInRange(start, stop, boundDir, fn) {
+    var curr = start;
+    var currDepth = getDistance(container, curr);
+    var justAscended = false;
+    while (curr !== stop){
+      if ((boundDir === BEFORE && curr.offsetTop + curr.clientHeight <= stop.offsetTop + stop.clientHeight) ||
+          (boundDir === AFTER && curr.offsetTop >= start.offsetTop) ||
+          (boundDir === ON)){
+        fn(curr);
       }
+      if (currDepth <= 0){
+        break;
+      }
+      else if (currDepth < maxDepth && !justAscended){
+        var child = curr.firstElementChild;
+        if (child !== null){
+          curr = child;
+          currDepth += 1;
+          continue;
+        }
+      }
+      var sibling = curr.nextElementSibling;
+      if (sibling !== null){
+        curr = sibling;
+        justAscended = false;
+      }
+      else {
+        curr = curr.parentNode;
+        currDepth -= 1;
+        justAscended = true;
+      }
+    }
+    fn(stop);
   }
 
   //====================================
-  //  helpers
+  //  dom helpers
   //====================================
 
-  const BEFORE = -1, ON = 0, AFTER = 1;
+  var BEFORE = -1, ON = 0, AFTER = 1;
   function visibilityPosition(container, child) {
 
     var scrollTop = container.scrollTop;
@@ -384,10 +457,104 @@ function monitorChildVisibility(
     return !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
   }
 
-  // Return true if node a is after node b and false otherwise
   function after(a, b) {
     return !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_PRECEDING);
   }
+
+  function getDistance(parent, child) {
+    var depth = 0;
+    var curr = child;
+    while (curr !== parent) {
+      depth += 1;
+      curr = curr.parentNode;
+    }
+    return depth;
+  }
+
+  function prevElement(elem){
+    var curr = elem;
+    var prev = curr.previousElementSibling;
+    while (prev === null){
+      curr = curr.parentNode;
+      prev = curr.previousElementSibling;
+    }
+    return prev;
+  }
+
+  function nextElement(elem){
+    var curr = elem;
+    var next = curr.nextElementSibling;
+    while (next === null){
+      curr = curr.parentNode;
+      next = curr.nextElementSibling;
+    }
+    return next;
+  }
+
+  function prevElementCousin(elem){
+    var curr = elem;
+    var depth = 0;
+    var prev = curr.previousElementSibling;
+    while (prev === null){
+      curr = curr.parentNode;
+      prev = curr.previousElementSibling;
+      depth -= 1;
+    }
+    curr = prev;
+    var child = curr;
+    while (depth < 0){
+      child = curr.lastElementChild;
+      if (child == null){
+        child = curr;
+        break;
+      }
+      curr = child;
+      depth += 1;
+    }
+    return child;
+  }
+
+  function nextElementCousin(elem){
+    var curr = elem;
+    var depth = 0;
+    var next = curr.nextElementSibling;
+    while (next === null){
+      curr = curr.parentNode;
+      next = curr.nextElementSibling;
+      depth -= 1;
+    }
+    curr = next;
+    var child = curr;
+    while (depth < 0){
+      child = curr.firstElementChild;
+      if (child == null){
+        child = curr;
+        break;
+      }
+      curr = child;
+      depth += 1;
+    }
+    return child;
+  }
+
+  function calcDeepestOnscreen(){
+    var firstOnscreenDepth = getOnscreenDepth(g.firstOnscreen);
+    var lastOnscreenDepth = getOnscreenDepth(g.lastOnscreen);
+
+    g.deepestFirstOnscreen = g.firstOnscreen[firstOnscreenDepth-1];
+    g.deepestLastOnscreen = g.lastOnscreen[lastOnscreenDepth-1];
+  }
+
+  function getOnscreenDepth(onscreen){
+    var depth = 1;
+    while (depth < onscreen.length && onscreen[depth] !== null)
+      depth += 1;
+    return depth;
+  }
+
+  //====================================
+  //  helpers
+  //====================================
 
   function safeOnscreenCallback(child, depth) {
       try {
@@ -419,7 +586,10 @@ function monitorChildVisibility(
     g.observer.disconnect();
   }
 
-
+  //====================================
+  //  initialization + return
+  //====================================
+  
   init();
 
   return {
