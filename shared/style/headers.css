@@ -139,6 +139,8 @@ section[role="region"] > header:first-child button {
 /* Pressed state */
 section[role="region"] > header:first-child a::-moz-focus-inner,
 section[role="region"] > header:first-child button::-moz-focus-inner,
+section[role="region"] > header:first-child a.touchActive,
+section[role="region"] > header:first-child button.touchActive,
 section[role="region"] > header:first-child a:active,
 section[role="region"] > header:first-child button:active,
 section[role="region"] > header:first-child a:focus,
@@ -147,12 +149,15 @@ section[role="region"] > header:first-child button:focus {
   border: none !important;
 }
 
+section[role="region"] > header:first-child a:not([aria-disabled="true"]).touchActive .icon:after,
+section[role="region"] > header:first-child button:not(:disabled).touchActive .icon:after,
+section[role="region"] > header:first-child menu[type="toolbar"] a:not([aria-disabled="true"]).touchActive,
+section[role="region"] > header:first-child menu[type="toolbar"] button:not(:disabled).touchActive,
 section[role="region"] > header:first-child a:not([aria-disabled="true"]):active .icon:after,
 section[role="region"] > header:first-child button:not(:disabled):active .icon:after,
 section[role="region"] > header:first-child menu[type="toolbar"] a:not([aria-disabled="true"]):active,
 section[role="region"] > header:first-child menu[type="toolbar"] button:not(:disabled):active  {
   background: #008aaa !important;
-  transition: background 0.2s ease;
 }
 
 /* Disabled state */

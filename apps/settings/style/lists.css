@@ -35,9 +35,10 @@ ul li > span {
   padding: 0 3rem;
 }
 
-ul li.active,
 ul li:not(.disabled) > small + a:active,
 ul li:not(.disabled) > a[href]:active,
+ul li:not(.disabled) > small + a.touchActive,
+ul li:not(.disabled) > a[href].touchActive,
 ul li:not(.disabled) > small + a:focus,
 ul li:not(.disabled) > a[href]:focus {
   background-color: #b2f2ff;
@@ -139,6 +140,7 @@ ul li > label:not([for]) ~ a {
   padding-right: 9rem;
 }
 
+ul li > label:not([for]).touchActive ~ a,
 ul li > label:not([for]):active ~ a {
   background-color: #b2f2ff;
   color: #222;
@@ -212,6 +214,7 @@ input[type=range]::-moz-range-thumb {
   background: url(images/range_thumb.png) no-repeat 50% 50%;
 }
 
+input[type=range].touchActive::-moz-range-thumb,
 input[type=range]:active::-moz-range-thumb {
   border: solid 0.4rem #01c5ed;
 }
@@ -300,6 +303,7 @@ ul li > label.bug344618_polyfill div span:last-child {
   background: url(images/range_thumb.png) no-repeat 50% 50%;
 }
 
+ul li > label.bug344618_polyfill div span:last-child.touchActive,
 ul li > label.bug344618_polyfill div span:last-child:active {
   outline: solid 0.4rem #01c5ed;
 }

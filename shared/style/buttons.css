@@ -36,6 +36,10 @@ a[role="button"],
 }
 
 /* Press (default & recommend) */
+button.touchActive,
+a[role="button"].touchActive,
+button.recommend.touchActive,
+a.recommend[role="button"].touchActive,
 button:active,
 a[role="button"]:active,
 button.recommend:active,
@@ -66,6 +70,9 @@ span.danger[role="button"] {
 }
 
 /* Danger Press */
+button.danger.touchActive,
+a[role="button"].danger.touchActive,
+.button.danger.touchActive,
 button.danger:active,
 a[role="button"].danger:active,
 .button.danger:active {
@@ -139,6 +146,9 @@ li .button:after {
 }
 
 /* Press */
+li a[role="button"].touchActive:after,
+li .button.touchActive:after,
+li button.touchActive:after,
 li a[role="button"]:active:after,
 li .button:active:after,
 li button:active:after {
@@ -178,6 +188,8 @@ li a[role="button"].icon-view:before {
   background: url(buttons/images/icons/view.png) no-repeat 1.6rem 0 / 1rem 9rem;
 }
 
+li button.icon-view.touchActive:before,
+li a[role="button"].icon-view.touchActive:before,
 li button.icon-view:active:before,
 li a[role="button"].icon-view:active:before {
   background-position: 1.6rem -3rem;
@@ -202,6 +214,9 @@ li .button.icon-dialog:before {
   margin-top: -2.4rem;
 }
 
+li button.icon-dialog.touchActive:before,
+li a[role="button"].icon-dialog.touchActive:before,
+li .button.icon-dialog.touchActive:before,
 li button.icon-dialog:active:before,
 li a[role="button"].icon-dialog:active:before,
 li .button.icon-dialog:active:before {
