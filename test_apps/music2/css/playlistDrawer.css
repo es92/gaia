@@ -1,0 +1,55 @@
+#playlistDrawer .header {
+  background-image: none;
+  background-color: #333;
+}
+
+#playlistDrawerPlaylists {
+  position: absolute;
+  top: 3rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #222;
+}
+
+.playlistTitle {
+  font-size: 1.25em;
+}
+
+.playlistDelete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-image: url('../style/minus-del.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 80%;
+}
+
+.playlistEdit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background-image: url('../style/headers/images/icons/compose.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 80%;
+}
+
+.currentPlayingPlaylist {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 80% auto;
+  background-image: url('../style/images/IconAction_Media_Play_30x30.png');
+}
+
+.currentPausedPlaylist {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 80% auto;
+  background-image: url('../style/images/IconAction_Media_Pause_30x30.png');
+}

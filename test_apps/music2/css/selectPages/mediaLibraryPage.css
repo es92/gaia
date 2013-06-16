@@ -1,0 +1,182 @@
+
+#mediaLibraryPage {
+
+}
+
+#mediaLibraryPage .gotoPanelButton {
+  background-image: url('../../style/headers/images/icons/back-rtl.png');
+  background-repeat: no-repeat;
+}
+
+#mediaLibraryPagePanel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#mediaLibraryPagePanelTitle {
+  margin-left: .25em;
+  padding-right: 4em;
+  border-bottom: 1px solid #aac;
+}
+
+#mediaLibraryPagePanelTitleText {
+  min-height: 2em;
+  padding-left: 1.5em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+#mediaLibraryPagePanelTitleText > * {
+  padding-left: .5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#mediaLibraryPagePanelTitleText > *:first-child {
+  font-size: 1.75em;
+  padding-left: 0;
+}
+
+#mediaLibraryPagePanelTitleText.songTitle {
+  height: auto;
+}
+
+#mediaLibraryPagePanelTitleText.songTitle > * {
+  white-space: normal;
+}
+
+#mediaLibraryPagePanelTitleText.songTitle > *:first-child {
+  font-size: 1.25em;
+}
+
+#mediaLibraryPagePanelList {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 4em;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+#mediaLibraryPagePanelSubCategories {
+  font-size: 1.5em;
+  padding-left: .75em;
+  padding-left: 2.5em;
+
+}
+
+#mediaLibraryPagePanelSubCategories > * {
+  padding-top: .5em;
+  padding-bottom: .5em;
+
+  background-position: right .75em center;
+  background-size: auto 60%;
+}
+
+#mediaLibraryPagePanelItems {
+  border-top: 1px solid #aac;
+  margin-left: .5em;
+}
+
+#mediaLibraryPagePanelItems > * {
+  padding-top: .5em;
+  padding-bottom: .5em;
+  padding-right: 3em;
+  padding-left: 2em;
+  position: relative;
+
+  background-position: right .75em center;
+  background-size: auto 60%;
+}
+
+#mediaLibraryPagePanelItems > .hasButtons > .fields {
+  min-height: 4em;
+}
+
+
+#mediaLibraryPagePanelItems > * > .fields > * {
+  padding-left: .5em;
+}
+
+#mediaLibraryPagePanelItems > * > .fields > *:first-child {
+  font-size: 1.25em;
+  padding-left: 0;
+}
+
+#mediaLibraryPagePanelItems > * > .add {
+  position: absolute;
+  right: .75em;
+  top: .25em;
+  width: 2em;
+  height: 2em;
+  background-image: url('../../style/add.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% auto;
+}
+
+#mediaLibraryPagePanelItems > * > .more {
+  position: absolute;
+  right: .75em;
+  top: 2.5em;
+  width: 2em;
+  height: 2em;
+  background-image: url('../../style/down.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% auto;
+}
+
+#mediaLibraryPagePanelItems > * > .more.unhide {
+  background-image: url('../../style/up.png');
+}
+
+#mediaLibraryPagePanelItems > * > .moreMenu {
+  width: 100%;
+}
+
+#mediaLibraryPagePanelItems > * > .moreMenu > .link {
+  background-position: right .75em center;
+  font-size: 1.25em;
+  padding: .25em;
+  padding-right: 1em;
+  background-size: auto 60%;
+}
+
+#mediaLibraryPagePanelItems > * > .track {
+  position: absolute;
+  left: 0;
+  top: .5em;
+  font-size: 1em;
+  padding-left: 0;
+}
+
+
+
+#mediaLibraryPagePanelPop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: url('../../style/headers/images/icons/back.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 50%;
+  height: 4em;
+  width: 2em;
+}
+
+#mediaLibraryPagePanelAdd {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-image: url('../../style/headers/images/icons/add.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 50%;
+  height: 4em;
+  width: 4em;
+}

@@ -1,0 +1,24 @@
+#metaDrawer {
+  background-color: #222;
+}
+
+#sourcesMetaDrawer > * {
+  padding-left: 1em;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+#sourcesMetaDrawer .current {
+  background: #333;
+}
+
+#settingsMetaDrawer > * {
+  padding-left: 1em;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+#settingsMetaDrawer > * > input[type="checkbox"] {
+  position: absolute;
+  right: 1em;
+}

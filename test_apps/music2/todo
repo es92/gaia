@@ -1,0 +1,55 @@
+
+*priority
+
+=====================
+core
+=====================
+  ==================== features =====================
+
+*   playlist drawer
+      quick clear current playlist
+      edit playlist view w/out switching
+      create playlist from template
+
+    drag moving in playlists
+    mini playing indicator in select screen
+
+    add titles to headers
+    add favoriting to more menu
+
+  ===================== bugs =====================
+
+    style moreMenu as a drawer
+    default album cover
+    fix part of item that turns blue
+
+  ===================== enhancements =====================
+
+    add animation for switch playlist/source
+    save inactive pages to canvas, use canvas for transitions
+
+  ===================== maintainability =====================
+
+=====================
+music library
+=====================
+  ==================== features =====================
+
+    search feature
+    proper sorting
+
+  ===================== bugs =====================
+
+*   first load indicator
+    default album cover
+    fix part of item that turns blue
+
+  ===================== enhancements =====================
+
+    loading indicator
+
+  ===================== maintainability =====================
+
+    try and remove subcategories as a thing to track
+    refactor MediaLibraryPagePanelManager
+    refactor selectMusicPage to use UIItemList
