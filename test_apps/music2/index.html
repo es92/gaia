@@ -17,6 +17,8 @@
 
   <link rel="stylesheet" type="text/css" href="css/itemList.css"></link>
 
+  <link rel="stylesheet" type="text/css" href="css/playlistView.css"></link>
+
   <link rel="stylesheet" type="text/css" href="css/currentMusicPage.css"></link>
   <link rel="stylesheet" type="text/css" href="css/currentMusicPageControls.css"></link>
 
@@ -46,7 +48,7 @@
     <script src="js/UI/SeekBar.js"></script>
     <script src="js/UI/CurrentMusicPageControls.js"></script>
     <script src="js/UI/CurrentMusicPageSource.js"></script>
-    <script src="js/UI/CurrentMusicPagePlaylist.js"></script>
+    <script src="js/UI/PlaylistView.js"></script>
     <script src="js/UI/CurrentMusicPage.js"></script>
 
     <script src="js/UI/SourcesMetaDrawer.js"></script>
@@ -167,11 +169,16 @@
     <div class="header">
       <!-- <div class="rightHeaderElem"></div>-->
     </div>
-    <div id="playlistDrawerPlaylists"></div>
-    
+    <div id="playlistDrawerTitle" class="hidden">
+      <div id="playlistDrawerTitleBack"></div>
+      <div id="playlistDrawerTitleContent"></div>
+      <div id="playlistDrawerTitleDel"></div>
     </div>
-    <div id="playlistDrawerPlaylistItems"></div>
-    
+    <div id="playlistDrawerPlaylists">
+
+    </div>
+    <div id="playlistDrawerPlaylistItems" class="hidden">
+
     </div>
   </div>
 </div>
@@ -185,7 +192,7 @@
     <div id="mediaLibraryPage" class="selectSourcePage">
       <div id="mediaLibraryPagePanel">
         <div id="mediaLibraryPagePanelPop" class="hidden"></div>
-        <div id="mediaLibraryPagePanelAdd"></div>
+        <div id="mediaLibraryPagePanelAdd" class="hidden"></div>
         <div id="mediaLibraryPagePanelTitle">
           <div id="mediaLibraryPagePanelTitleText"></div>
         </div>

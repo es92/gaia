@@ -12,7 +12,8 @@
     "device-storage:music":{ "access": "readwrite" },
     "settings":{ "access": "readonly" },
     "deprecated-hwvideo":{},
-    "audio-channel-content":{}
+    "audio-channel-content":{},
+    "network-http":{}
   },
   "activities": {
     "pick": {

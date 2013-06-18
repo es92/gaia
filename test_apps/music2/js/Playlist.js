@@ -41,6 +41,8 @@ Playlist.prototype = {
     var sourceIndex = this.list.indexOf(source);
     if (sourceIndex === -1)
       return;
+    if (sourceIndex < this.currentIndex)
+      this.currentIndex -= 1;
     this.list.splice(sourceIndex, 1);
   },
   setCurrentSource: function(source){

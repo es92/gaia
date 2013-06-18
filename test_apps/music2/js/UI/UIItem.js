@@ -58,6 +58,9 @@ UIItem.prototype = {
     primaryButton.classList.add('primaryButton');
     if (this.primaryButton)
       primaryButton.appendChild(this.primaryButton);
+    if (this.more === null){
+      primaryButton.classList.add('full');
+    }
     div.appendChild(primaryButton);
 
     this.dom.div = div;

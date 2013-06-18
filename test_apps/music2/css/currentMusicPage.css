@@ -55,7 +55,6 @@
 }
 
 
-
 #currentPlaylistView {
   position: absolute;
   top: 0;
@@ -64,42 +63,4 @@
   right: 0;
 }
 
-#currentPlaylistView .info > * {
-  padding-left: .5em;
-}
 
-#currentPlaylistView .info > *:first-child {
-  font-size: 1.25em;
-  padding-left: 0em;
-}
-
-#currentPlaylistView .tracknum {
-  text-align: center;
-  padding-top: .75em;
-}
-
-#currentPlaylistView .playlistItemDelete {
-  background-image: url('../style/minus-del.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 50% auto;
-}
-
-.playlistItemDelete {
-  width: 100%;
-  height: 100%;
-  background-image: url('../style/clear.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: auto 80%;
-}
-
-.beingPlayedIcon {
-  background-image: url('../style/images/IconAction_Media_Play_30x30.png');
-  background-size: 80% auto;
-}
-
-.beingPausedIcon {
-  background-image: url('../style/images/IconAction_Media_Pause_30x30.png');
-  background-size: 80% auto;
-}

@@ -166,8 +166,11 @@ MediaLibraryPagePanelManager.prototype = {
       rerenderCategories(genres, artists, albums);
       artistKnown |= Utils.size(artists) === 1;
       albumKnown |= Utils.size(albums) === 1;
-      console.log();
-      this.dom.mediaLibraryPagePanelList.style.top = this.dom.title.clientHeight + 'px'
+
+      var titleHeight = this.dom.title.clientHeight;
+      if (titleHeight !== 0)
+        this.dom.mediaLibraryPagePanelList.style.top = titleHeight + 'px'
+
       setTimeout(function(){
         renderItems(items); 
       }, 0);

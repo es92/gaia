@@ -72,9 +72,14 @@
 #mediaLibraryPagePanelSubCategories > * {
   padding-top: .5em;
   padding-bottom: .5em;
+  padding-right: 1.5em;
 
   background-position: right .75em center;
   background-size: auto 60%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #mediaLibraryPagePanelItems {
@@ -143,8 +148,12 @@
   background-position: right .75em center;
   font-size: 1.25em;
   padding: .25em;
-  padding-right: 1em;
+  padding-right: 1.5em;
   background-size: auto 60%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #mediaLibraryPagePanelItems > * > .track {

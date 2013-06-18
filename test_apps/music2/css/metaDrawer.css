@@ -3,9 +3,10 @@
 }
 
 #sourcesMetaDrawer > * {
+  font-size: 1.333333em;
   padding-left: 1em;
-  padding-top: .5em;
-  padding-bottom: .5em;
+  padding-top: .666667em;
+  padding-bottom: .666667em;
 }
 
 #sourcesMetaDrawer .current {

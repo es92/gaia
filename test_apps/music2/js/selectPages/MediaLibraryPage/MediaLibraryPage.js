@@ -10,8 +10,19 @@ var MediaLibraryPage = function(pageBridge){
 
   this.panelManager = new MediaLibraryPagePanelManager(this.musicDB, this.pageBridge);
 
-  this.startPanel = new MediaLibraryPagePanel();
-  this.panelManager.pushPanel(this.startPanel);
+  setTimeout(function(){
+    if (!this.musicDB.ready){
+      var title = document.createElement('div');
+      title.innerHTML = 'Loading...';
+      this.panelManager.dom.titleText.appendChild(title);
+    }
+  }.bind(this), 1000);
+
+  this.musicDB.onisReady = function(){
+    this.startPanel = new MediaLibraryPagePanel();
+    this.panelManager.pushPanel(this.startPanel);
+  }.bind(this);
+
 
 }
 

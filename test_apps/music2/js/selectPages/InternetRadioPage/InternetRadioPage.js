@@ -20,12 +20,13 @@ var InternetRadioPage = function(pageBridge){
   appendURL("http://streaming208.radionomy.com:80/ABC-Jazz");
   appendURL("http://streaming206.radionomy.com:80/abacusfm-mozart-piano");
 
-
-
 }
 
 InternetRadioPage.prototype = {
   name: "Internet Radio",
+  unserialize: function(serializedSource){
+    return new InternetAudioSource(serializedSource);
+  },
   activate: function(){
     this.dom.selectSourcePages.removeChild(this.dom.page);
     this.pageBridge.setPageDiv(this.dom.page);
@@ -33,7 +34,7 @@ InternetRadioPage.prototype = {
   deactivate: function(){
     this.dom.page.parentNode.removeChild(this.dom.page);
     this.dom.selectSourcePages.appendChild(this.dom.page);
-  }
+  },
 }
 
 

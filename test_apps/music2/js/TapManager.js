@@ -54,7 +54,7 @@ TapManager.prototype = {
     }
   },
   checkLong: function(){
-    if (this.state.potentialTap){
+    if (this.state.potentialTap && this.onlong){
       this.state.potentialTap = false;
       this.long();
       this.up();

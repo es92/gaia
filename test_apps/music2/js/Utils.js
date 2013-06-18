@@ -57,5 +57,10 @@ var Utils = {
     tapManager.ondown = function(){ div.classList.add('buttonDown'); };
     tapManager.onup = function(){ div.classList.remove('buttonDown'); };
     return tapManager;
+  },
+  classDiv: function(className){
+    var classDiv = document.createElement('div');
+    classDiv.classList.add(className);
+    return classDiv;
   }
 }

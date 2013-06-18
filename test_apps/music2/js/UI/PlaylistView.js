@@ -1,15 +1,18 @@
-var CurrentMusicPagePlaylist = function(){
-  Utils.loadDomIds(this, [
-      "currentPlaylistView"
-  ]);
+var PlaylistView = function(list){
+  this.dom = {};
+  this.dom.list = list;
+  this.dom.list.classList.add('playlistView');
 
-  this.playlist = new UIItemList(this.dom.currentPlaylistView);
+  this.playlist = new UIItemList(this.dom.list);
 
   Utils.setupPassEvent(this, 'deleteItemFromPlaylist');
   Utils.setupPassEvent(this, 'switchCurrentPlaylistToItem');
+
+  this.show = this.playlist.show.bind(this.playlist);
+  this.hide = this.playlist.hide.bind(this.playlist);
 }
 
-CurrentMusicPagePlaylist.prototype = {
+PlaylistView.prototype = {
   setPlaylist: function(playlist){
     this.playlist.empty();
 
@@ -30,7 +33,7 @@ CurrentMusicPagePlaylist.prototype = {
 
     var more = null;
 
-    var icon;;
+    var icon;
     var state = source.getState();
     if (state === 'pause')
       icon = 'beingPausedIcon';
@@ -68,4 +71,3 @@ CurrentMusicPagePlaylist.prototype = {
     }.bind(this));
   }
 }
-

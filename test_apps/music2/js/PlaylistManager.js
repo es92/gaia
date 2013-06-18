@@ -89,8 +89,8 @@ PlaylistManager.prototype = {
     if (this.currentPlaylistId === null)
       return;
     var playlist = this.playlists[this.currentPlaylistId];
-    this.ui.source.setInfo(playlist.getCurrentSource());
     playlist.play(this.audioPlayer);
+    this.ui.source.setInfo(playlist.getCurrentSource());
     this.ui.playlist.setPlaylist(playlist);
     this.ui.playlists.setCurrentPlaylist(this.currentPlaylistId, 'play');
   },
@@ -106,10 +106,10 @@ PlaylistManager.prototype = {
     if (this.currentPlaylistId === null)
       return;
     var playlist = this.playlists[this.currentPlaylistId];
-    playlist.stop(this.audioPlayer);
+    this.stop();
     playlist.currentIndex += 1;
     if (!playlist.atEnd()){
-      playlist.play(this.audioPlayer);
+      this.play();
     }
     this.ui.playlist.setPlaylist(playlist);
   },
@@ -117,10 +117,10 @@ PlaylistManager.prototype = {
     if (this.currentPlaylistId === null)
       return;
     var playlist = this.playlists[this.currentPlaylistId];
-    playlist.stop(this.audioPlayer);
+    this.stop();
     playlist.currentIndex -= 1;
     if (!playlist.atBegin()){
-      playlist.play(this.audioPlayer);
+      this.play();
     }
     this.ui.playlist.setPlaylist(playlist);
   },
@@ -139,6 +139,7 @@ PlaylistManager.prototype = {
     if (playlist.list.length === 0){
       this.ui.controls.disable();
     }
+    this.ui.playlist.setPlaylist(playlist);
     this.savePlaylists();
   },
   switchCurrentPlaylistToItem: function(source, playlist){

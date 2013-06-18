@@ -6,6 +6,9 @@ var MusicDB = function(){
     autoscan: false, // We call scan() explicitly after listing music we know
     version: 2
   });
+
+  Utils.setupPassEvent(this, 'isReady');
+
   this.getFile = this.db.getFile.bind(this.db);
 
   this.cache = {};
@@ -31,6 +34,7 @@ var MusicDB = function(){
 
   this.db.onscanend = function() {
     console.log('scanend');
+    this.isReady();
     this.ready = true;
   }.bind(this);
 

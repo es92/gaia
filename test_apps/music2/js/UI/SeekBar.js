@@ -39,7 +39,9 @@ SeekBar.prototype = {
     if (this.total !== 0)
       progressPercent = this.current / this.total;
     var x = progressPercent * this.dom.seekBarProgress.offsetWidth - this.dom.seekBarIndicator.offsetWidth/2;
-    this.dom.seekBarIndicator.style.transform = 'translateX(' + x + 'px)';
+    if (!window.isNaN(x)){
+      this.dom.seekBarIndicator.style.transform = 'translateX(' + x + 'px)';
+    }
   },
   setTime: function(elem, seconds){
     var mins = Math.floor(seconds/60);

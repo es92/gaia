@@ -8,6 +8,12 @@ UIItemList.prototype = {
   empty: function(){
     Utils.empty(this.dom.list);
   },
+  hide: function(){
+    this.dom.list.classList.add('hidden');
+  },
+  show: function(){
+    this.dom.list.classList.remove('hidden');
+  },
   append: function(item){
     var div = item.createDiv();
     this.dom.list.appendChild(div);

@@ -35,6 +35,12 @@
   height: 2em;
 }
 
+.itemList > * > .primaryButton.full {
+  bottom: .25em;
+  height: auto;
+  width: 3em;
+}
+
 .itemList > * > .toggleMore {
   position: absolute;
   right: 1em;

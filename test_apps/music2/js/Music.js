@@ -26,7 +26,7 @@ var Music = function() {
 
   //this.ui.viewVisibility.showCurrentMusicPage();
   //this.ui.viewVisibility.toggleCurrentMusicPageView();
-  //setTimeout(this.ui.viewVisibility.togglePlaylistDrawer.bind(this.ui.viewVisibility), 500);
+  //setTimeout(this.ui.viewVisibility.togglePlaylistDrawer.bind(this.ui.viewVisibility), 1000);
 }
 
 Music.prototype = {
