@@ -16,8 +16,18 @@ PlaylistView.prototype = {
   setPlaylist: function(playlist){
     this.playlist.empty();
 
-    if (playlist === null || playlist === undefined)
+    if (playlist === null || playlist === undefined){
+      var text = Utils.classDiv('text');
+      text.innerHTML = 'no playlist selected:<br>select songs or create a playlist';
+      this.dom.list.appendChild(text);
       return;
+    }
+
+    if (playlist.list.length === 0){
+      var text = Utils.classDiv('text');
+      text.innerHTML = 'playlist empty';
+      this.dom.list.appendChild(text);
+    }
 
     for (var i = 0; i < playlist.list.length; i++){
       var source = playlist.list[i];

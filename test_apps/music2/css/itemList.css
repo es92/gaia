@@ -64,4 +64,6 @@
 .itemList > * > .more {
   position: relative;
   width: 100%;
+  padding-left: 2.5em;
+  -moz-box-sizing: border-box; 
 }

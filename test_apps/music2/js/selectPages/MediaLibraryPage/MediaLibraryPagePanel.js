@@ -1,20 +1,15 @@
 
-var MediaLibraryPagePanel = function(title, subCategories, select, config){
+var MediaLibraryPagePanel = function(title, select, config){
   this.title = title;
   if (this.title === null || this.title === undefined)
     this.title = 'Music Library';
-  this.subCategories = subCategories || [
-    'Genres',
-    'Artists',
-    'Albums'
-  ];
   this.query = config || {
     'genre': '*',
     'artist': '*',
     'album': '*',
     'song': '*'
   };
-  this.select = select;
+  this.select = select || null;
 }
 
 MediaLibraryPagePanel.prototype = {
@@ -28,9 +23,7 @@ MediaLibraryPagePanel.prototype = {
     var select = subCategory;
     var title = subCategory;
 
-    var subCategories = [];
-
-    return new MediaLibraryPagePanel(title, subCategories, select, config);
+    return new MediaLibraryPagePanel(title, select, config);
   },
   getItemPanel: function(item, selectOverride){
 
@@ -44,23 +37,18 @@ MediaLibraryPagePanel.prototype = {
     var select = null;
     var title = item;
 
-    var subCategories = [];
-
     if (switchSelect === 'Genres'){
       config.genre = item;
-      subCategories.push('Artists', 'Albums');
     }
     else if (switchSelect === 'Artists'){
       config.artist = item;
-      subCategories.push('Albums');
     }
     else if (switchSelect === 'Albums'){
       config.album = item;
-      subCategories.push('Artists');
     }
     else {
       config.song = item;
     }
-    return new MediaLibraryPagePanel(title, subCategories, select, config);
+    return new MediaLibraryPagePanel(title, select, config);
   }
 }

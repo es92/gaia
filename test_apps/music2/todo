@@ -14,11 +14,10 @@ core
 
   ===================== bugs =====================
 
-*    style moreMenu as a drawer
+    manually move seekbar
     default album cover
-*    fix part of item that turns blue
     allow delete playlist item from playlist drawer
-    optimize playlist handling
+    more performant playlist manipulation
 
   ===================== enhancements =====================
 
@@ -34,13 +33,15 @@ music library
 =====================
   ==================== features =====================
 
+*   song page
+      favoriting
+
     search feature
     proper sorting
 
   ===================== bugs =====================
 
     default album cover
-    fix part of item that turns blue
 
   ===================== enhancements =====================
 
@@ -48,9 +49,6 @@ music library
     loading indicator
 
   ===================== maintainability =====================
-
-    try and remove subcategories as a thing to track
-    refactor MediaLibraryPagePanelManager
 
 =====================
 internet radio

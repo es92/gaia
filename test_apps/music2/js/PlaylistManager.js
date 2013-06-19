@@ -64,6 +64,9 @@ PlaylistManager.prototype = {
     for (var i = 0; i < sources.length; i++){
       playlist.appendAudioSource(sources[i]);
     }
+    if (sources.length > 0){
+      this.ui.controls.enable();
+    }
     this.ui.playlist.setPlaylist(playlist);
     this.ui.playlists.setCurrentPlaylist(this.currentPlaylistId, 'stop');
     this.play();
@@ -208,7 +211,7 @@ PlaylistManager.prototype = {
     var currentPlaylist = this.playlists[this.currentPlaylistId];
     this.ui.playlist.setPlaylist(currentPlaylist);
     this.ui.playlists.setCurrentPlaylist(playlistId);
-    if (playlistId === null){
+    if (playlistId === null || currentPlaylist.list.length === 0){
       this.ui.controls.disable();
     }
     else {

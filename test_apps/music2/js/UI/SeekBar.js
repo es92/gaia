@@ -46,9 +46,13 @@ SeekBar.prototype = {
   setTime: function(elem, seconds){
     var mins = Math.floor(seconds/60);
     var secs = seconds % 60;
-    if (mins < 10)
+    if (window.isNaN(mins))
+      mins = '--';
+    else if (mins < 10)
       mins = '0' + mins;
-    if (secs < 10)
+    if (window.isNaN(secs))
+      secs = '--';
+    else if (secs < 10)
       secs = '0' + secs;
     elem.innerHTML = mins + ':' + secs;
   }
