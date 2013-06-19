@@ -61,6 +61,7 @@
   bottom: 4.5em;
   left: 0;
   right: 0;
+  overflow-y: scroll;
 }
 
 

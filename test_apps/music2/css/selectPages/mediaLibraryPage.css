@@ -3,10 +3,6 @@
 
 }
 
-#mediaLibraryPage .gotoPanelButton {
-  background-image: url('../../style/headers/images/icons/back-rtl.png');
-  background-repeat: no-repeat;
-}
 
 #mediaLibraryPagePanel {
   position: absolute;
@@ -17,14 +13,13 @@
 }
 
 #mediaLibraryPagePanelTitle {
-  margin-left: .25em;
   padding-right: 4em;
+  padding-left: 2em;
   border-bottom: 1px solid #aac;
 }
 
 #mediaLibraryPagePanelTitleText {
   min-height: 2em;
-  padding-left: 1.5em;
   padding-top: 1em;
   padding-bottom: 1em;
 }
@@ -39,6 +34,7 @@
 #mediaLibraryPagePanelTitleText > *:first-child {
   font-size: 1.75em;
   padding-left: 0;
+  color: white;
 }
 
 #mediaLibraryPagePanelTitleText.songTitle {
@@ -52,119 +48,6 @@
 #mediaLibraryPagePanelTitleText.songTitle > *:first-child {
   font-size: 1.25em;
 }
-
-#mediaLibraryPagePanelList {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 4em;
-  bottom: 0;
-  overflow-y: auto;
-}
-
-#mediaLibraryPagePanelSubCategories {
-  font-size: 1.5em;
-  padding-left: .75em;
-  padding-left: 2.5em;
-
-}
-
-#mediaLibraryPagePanelSubCategories > * {
-  padding-top: .5em;
-  padding-bottom: .5em;
-  padding-right: 1.5em;
-
-  background-position: right .75em center;
-  background-size: auto 60%;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-#mediaLibraryPagePanelItems {
-  border-top: 1px solid #aac;
-  margin-left: .5em;
-}
-
-#mediaLibraryPagePanelItems > * {
-  padding-top: .5em;
-  padding-bottom: .5em;
-  padding-right: 3em;
-  padding-left: 2em;
-  position: relative;
-
-  background-position: right .75em center;
-  background-size: auto 60%;
-}
-
-#mediaLibraryPagePanelItems > .hasButtons > .fields {
-  min-height: 4em;
-}
-
-
-#mediaLibraryPagePanelItems > * > .fields > * {
-  padding-left: .5em;
-}
-
-#mediaLibraryPagePanelItems > * > .fields > *:first-child {
-  font-size: 1.25em;
-  padding-left: 0;
-}
-
-#mediaLibraryPagePanelItems > * > .add {
-  position: absolute;
-  right: .75em;
-  top: .25em;
-  width: 2em;
-  height: 2em;
-  background-image: url('../../style/add.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 50% auto;
-}
-
-#mediaLibraryPagePanelItems > * > .more {
-  position: absolute;
-  right: .75em;
-  top: 2.5em;
-  width: 2em;
-  height: 2em;
-  background-image: url('../../style/down.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 50% auto;
-}
-
-#mediaLibraryPagePanelItems > * > .more.unhide {
-  background-image: url('../../style/up.png');
-}
-
-#mediaLibraryPagePanelItems > * > .moreMenu {
-  width: 100%;
-}
-
-#mediaLibraryPagePanelItems > * > .moreMenu > .link {
-  background-position: right .75em center;
-  font-size: 1.25em;
-  padding: .25em;
-  padding-right: 1.5em;
-  background-size: auto 60%;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-#mediaLibraryPagePanelItems > * > .track {
-  position: absolute;
-  left: 0;
-  top: .5em;
-  font-size: 1em;
-  padding-left: 0;
-}
-
-
 
 #mediaLibraryPagePanelPop {
   position: absolute;
@@ -189,3 +72,109 @@
   height: 4em;
   width: 4em;
 }
+
+#mediaLibraryPagePanelList {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 4em;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+#mediaLibraryPagePanelSubCategories {
+  font-size: 1.5em;
+  padding-left: 1em;
+
+}
+
+#mediaLibraryPagePanelSubCategories > * {
+  padding-top: .5em;
+  padding-bottom: .5em;
+  padding-right: 1.5em;
+  padding-left: 1em;
+  color: white;
+
+  background-image: url('../../style/headers/images/icons/back-rtl.png');
+  background-repeat: no-repeat;
+  background-position: right .75em center;
+  background-size: auto 60%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*======================================*/
+
+#mediaLibraryPagePanelItems .add {
+  width: 100%;
+  height: 100%;
+  background-image: url('../../style/add.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% auto;
+}
+
+#mediaLibraryPagePanelItems {
+  border-top: 1px solid #aac;
+}
+
+#mediaLibraryPagePanelItems .fields {
+  min-height: 4em;
+  padding-top: .75em;
+  padding-bottom: .75em;
+}
+
+#mediaLibraryPagePanelItems .fields.canGoMin {
+  min-height: 0;
+}
+
+#mediaLibraryPagePanelItems .fields > * {
+  padding-left: .5em;
+  color: #aac;
+}
+
+#mediaLibraryPagePanelItems .fields > *:first-child {
+  font-size: 1.25em;
+  padding-left: 0;
+  color: white;
+}
+
+#mediaLibraryPagePanelItems .gotoPanelButton {
+  background-image: url('../../style/headers/images/icons/back-rtl.png');
+  background-repeat: no-repeat;
+  background-position: right 1em center;
+  background-size: 2em auto;
+  padding-right: 3.5em;
+}
+
+#mediaLibraryPagePanelItems .gotoPanelButton .fields {
+  min-height: 0em;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+
+#mediaLibraryPagePanelItems .link {
+  background-position: right .75em center;
+  font-size: 1.25em;
+  padding: .25em;
+  padding-right: 1.5em;
+  background-size: auto 60%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#mediaLibraryPagePanelItems .track {
+  position: absolute;
+  left: 0;
+  top: .5em;
+  font-size: 1em;
+  padding-left: 0;
+}
+

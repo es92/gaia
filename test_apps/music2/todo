@@ -51,7 +51,6 @@ music library
 
     try and remove subcategories as a thing to track
     refactor MediaLibraryPagePanelManager
-    refactor selectMusicPage to use UIItemList
 
 =====================
 internet radio

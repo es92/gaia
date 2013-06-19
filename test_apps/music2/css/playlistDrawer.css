@@ -64,6 +64,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  overflow-y: scroll;
 }
 
 #playlistDrawerPlaylists .noicon {
@@ -84,6 +85,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  padding-top: .75em;
+  padding-bottom: .75em;
+  min-height: 2em;
 }
 
 #playlistDrawerPlaylists .gotoPlaylistButton {
@@ -103,6 +108,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  overflow-y: scroll;
 }
 
 /*=========================*/

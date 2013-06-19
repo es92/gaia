@@ -1,13 +1,22 @@
+.playlistView .info {
+  padding-top: .75em;
+  padding-bottom: .75em;
+  min-height: 3.5em;
+}
+
 .playlistView .info > * {
   padding-left: .5em;
+  color: #aac;
 }
 
 .playlistView .info > *:first-child {
+  color: white;
   font-size: 1.25em;
   padding-left: 0em;
 }
 
 .playlistView .tracknum {
+  color: #aac;
   text-align: center;
   padding-top: .75em;
 }

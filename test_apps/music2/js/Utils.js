@@ -60,7 +60,9 @@ var Utils = {
   },
   classDiv: function(className){
     var classDiv = document.createElement('div');
-    classDiv.classList.add(className);
+    for (var i = 0; i < arguments.length; i++){
+      classDiv.classList.add(arguments[i]);
+    }
     return classDiv;
   }
 }

@@ -63,6 +63,10 @@ UIItem.prototype = {
     }
     div.appendChild(primaryButton);
 
+    if (this.primaryButton === null){
+      content.classList.add('noButtons');
+    }
+
     this.dom.div = div;
     this.dom.content = content;
     this.dom.more = more;

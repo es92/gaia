@@ -17,6 +17,8 @@ var MediaLibraryPagePanelManager = function(musicDB, pageBridge){
   this.dom.subCategories = this.dom.mediaLibraryPagePanelSubCategories;
   this.dom.items = this.dom.mediaLibraryPagePanelItems;
 
+  this.dom.itemList = new UIItemList(this.dom.items);
+
   Utils.onButtonTap(this.dom.mediaLibraryPagePanelPop, this.popPanel.bind(this));
   Utils.onButtonTap(this.dom.mediaLibraryPagePanelAdd, this.add.bind(this));
   Utils.onButtonTap(this.dom.titleText, this.playAll.bind(this));
@@ -215,58 +217,54 @@ MediaLibraryPagePanelManager.prototype = {
     }.bind(this)
 
     var renderItem = function(item){
-        var div = document.createElement('div');
-        var fieldsDiv = document.createElement('div');
-        fieldsDiv.classList.add('fields');
-        for (var j = 0; j < fields.length; j++){
-          if (!panel.select){
-            if (genreKnown && fields[j] === 'genre')
-              continue;
-            if (artistKnown && fields[j] === 'artist')
-              continue;
-            if (albumKnown && fields[j] === 'album')
-              continue;
-          }
-          var subdiv = document.createElement('div');
-
-          subdiv.innerHTML = item.metadata[fields[j]];
-          fieldsDiv.appendChild(subdiv);
+      var content = document.createElement('div');
+      content.classList.add('fields');
+      for (var j = 0; j < fields.length; j++){
+        if (!panel.select){
+          if (genreKnown && fields[j] === 'genre')
+            continue;
+          if (artistKnown && fields[j] === 'artist')
+            continue;
+          if (albumKnown && fields[j] === 'album')
+            continue;
         }
-        div.appendChild(fieldsDiv);
-        if (!panel.select && (artistKnown || albumKnown) && item.metadata.tracknum >= 0){
-          var subdiv = document.createElement('div');
-          subdiv.classList.add('track');
-          subdiv.innerHTML = item.metadata.tracknum;
-          div.appendChild(subdiv);
-        }
-        div.item = item.metadata[fields[0]];
-        if (panel.select){
-          this.setupOnClickItem(panel, div);
-          div.classList.add('gotoPanelButton');
-        }
-        else {
+        var fieldDiv = document.createElement('div');
+        fieldDiv.innerHTML = item.metadata[fields[j]];
+        content.appendChild(fieldDiv);
+      }
 
-          this.setupOnSongPlayClick(fieldsDiv, item);
+      var icon = null;
+      if (!panel.select && (artistKnown || albumKnown) && item.metadata.tracknum >= 0){
+        var icon = document.createElement('div');
+        icon.classList.add('track');
+        icon.innerHTML = item.metadata.tracknum;
+      }
 
-          var addButton = document.createElement('div');
-          addButton.classList.add('add');
-          div.appendChild(addButton)
-          this.setupOnSongAddClick(addButton, item);
+      if (panel.select){
+        var gotoPanelButton = Utils.classDiv('gotoPanelButton');
+        gotoPanelButton.item = item.metadata[fields[0]];
+        this.setupOnClickItem(panel, gotoPanelButton);
+        gotoPanelButton.appendChild(content);
 
-          var moreMenu = document.createElement('div');
-          moreMenu.classList.add('moreMenu');
-          moreMenu.classList.add('hidden');
-          div.appendChild(moreMenu);
+        var item = new UIItem(null, gotoPanelButton, null, null);
+        this.dom.itemList.append(item);
+      }
+      else {
+        content.item = item.metadata[fields[0]];
+        this.setupOnSongPlayClick(content, item);
 
+        var add = Utils.classDiv('add');
+        this.setupOnSongAddClick(add, item);
+
+        var more = null;
+        if (!artistKnown || !albumKnown){
+          more = document.createElement('div');
           function addMoreMenuLink(text){
-            var link = document.createElement('div');
-            link.classList.add('gotoPanelButton');
-            link.classList.add('link');
+            var link = Utils.classDiv('gotoPanelButton', 'link');
             link.innerHTML = text;
-            moreMenu.appendChild(link);
+            more.appendChild(link);
             return link;
           }
-
           if (!artistKnown){
             var link = addMoreMenuLink('see artist ' + item.metadata.artist);
             this.setupOnClickLink(panel, link, item.metadata.artist, 'Artists');
@@ -276,16 +274,15 @@ MediaLibraryPagePanelManager.prototype = {
             var link = addMoreMenuLink('see album ' + item.metadata.album);
             this.setupOnClickLink(panel, link, item.metadata.album, 'Albums');
           }
-
-          if (moreMenu.childNodes.length > 0){
-            var moreButton = document.createElement('div');
-            moreButton.classList.add('more');
-            div.appendChild(moreButton);
-            this.setupOnSongMoreClick(moreButton, moreMenu);
-            div.classList.add('hasButtons');
-          }
         }
-        this.dom.items.appendChild(div);
+        else {
+          content.classList.add('canGoMin');
+        }
+
+        var item = new UIItem(icon, content, more, add);
+        this.dom.itemList.append(item);
+
+      }
     }.bind(this);
 
     function strCmp(a, b){
@@ -307,7 +304,8 @@ MediaLibraryPagePanelManager.prototype = {
       }
     }
 
-    Utils.empty(this.dom.items);
+    this.dom.itemList.empty();
+    //Utils.empty(this.dom.items);
     if (panel.select === 'Genres'){
       fields.push('genre');
       this.musicDB.getGenres(setItems);

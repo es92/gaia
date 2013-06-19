@@ -1,6 +1,8 @@
 
 var MediaLibraryPagePanel = function(title, subCategories, select, config){
-  this.title = title || 'Music Library';
+  this.title = title;
+  if (this.title === null || this.title === undefined)
+    this.title = 'Music Library';
   this.subCategories = subCategories || [
     'Genres',
     'Artists',

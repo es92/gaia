@@ -1,9 +1,8 @@
 .itemList {
-  overflow-y: scroll;
+
 }
 
 .itemList > * {
-  border-bottom: 1px solid #445; 
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -12,9 +11,14 @@
 .itemList > * > .content {
   padding-left: 2em;
   padding-right: 3.5em;
-  padding-top: .75em;
-  padding-bottom: .75em;
-  min-height: 4em;
+}
+
+.itemList > * > .content.noButtons {
+  padding-right: 0em;
+}
+
+.itemList > * > .content.noIcon {
+  padding-left: 0em;
 }
 
 .itemList > * > .icon {
@@ -29,24 +33,24 @@
 
 .itemList > * > .primaryButton {
   position: absolute;
-  right: 1em;
-  top: .25em;
-  width: 2em;
-  height: 2em;
+  right: .75em;
+  top: 0em;
+  width: 3em;
+  height: 3em;
 }
 
 .itemList > * > .primaryButton.full {
-  bottom: .25em;
+  bottom: 0em;
   height: auto;
   width: 3em;
 }
 
 .itemList > * > .toggleMore {
   position: absolute;
-  right: 1em;
-  top: 2.5em;
-  width: 2em;
-  height: 2em;
+  right: .75em;
+  top: 3em;
+  width: 3em;
+  height: 3em;
   background-image: url('../style/down.png');
   background-repeat: no-repeat;
   background-position: center center;
@@ -59,7 +63,5 @@
 
 .itemList > * > .more {
   position: relative;
-  height: 1.5em;
   width: 100%;
-  padding-bottom: .75em;
 }
