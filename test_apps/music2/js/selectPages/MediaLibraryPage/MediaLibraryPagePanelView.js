@@ -265,6 +265,11 @@ MediaLibraryPagePanelView.prototype = {
 
     }
   },
+  setupOnTapOverridedSubcategory: function(div, item, override){
+    Utils.onButtonTap(div, function(){
+      this.gotoItem(item, override);
+    }.bind(this));
+  },
   rerenderCategories: function(genres, artists, albums){
     var numArtists = Utils.size(artists);
     var numAlbums = Utils.size(albums);
@@ -274,9 +279,7 @@ MediaLibraryPagePanelView.prototype = {
       if (numAlbums > 1){
         for (var album in albums){
           var subCategory = document.createElement('div');
-          Utils.onButtonTap(subCategory, function(){
-            this.gotoItem(album, 'Albums');
-          }.bind(this));
+          this.setupOnTapOverridedSubcategory(subCategory, album, 'Albums');
           subCategory.classList.add('gotoPanelButton');
           subCategory.innerHTML = album;
           subCategory.item = album;
@@ -294,9 +297,7 @@ MediaLibraryPagePanelView.prototype = {
       if (numArtists > 1){
         for (var artist in artists){
           var subCategory = document.createElement('div');
-          Utils.onButtonTap(subCategory, function(){
-            this.gotoItem(artist, 'Artists');
-          }.bind(this));
+          this.setupOnTapOverridedSubcategory(subCategory, artist, 'Artists');
           subCategory.classList.add('gotoPanelButton');
           subCategory.innerHTML = artist;
           subCategory.item = artist;
