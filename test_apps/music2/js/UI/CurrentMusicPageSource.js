@@ -10,7 +10,8 @@ var CurrentMusicPageSource = function(){
 CurrentMusicPageSource.prototype = {
   setInfo: function(source){
     Utils.empty(this.dom.currentSourceInfo);
-    if (source === null)
+    this.dom.currentSourceImg.src = '';
+    if (source === null || source === undefined)
       return;
     source.setInfo(this.dom.currentSourceInfo);
     source.setAlbumArt(this.dom.currentSourceImg);

@@ -147,6 +147,7 @@ PlaylistManager.prototype = {
     if (playlist.list.length === 0){
       this.ui.controls.disable();
     }
+    this.ui.source.setInfo(playlist.getCurrentSource());
     this.ui.playlist.setPlaylist(playlist);
     this.savePlaylists();
   },
