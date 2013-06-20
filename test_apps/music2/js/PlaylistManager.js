@@ -129,7 +129,6 @@ PlaylistManager.prototype = {
     this.ui.playlist.setPlaylist(playlist);
   },
   currentEnded: function(){
-    this.ui.controls.setPaused();
     this.playNext();
   },
   deleteItemFromPlaylist: function(source, playlist){

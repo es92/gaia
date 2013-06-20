@@ -61,7 +61,7 @@ UIItemDrag.prototype = {
       this.dom.list.insertBefore(this.dom.div, this.state.currentDropElement);
     }
     else if (this.state.currentDropDir === 'below'){
-      this.dom.list.insertAfter(this.dom.div, this.state.currentDropElement);
+      this.dom.list.insertBefore(this.dom.div, this.state.currentDropElement.nextElementSibling);
     }
     else {
       console.warn('this.state.currentDropDir in bad state: ' + this.state.currentDropDir);
@@ -110,12 +110,12 @@ UIItemDrag.prototype = {
     var center = nextRect.top + nextRect.height/2;
 
     if (y < center){
-      currentDropDir = 'above'
+      this.state.currentDropDir = 'above'
       next.style.borderTop = '1px solid #00c9f1';
       next.style.borderBottom = 'none';
     }
     else {
-      currentDropDir = 'below'
+      this.state.currentDropDir = 'below'
       next.style.borderBottom = '1px solid #00c9f1';
       next.style.borderTop = 'none';
     }

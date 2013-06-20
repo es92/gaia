@@ -54,10 +54,13 @@ Playlist.prototype = {
         this.currentIndex += 1;
       this.list.splice(relativeSourceIndex, 0, source);
     }
-    if (relativeDir === 'below'){
+    else if (relativeDir === 'below'){
       if (this.currentIndex > relativeSourceIndex)
         this.currentIndex += 1;
       this.list.splice(relativeSourceIndex+1, 0, source);
+    }
+    else {
+      console.warn('relativeDir in bad state: ' + relativeDir);
     }
   },
   setCurrentSource: function(source){
