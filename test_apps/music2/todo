@@ -6,17 +6,17 @@ core
 =====================
   ==================== features =====================
 
-    mini playing indicator in select screen
+*    mini playing indicator in select screen
 
     add titles to headers
-    add favoriting to more menu
 
   ===================== bugs =====================
 
     manually move seekbar
-    allow delete playlist item from playlist drawer
+    change appearance of seekbar when controls disabled
+*    allow delete playlist item from playlist drawer
+*    allow move playlist item in playlist drawer
     more performant playlist manipulation
-
     show tracknumber if doesn't match playlist number
 
   ===================== enhancements =====================
@@ -39,6 +39,8 @@ music library
 
   ===================== bugs =====================
 
+*    more performant queries
+
   ===================== enhancements =====================
 
     better first load indicator
@@ -51,8 +53,22 @@ internet radio
 =====================
   ==================== features =====================
     
-    icecast search
+*    icecast search
+    custom urls
 
+  ===================== bugs =====================
+
+  ===================== enhancements =====================
+
+  ===================== maintainability =====================
+
+=====================
+FM Radio
+=====================
+  ==================== features =====================
+    
+    implement
+    
   ===================== bugs =====================
 
   ===================== enhancements =====================
