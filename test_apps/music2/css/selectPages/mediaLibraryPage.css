@@ -12,16 +12,23 @@
   bottom: 0;
 }
 
+/*======================================*/
+
 #mediaLibraryPagePanelTitle {
-  padding-right: 4em;
-  padding-left: 2em;
   border-bottom: 1px solid #aac;
+  position: relative;
 }
 
 #mediaLibraryPagePanelTitleText {
   min-height: 2em;
+  margin-left: 2em;
   padding-top: 1em;
   padding-bottom: 1em;
+}
+
+#mediaLibraryPagePanelTitleText.right {
+  margin-left: 8em;
+  height: 2.5em;
 }
 
 #mediaLibraryPagePanelTitleText > * {
@@ -49,29 +56,69 @@
   font-size: 1.25em;
 }
 
+/*======================================*/
+
 #mediaLibraryPagePanelPop {
   position: absolute;
   left: 0;
   top: 0;
+  bottom: 0;
   background-image: url('../../style/headers/images/icons/back.png');
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: auto 50%;
-  height: 4em;
+  background-size: 75% auto;
   width: 2em;
 }
 
-#mediaLibraryPagePanelAdd {
+/*======================================*/
+
+#mediaLibraryPagePanelAlbum {
   position: absolute;
-  right: 0;
   top: 0;
-  background-image: url('../../style/headers/images/icons/add.png');
+  left: 2em;
+  height: 5em;
+  width: 5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#mediaLibraryPagePanelAlbum[src=''] {
+  display: none;
+}
+
+#mediaLibraryPagePanelControls {
+  padding-left: 2em;
+  -moz-box-sizing: border-box;
+  height: 2.5em;
+}
+
+#mediaLibraryPagePanelControls.right {
+  padding-left: 7em;
+}
+
+#mediaLibraryPagePanelControlPlay {
+  width: 50%;
+  height: 100%;
+  float: left;
+
+  background-image: url('../../style/images/IconAction_Media_Play_30x30.png');
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: auto 50%;
-  height: 4em;
-  width: 4em;
+  background-size: auto 70%;
 }
+
+#mediaLibraryPagePanelControlAdd {
+  width: 50%;
+  height: 100%;
+  float: left;
+
+  background-image: url('../../style/add.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 70%;
+}
+
+/*======================================*/
 
 #mediaLibraryPagePanelList {
   position: absolute;
@@ -121,13 +168,8 @@
 }
 
 #mediaLibraryPagePanelItems .fields {
-  min-height: 4em;
   padding-top: .75em;
   padding-bottom: .75em;
-}
-
-#mediaLibraryPagePanelItems .fields.canGoMin {
-  min-height: 0;
 }
 
 #mediaLibraryPagePanelItems .fields > * {
@@ -162,19 +204,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
-}
-
-#mediaLibraryPagePanelItems .link {
-  background-position: right .75em center;
-  font-size: 1.25em;
-  padding: .25em;
-  padding-right: 1.5em;
-  background-size: auto 60%;
-  color: white;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 #mediaLibraryPagePanelItems .track {

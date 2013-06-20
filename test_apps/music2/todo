@@ -15,7 +15,6 @@ core
   ===================== bugs =====================
 
     manually move seekbar
-    default album cover
     allow delete playlist item from playlist drawer
     more performant playlist manipulation
 
@@ -33,15 +32,12 @@ music library
 =====================
   ==================== features =====================
 
-*   song page
-      favoriting
+    favoriting
 
     search feature
     proper sorting
 
   ===================== bugs =====================
-
-    default album cover
 
   ===================== enhancements =====================
 

@@ -153,6 +153,11 @@ MusicDB.prototype = {
       setTimeout(function(){ this.getAlbumArtAsURL(song, done); }.bind(this), 100);
       return;
     }
-    getThumbnailURL(song, done);
+    getThumbnailURL(song, function(url){
+      if (!url){
+        url = 'style/images/AlbumArt10_small.png';
+      }
+      done(url); 
+    });
   }
 }

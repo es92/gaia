@@ -18,7 +18,7 @@ PlaylistView.prototype = {
 
     if (playlist === null || playlist === undefined){
       var text = Utils.classDiv('text');
-      text.innerHTML = 'no playlist selected:<br>select songs or create a playlist';
+      text.innerHTML = 'no playlist selected:<br>select songs or select a playlist';
       this.dom.list.appendChild(text);
       return;
     }

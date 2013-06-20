@@ -4,13 +4,15 @@ var MediaLibraryPagePanelManager = function(musicDB, pageBridge){
   Utils.loadDomIds(this, [
       "mediaLibraryPagePanelTitleText",
       "mediaLibraryPagePanelPop",
-      "mediaLibraryPagePanelAdd"
+      "mediaLibraryPagePanelControlPlay",
+      "mediaLibraryPagePanelControlAdd"
   ]);
   this.dom.titleText = this.dom.mediaLibraryPagePanelTitleText;
 
   Utils.onButtonTap(this.dom.mediaLibraryPagePanelPop, this.popPanel.bind(this));
-  Utils.onButtonTap(this.dom.mediaLibraryPagePanelAdd, this.add.bind(this));
-  Utils.onButtonTap(this.dom.titleText, this.playAll.bind(this));
+
+  Utils.onButtonTap(this.dom.mediaLibraryPagePanelControlPlay, this.playAll.bind(this));
+  Utils.onButtonTap(this.dom.mediaLibraryPagePanelControlAdd, this.add.bind(this));
 
   this.panelView = null;
   this.currentPanel = null;
@@ -77,10 +79,4 @@ MediaLibraryPagePanelManager.prototype = {
     var source = new FileAudioSource(this.musicDB, song);
     this.pageBridge.enqueueIntoCurrentPlaylist(song.metadata.title, source);
   },
-  //setupOnClickLink: function(panel, link, item, type){
-  //  Utils.onButtonTap(link, function(){
-  //    var newPanel = panel.getItemPanel(item, type);
-  //    this.pushPanel(newPanel);
-  //  }.bind(this));
-  //},
 }

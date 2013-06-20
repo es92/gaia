@@ -9,7 +9,9 @@ var MediaLibraryPagePanelView = function(musicDB, panel){
       "mediaLibraryPagePanelSubCategories",
       "mediaLibraryPagePanelItems",
       "mediaLibraryPagePanelPop",
-      "mediaLibraryPagePanelAdd"
+
+      "mediaLibraryPagePanelAlbum",
+      "mediaLibraryPagePanelControls"
   ]);
 
   this.dom.panel = this.dom.mediaLibraryPagePanel;
@@ -17,6 +19,12 @@ var MediaLibraryPagePanelView = function(musicDB, panel){
   this.dom.titleText = this.dom.mediaLibraryPagePanelTitleText;
   this.dom.subCategories = this.dom.mediaLibraryPagePanelSubCategories;
   this.dom.items = this.dom.mediaLibraryPagePanelItems;
+
+
+  this.dom.albumCover = this.dom.mediaLibraryPagePanelAlbum;
+  this.dom.controls = this.dom.mediaLibraryPagePanelControls;
+  this.dom.controlPlay = this.dom.mediaLibraryPagePanelControlPlay;
+  this.dom.controlAdd = this.dom.mediaLibraryPagePanelControlAdd;
 
   this.dom.itemList = new UIItemList(this.dom.items);
 
@@ -52,6 +60,11 @@ MediaLibraryPagePanelView.prototype = {
 
     this.fields = [];
 
+    if ((this.panel.select === undefined || this.panel.select === null) && 
+        (this.genreKnown || this.artistKnown || this.albumKnown || this.songKnown)
+    ){
+      this.setTitleToControlView(null, this.albumKnown);
+    }
 
     this.dom.itemList.empty();
     if (this.panel.select === 'Genres'){
@@ -68,6 +81,9 @@ MediaLibraryPagePanelView.prototype = {
         this.panel.query.genre, 
         this.panel.query.artist, 
         this.setItems.bind(this));
+    }
+    else if (this.songKnown){
+      this.musicDB.getSong(this.panel.query.song, this.setSongPage.bind(this));
     }
     else {
       this.fields.push('title', 'artist', 'album');
@@ -88,16 +104,11 @@ MediaLibraryPagePanelView.prototype = {
 
     this.dom.mediaLibraryPagePanelList.style.top = '4em';
 
-    if ((this.panel.select !== undefined && this.panel.select !== null) || 
-        !(this.genreKnown || this.artistKnown || this.albumKnown || this.songKnown)
-    ){
-      this.dom.titleText.disabled = true;
-      this.dom.mediaLibraryPagePanelAdd.classList.add('hidden');
-    }
-    else {
-      this.dom.titleText.disabled = false;
-      this.dom.mediaLibraryPagePanelAdd.classList.remove('hidden');
-    }
+    this.dom.controls.classList.add('hidden');
+    this.dom.controls.classList.remove('right');
+    this.dom.albumCover.classList.add('hidden');
+    this.dom.titleText.classList.remove('right');
+
   },
   addSubtitle: function(text){
     var subtitle = document.createElement('div');
@@ -143,8 +154,19 @@ MediaLibraryPagePanelView.prototype = {
       albums[item.metadata.album] = '';
     }
     this.rerenderCategories(genres, artists, albums);
-    this.artistKnown |= Utils.size(artists) === 1;
-    this.albumKnown |= Utils.size(albums) === 1;
+    if (Utils.size(artists) === 1){
+      this.artistKnown = true;
+    }
+    if (Utils.size(albums) === 1){
+      this.albumKnown = true;
+    }
+
+    if ((this.panel.select === undefined || this.panel.select === null) && 
+        (this.genreKnown || this.artistKnown || this.albumKnown || this.songKnown)
+    ){
+      this.setTitleToControlView(items[0], this.albumKnown);
+    }
+
 
     var titleHeight = this.dom.title.clientHeight;
     if (titleHeight !== 0)
@@ -227,7 +249,8 @@ MediaLibraryPagePanelView.prototype = {
     }
     else {
       Utils.onButtonTap(content, function(){
-        this.playSong(item);
+        this.gotoItem(item.metadata.title);
+        //this.playSong(item);
       }.bind(this));
 
       var add = Utils.classDiv('add');
@@ -236,27 +259,6 @@ MediaLibraryPagePanelView.prototype = {
       }.bind(this));
 
       var more = null;
-      if (!this.artistKnown || !this.albumKnown){
-        more = document.createElement('div');
-        function addMoreMenuLink(text){
-          var link = Utils.classDiv('gotoPanelButton', 'link');
-          link.innerHTML = text;
-          more.appendChild(link);
-          return link;
-        }
-        if (!this.artistKnown){
-          var link = addMoreMenuLink('see artist ' + item.metadata.artist);
-          //this.manager.setupOnClickLink(this.panel, link, item.metadata.artist, 'Artists');
-        }
-
-        if (!this.albumKnown){
-          var link = addMoreMenuLink('see album ' + item.metadata.album);
-          //this.manager.setupOnClickLink(this.panel, link, item.metadata.album, 'Albums');
-        }
-      }
-      else {
-        content.classList.add('canGoMin');
-      }
 
       var uiItem = new UIItem(icon, content, more, add);
       this.dom.itemList.append(uiItem);
@@ -318,5 +320,49 @@ MediaLibraryPagePanelView.prototype = {
       }
       return false;
     }
+  },
+  setSongPage: function(song){
+
+    this.songs = [ song ];
+
+    this.setTitleToControlView(song, true);
+
+
+
+    if (!this.artistKnown){
+      this.addLink('see artist ' + song.metadata.artist, 'Artists', song.metadata.artist);
+    }
+
+    if (!this.albumKnown){
+      this.addLink('see album ' + song.metadata.album, 'Albums', song.metadata.album);
+    }
+  },
+  addLink: function(description, type, target){
+    var link = Utils.classDiv('gotoPanelButton');
+    var text = Utils.classDiv('fields');
+    text.innerHTML = description;
+    link.appendChild(text);
+    var item = new UIItem(null, link, null, null);
+    this.dom.itemList.append(item);
+    Utils.onButtonTap(link, function(){
+      this.gotoItem(target, type);
+    }.bind(this));
+  },
+  setTitleToControlView: function(song, albumKnown){
+    this.dom.controls.classList.remove('hidden');
+    if (albumKnown){
+      this.dom.controls.classList.add('right');
+      this.dom.albumCover.classList.remove('hidden');
+      this.dom.titleText.classList.add('right');
+      this.dom.albumCover.src = '';
+      if (song !== null){
+        this.musicDB.getAlbumArtAsURL(song, function(url){
+          this.dom.albumCover.src = url;
+        }.bind(this));
+      }
+    }
+    var titleHeight = this.dom.title.clientHeight;
+    if (titleHeight !== 0)
+      this.dom.mediaLibraryPagePanelList.style.top = titleHeight + 'px'
   }
 }

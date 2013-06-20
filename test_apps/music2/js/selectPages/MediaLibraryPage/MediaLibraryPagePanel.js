@@ -39,12 +39,15 @@ MediaLibraryPagePanel.prototype = {
 
     if (switchSelect === 'Genres'){
       config.genre = item;
+      config.song = '*';
     }
     else if (switchSelect === 'Artists'){
       config.artist = item;
+      config.song = '*';
     }
     else if (switchSelect === 'Albums'){
       config.album = item;
+      config.song = '*';
     }
     else {
       config.song = item;
