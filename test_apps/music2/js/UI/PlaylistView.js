@@ -31,14 +31,32 @@ PlaylistView.prototype = {
 
     for (var i = 0; i < playlist.list.length; i++){
       var source = playlist.list[i];
-      var item = this.uiItemFromPlaylistItem(source, playlist, i+1);
+
+      var showAlbumArt = true;
+      if (i > 0){
+        var other = playlist.list[i-1];
+        if (other.parentPageName === source.parentPageName){
+          showAlbumArt = !source.hasSameAlbumArt(other);
+        }
+      }
+      var item = this.uiItemFromPlaylistItem(source, playlist, i+1, showAlbumArt);
       this.playlist.append(item);
     }
   },
-  uiItemFromPlaylistItem: function(source, playlist, index){
+  uiItemFromPlaylistItem: function(source, playlist, index, showAlbum){
     var content = document.createElement('div');
-    content.classList.add('info');
-    source.setInfo(content);
+    var contentText = Utils.classDiv('info');
+
+    if (showAlbum){
+      var contentAlbumCover = document.createElement('img');
+      contentAlbumCover.classList.add('albumCover');
+      source.setAlbumArt(contentAlbumCover);
+      content.appendChild(contentAlbumCover);
+      contentText.classList.add('right');
+    }
+
+    content.appendChild(contentText);
+    source.setInfo(contentText);
     this.setupOnSwitchEvent(content, source, playlist);
 
     var more = null;

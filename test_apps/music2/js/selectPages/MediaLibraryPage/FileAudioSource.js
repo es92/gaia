@@ -61,6 +61,9 @@ FileAudioSource.prototype = {
       img.src = url;
     });
   },
+  hasSameAlbumArt: function(other){
+    return this.song.metadata.album === other.song.metadata.album;
+  },
   getState: function(){
     return this.state;
   },

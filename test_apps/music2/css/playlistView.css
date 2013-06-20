@@ -6,10 +6,28 @@
   font-size: 1.5em;
 }
 
+.playlistView .content {
+  position: relative;
+}
+
+.playlistView .content .albumCover {
+  position: absolute;
+  left: 2em;
+  width: 5em;
+  top: calc(50% - 2.5em);
+  bottom: 0;
+  moz-box-sizing: border-box;
+}
+
 .playlistView .info {
   padding-top: .75em;
   padding-bottom: .75em;
-  min-height: 3.5em;
+}
+
+.playlistView .info.right {
+  width: calc(100% - 5.5em);
+  margin-left: 5.5em;
+  min-height: 5em;
 }
 
 .playlistView .info > * {
