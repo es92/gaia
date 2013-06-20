@@ -24,8 +24,8 @@ var Music = function() {
   this.currentSelectPage = startPage;
   this.ui.activatePage(startPage);
 
-  //this.ui.viewVisibility.showCurrentMusicPage();
-  //setTimeout(this.ui.viewVisibility.toggleCurrentMusicPageView.bind(this.ui.viewVisibility), 1000);
+  this.ui.viewVisibility.showCurrentMusicPage();
+  setTimeout(this.ui.viewVisibility.toggleCurrentMusicPageView.bind(this.ui.viewVisibility), 1000);
   //setTimeout(this.ui.viewVisibility.togglePlaylistDrawer.bind(this.ui.viewVisibility), 1000);
 }
 

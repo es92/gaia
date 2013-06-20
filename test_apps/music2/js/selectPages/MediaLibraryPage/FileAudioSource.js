@@ -24,8 +24,9 @@ FileAudioSource.prototype = {
   play: function(audioPlayer){
     if (!this.loaded){
       this.load(audioPlayer, function(){
-        audioPlayer.play();
-      });
+        if (this.state === 'play')
+          audioPlayer.play();
+      }.bind(this));
     }
     else {
       audioPlayer.play();

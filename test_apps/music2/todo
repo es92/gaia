@@ -6,7 +6,6 @@ core
 =====================
   ==================== features =====================
 
-*    drag moving in playlists
     mini playing indicator in select screen
 
     add titles to headers
@@ -17,6 +16,8 @@ core
     manually move seekbar
     allow delete playlist item from playlist drawer
     more performant playlist manipulation
+
+    show tracknumber if doesn't match playlist number
 
   ===================== enhancements =====================
 

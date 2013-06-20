@@ -1,4 +1,5 @@
-.playlistView .text {
+
+.playlistViewItem .text {
   width: 100%;
   -moz-box-sizing: border-box;
   padding: 1em;
@@ -6,11 +7,11 @@
   font-size: 1.5em;
 }
 
-.playlistView .content {
+.playlistViewItem .content {
   position: relative;
 }
 
-.playlistView .content .albumCover {
+.playlistViewItem .content .albumCover {
   position: absolute;
   left: 2em;
   width: 5em;
@@ -19,35 +20,39 @@
   moz-box-sizing: border-box;
 }
 
-.playlistView .info {
+.playlistViewItem .content .albumCover[src=''] {
+  display: none;
+}
+
+.playlistViewItem .info {
   padding-top: .75em;
   padding-bottom: .75em;
 }
 
-.playlistView .info.right {
+.playlistViewItem .info.right {
   width: calc(100% - 5.5em);
   margin-left: 5.5em;
   min-height: 5em;
 }
 
-.playlistView .info > * {
+.playlistViewItem .info > * {
   padding-left: .5em;
   color: #aac;
 }
 
-.playlistView .info > *:first-child {
+.playlistViewItem .info > *:first-child {
   color: white;
   font-size: 1.25em;
   padding-left: 0em;
 }
 
-.playlistView .tracknum {
+.playlistViewItem .tracknum {
   color: #aac;
   text-align: center;
   padding-top: .75em;
 }
 
-.playlistView .playlistItemDelete {
+.playlistViewItem .playlistItemDelete {
   width: 100%;
   height: 100%;
   background-image: url('../style/minus-del.png');
@@ -56,12 +61,12 @@
   background-size: 50% auto;
 }
 
-.playlistView .beingPlayedIcon {
+.playlistViewItem .beingPlayedIcon {
   background-image: url('../style/images/IconAction_Media_Play_30x30.png');
   background-size: 80% auto;
 }
 
-.playlistView .beingPausedIcon {
+.playlistViewItem .beingPausedIcon {
   background-image: url('../style/images/IconAction_Media_Pause_30x30.png');
   background-size: 80% auto;
 }

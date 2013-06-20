@@ -6,6 +6,7 @@ var UIItem = function(icon, content, more, primaryButton){
 
   this.dom = {};
 
+  this.data = {};
 }
 
 UIItem.prototype = {
@@ -25,7 +26,7 @@ UIItem.prototype = {
     }
   },
   createDiv: function(){
-    var div = document.createElement('div');
+    var div = Utils.classDiv('uiItem');
 
     this.dom.icon = document.createElement('div');
     this.dom.icon.classList.add('icon');

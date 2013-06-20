@@ -30,6 +30,7 @@ var PlaylistManager = function(currentPageUI, playlistDrawerUI){
 
   this.ui.playlist.ondeleteItemFromPlaylist = this.deleteItemFromPlaylist.bind(this);
   this.ui.playlist.onswitchCurrentPlaylistToItem = this.switchCurrentPlaylistToItem.bind(this);
+  this.ui.playlist.onmovePlaylistItemRelative = this.movePlaylistItemRelative.bind(this);
 
   this.ui.playlists.oncreatePlaylist = this.createPlaylist.bind(this);
   this.ui.playlists.ondeletePlaylist = this.deletePlaylist.bind(this);
@@ -136,7 +137,11 @@ PlaylistManager.prototype = {
         playlist === this.playlists[this.currentPlaylistId] &&
         source === playlist.getCurrentSource()
     ){
+      var wasPlaying = source.state === 'play';
       this.playNext();
+      if (!wasPlaying){
+        this.pause();
+      }
     }
     playlist.deleteSource(source);
     if (playlist.list.length === 0){
@@ -144,6 +149,21 @@ PlaylistManager.prototype = {
     }
     this.ui.playlist.setPlaylist(playlist);
     this.savePlaylists();
+  },
+  movePlaylistItemRelative: function(playlist, source, relativeSource, relativeDir){
+    var setIndex = playlist.getCurrentSource() === source;
+    playlist.deleteSource(source);
+    playlist.insertSourceRelative(source, relativeSource, relativeDir);
+    if (setIndex){
+      playlist.currentIndex = playlist.list.indexOf(source);
+    }
+
+    if (this.playlists[this.currentPlaylistId] === playlist){
+      this.ui.playlist.setPlaylist(playlist);
+    }
+    this.ui.playlists.setPlaylists(this.playlists);
+    this.savePlaylists();
+
   },
   switchCurrentPlaylistToItem: function(source, playlist){
     if (this.currentPlaylistId === null)

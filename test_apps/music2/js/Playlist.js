@@ -45,6 +45,21 @@ Playlist.prototype = {
       this.currentIndex -= 1;
     this.list.splice(sourceIndex, 1);
   },
+  insertSourceRelative: function(source, relativeSource, relativeDir){
+    var relativeSourceIndex = this.list.indexOf(relativeSource);
+    if (relativeSourceIndex === -1)
+      return;
+    if (relativeDir === 'above'){
+      if(this.currentIndex >= relativeSourceIndex)
+        this.currentIndex += 1;
+      this.list.splice(relativeSourceIndex, 0, source);
+    }
+    if (relativeDir === 'below'){
+      if (this.currentIndex > relativeSourceIndex)
+        this.currentIndex += 1;
+      this.list.splice(relativeSourceIndex+1, 0, source);
+    }
+  },
   setCurrentSource: function(source){
     var sourceIndex = this.list.indexOf(source);
     if (sourceIndex === -1)

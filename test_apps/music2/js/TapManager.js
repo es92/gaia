@@ -9,6 +9,8 @@ function TapManager(dom){
   this.state = {
     startX: 0,
     startY: 0,
+    lastX: 0,
+    lastY: 0,
     potentialTap: false,
   };
 
@@ -26,13 +28,17 @@ TapManager.prototype = {
       return;
     this.state.startX = x;
     this.state.startY = y;
+    this.state.lastX = x;
+    this.state.lastY = y;
     this.state.potentialTap = true;
-    this.down();
+    this.down(x, y);
     setTimeout(this.checkLong.bind(this), 500);
   },
   pointerMove: function(x, y){
     if (this.state.potentialTap && this.movedTooMuch(x, y)){
       this.state.potentialTap = false;
+      this.state.lastX = x;
+      this.state.lastY = y;
       this.up();
     }
   },
@@ -42,7 +48,7 @@ TapManager.prototype = {
   },
   pointerUp: function(){
     if (this.state.potentialTap){
-      this.tap();
+      this.tap(this.state.lastX, this.state.lastY);
       this.state.potentialTap = false;
       this.up();
     }
@@ -56,7 +62,7 @@ TapManager.prototype = {
   checkLong: function(){
     if (this.state.potentialTap && this.onlong){
       this.state.potentialTap = false;
-      this.long();
+      this.long(this.state.lastX, this.state.lastY);
       this.up();
     }
   },
@@ -67,7 +73,7 @@ TapManager.prototype = {
 
   addEvent: function(eventName, fn){
     this.dom.addEventListener(eventName, fn);
-    this.fns.push(fn);
+    this.fns.push({ 'type': eventName, 'fn': fn });
   },
 
   registerEvents: function(){
@@ -109,8 +115,9 @@ TapManager.prototype = {
   //  DESTROY
   //========================
   destroy: function(){
-    for (var i = 0; i < this.fns; i++){
-      this.dom.removeEventListener(this.fns[i]);
+    for (var i = 0; i < this.fns.length; i++){
+      this.dom.removeEventListener(this.fns[i].type, this.fns[i].fn);
     }
+    this.fns = [];
   }
 }
