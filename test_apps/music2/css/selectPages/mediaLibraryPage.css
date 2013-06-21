@@ -137,6 +137,14 @@
   background-size: auto 70%;
 }
 
+#mediaLibraryPagePanelControls.disabled #mediaLibraryPagePanelControlPlay {
+  background-image: url('../../style/play_disabled.png');
+}
+
+#mediaLibraryPagePanelControls.disabled #mediaLibraryPagePanelControlAdd {
+  background-image: url('../../style/add_disabled.png');
+}
+
 /*======================================*/
 
 #mediaLibraryPagePanelList {

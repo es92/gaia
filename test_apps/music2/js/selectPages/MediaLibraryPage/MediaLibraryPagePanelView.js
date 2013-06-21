@@ -11,7 +11,9 @@ var MediaLibraryPagePanelView = function(musicDB, panel){
       "mediaLibraryPagePanelPop",
 
       "mediaLibraryPagePanelAlbum",
-      "mediaLibraryPagePanelControls"
+      "mediaLibraryPagePanelControls",
+      "mediaLibraryPagePanelControlPlay",
+      "mediaLibraryPagePanelControlAdd"
   ]);
 
   this.dom.panel = this.dom.mediaLibraryPagePanel;
@@ -63,7 +65,7 @@ MediaLibraryPagePanelView.prototype = {
     if ((this.panel.select === undefined || this.panel.select === null) && 
         (this.genreKnown || this.artistKnown || this.albumKnown || this.songKnown)
     ){
-      this.setTitleToControlView(null, this.albumKnown);
+      this.setTitleToControlView(null, this.albumKnown, false);
     }
 
     this.dom.itemList.empty();
@@ -164,7 +166,7 @@ MediaLibraryPagePanelView.prototype = {
     if ((this.panel.select === undefined || this.panel.select === null) && 
         (this.genreKnown || this.artistKnown || this.albumKnown || this.songKnown)
     ){
-      this.setTitleToControlView(items[0], this.albumKnown);
+      this.setTitleToControlView(items[0], this.albumKnown, true);
     }
 
 
@@ -326,7 +328,7 @@ MediaLibraryPagePanelView.prototype = {
 
     this.songs = [ song ];
 
-    this.setTitleToControlView(song, true);
+    this.setTitleToControlView(song, true, true);
 
 
 
@@ -349,7 +351,7 @@ MediaLibraryPagePanelView.prototype = {
       this.gotoItem(target, type);
     }.bind(this));
   },
-  setTitleToControlView: function(song, albumKnown){
+  setTitleToControlView: function(song, albumKnown, loaded){
     this.dom.controls.classList.remove('hidden');
     if (albumKnown){
       this.dom.controls.classList.add('right');
@@ -361,6 +363,17 @@ MediaLibraryPagePanelView.prototype = {
           this.dom.albumCover.src = url;
         }.bind(this));
       }
+    }
+
+    if (loaded){
+      this.dom.controls.classList.remove('disabled');
+      this.dom.mediaLibraryPagePanelControlPlay.disabled = false;
+      this.dom.mediaLibraryPagePanelControlAdd.disabled = false;
+    }
+    else {
+      this.dom.controls.classList.add('disabled');
+      this.dom.mediaLibraryPagePanelControlPlay.disabled = true;
+      this.dom.mediaLibraryPagePanelControlAdd.disabled = true;
     }
     var titleHeight = this.dom.title.clientHeight;
     if (titleHeight !== 0)
