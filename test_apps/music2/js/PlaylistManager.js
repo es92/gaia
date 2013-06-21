@@ -61,8 +61,11 @@ PlaylistManager.prototype = {
     var playlist = this.playlists[this.currentPlaylistId];
     if (playlist.list.length === 0)
       this.ui.controls.enable();
-    if (playlist.temporary)
+    if (playlist.temporary){
       playlist.temporary = false;
+      this.ui.playlists.setPlaylists(this.playlists);
+      this.ui.playlists.setCurrentPlaylist(this.currentPlaylistId, 'stop');
+    }
     for (var i = 0; i < sources.length; i++){
       playlist.appendAudioSource(sources[i]);
     }
