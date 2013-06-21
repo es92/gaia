@@ -1,4 +1,5 @@
-var InternetAudioSource = function(url){
+var InternetAudioSource = function(station, url){
+  this.station = station;
   this.url = url;
   this.loaded = false;
   this.state = 'stop';
@@ -39,7 +40,7 @@ InternetAudioSource.prototype = {
   },
   setInfo: function(infoDiv){
     var urlDiv = document.createElement('div');
-    urlDiv.innerHTML = this.url;
+    urlDiv.innerHTML = this.station.title;
     infoDiv.appendChild(urlDiv);
   },
   setAlbumArt: function(img){
@@ -49,7 +50,7 @@ InternetAudioSource.prototype = {
     return this.state;
   },
   getSerializable: function(){
-    return {  'data': this.song,
+    return {  'data': { 'url': this.url, 'station': this.station },
               'parentPageName': 'Internet Radio'
     };
 

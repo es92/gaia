@@ -1,7 +1,6 @@
 
 var Music = function() {
 
-
   //window.router = new Router('DEBUG');
   window.router = new Router();
   window.router.on('unserialize', this.unserializeSource.bind(this));
@@ -20,7 +19,7 @@ var Music = function() {
   this.selectPageBridge.onenqueueIntoCurrentPlaylist = this.playlistManager.appendAudioSourceToCurrent.bind(this.playlistManager);
   this.selectPageBridge.oncreateTemporaryPlaylistFromSources = this.playlistManager.createTemporaryPlaylistFromSources.bind(this.playlistManager);
 
-  var startPage = this.selectPagesByName['Music Library'];
+  var startPage = this.selectPagesByName['Internet Radio'];
   this.currentSelectPage = startPage;
   this.ui.activatePage(startPage);
 

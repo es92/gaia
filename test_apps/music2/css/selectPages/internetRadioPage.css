@@ -1,0 +1,36 @@
+#internetRadioSearch {
+  font-size: 1.5em;
+  position: absolute;
+  top: 0;
+  height: 2em;
+  line-height: 2em;
+  text-align: center;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid #aac;
+}
+
+
+#internetRadioStations {
+  position: absolute;
+  top: 3em;
+  bottom: 0em;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
+}
+
+#internetRadioStations .station {
+  padding-top: .5em;
+  padding-bottom: .5em;
+  font-size: 1.25em;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  background-repeat: no-repeat;
+  background-position: right 1em center;
+  background-size: auto 60%;
+  background-image: url('../../style/images/IconAction_Media_Play_30x30.png');
+}

@@ -13,7 +13,9 @@
     "settings":{ "access": "readonly" },
     "deprecated-hwvideo":{},
     "audio-channel-content":{},
-    "network-http":{}
+    "systemXHR":{},
+    "network-http": {},
+    "network-tcp": {}
   },
   "activities": {
     "pick": {

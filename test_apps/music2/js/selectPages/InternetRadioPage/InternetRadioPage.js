@@ -2,30 +2,54 @@ var InternetRadioPage = function(pageBridge){
   this.pageBridge = pageBridge;
   Utils.loadDomIds(this, [
       'internetRadioPage',
-      'selectSourcePages'
+      'selectSourcePages',
+      'internetRadioSearch',
+      'internetRadioStations'
   ]);
+
+  this.stations = new UIItemList(this.dom.internetRadioStations);
+
   this.dom.page = this.dom.internetRadioPage;
 
-  var appendURL = function(url){
-    var urlDiv = document.createElement('div');
-    urlDiv.innerHTML = url;
-    this.dom.page.appendChild(urlDiv);
-    Utils.onButtonTap(urlDiv, function(){
-      var source = new InternetAudioSource(url);
-      this.pageBridge.createTemporaryPlaylistFromSources(url, [ source ]);
-    }.bind(this));
-  }.bind(this);
+  this.icecast = new IcecastStationSearch();
 
-  appendURL("http://revolutionradio.ru/live.ogg");
-  appendURL("http://streaming208.radionomy.com:80/ABC-Jazz");
-  appendURL("http://streaming206.radionomy.com:80/abacusfm-mozart-piano");
+  Utils.onButtonTap(this.dom.internetRadioSearch, function(){
+    var search = prompt();
+    this.icecast.search(search, function(items){
+      this.setStations(items);
+    }.bind(this));
+  }.bind(this));
+
 
 }
 
 InternetRadioPage.prototype = {
   name: "Internet Radio",
+  setStations: function(stations){
+    this.stations.empty();
+    var items = stations.map(this.addStation.bind(this));
+    items.forEach(this.stations.append.bind(this.stations));
+  },
+  addStation: function(station){
+    var content = Utils.classDiv('station');
+    content.innerHTML = station.title;
+
+    Utils.onButtonTap(content, function(){
+      this.playM3U(station);
+    }.bind(this));
+
+    var item = new UIItem(null, content, null, null);
+
+    return item;
+  },
+  playM3U: function(station){
+    this.icecast.getM3UUrl(station.m3u, function(link){
+      var source = new InternetAudioSource(station, link);
+      this.pageBridge.createTemporaryPlaylistFromSources(station.title, [ source ]);
+    }.bind(this));
+  },
   unserialize: function(serializedSource){
-    return new InternetAudioSource(serializedSource);
+    return new InternetAudioSource(serializedSource.station, serializedSource.url);
   },
   activate: function(){
     this.dom.selectSourcePages.removeChild(this.dom.page);
@@ -35,6 +59,8 @@ InternetRadioPage.prototype = {
     this.dom.page.parentNode.removeChild(this.dom.page);
     this.dom.selectSourcePages.appendChild(this.dom.page);
   },
+  getStations: function(){
+  }
 }
 
 
