@@ -14,7 +14,7 @@ var InternetRadioPage = function(pageBridge){
   this.icecast = new IcecastStationSearch();
 
   Utils.onButtonTap(this.dom.internetRadioSearch, function(){
-    var search = prompt();
+    var search = prompt("search internet radio:");
     this.stations.empty();
     this.icecast.search(search, function(items){
       this.setStations(items);

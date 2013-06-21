@@ -67,6 +67,8 @@ FM Radio
     implement
     
   ===================== bugs =====================
+    
+    notify on silent fails (ex. unknown audio format such as .aac)
 
   ===================== enhancements =====================
 
