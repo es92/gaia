@@ -49,7 +49,7 @@ var PlaylistManager = function(currentPageUI, playlistDrawerUI){
 }
 
 PlaylistManager.prototype = {
-  appendAudioSourceToCurrent: function(title, source){
+  appendAudioSourcesToCurrent: function(title, sources){
     if (this.currentPlaylistId === null){
       this.createPlaylist(title);
     }
@@ -58,7 +58,9 @@ PlaylistManager.prototype = {
       this.ui.controls.enable();
     if (playlist.temporary)
       playlist.temporary = false;
-    playlist.appendAudioSource(source);
+    for (var i = 0; i < sources.length; i++){
+      playlist.appendAudioSource(sources[i]);
+    }
     this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
     this.savePlaylists();
   },

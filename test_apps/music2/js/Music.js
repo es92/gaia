@@ -16,7 +16,7 @@ var Music = function() {
 
   this.playlistManager = new PlaylistManager(this.ui.currentMusicPage, this.ui.playlistDrawer);
 
-  this.selectPageBridge.onenqueueIntoCurrentPlaylist = this.playlistManager.appendAudioSourceToCurrent.bind(this.playlistManager);
+  this.selectPageBridge.onenqueueIntoCurrentPlaylist = this.playlistManager.appendAudioSourcesToCurrent.bind(this.playlistManager);
   this.selectPageBridge.oncreateTemporaryPlaylistFromSources = this.playlistManager.createTemporaryPlaylistFromSources.bind(this.playlistManager);
 
   var startPageName = 'Music Library';

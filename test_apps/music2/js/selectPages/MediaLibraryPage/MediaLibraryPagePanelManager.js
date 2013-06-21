@@ -38,11 +38,13 @@ MediaLibraryPagePanelManager.prototype = {
     }
   },
   add: function(){
+    var sources = [];
     for (var i = 0; i < this.panelView.songs.length; i++){
       var song = this.panelView.songs[i];
       var source = new FileAudioSource(this.musicDB, song);
-      this.pageBridge.enqueueIntoCurrentPlaylist(this.panelView.currentTitle, source);
+      sources.push(source);
     }
+    this.pageBridge.enqueueIntoCurrentPlaylist(this.panelView.currentTitle, sources);
   },
   playAll: function(){
     var sources = [];
@@ -77,6 +79,6 @@ MediaLibraryPagePanelManager.prototype = {
   },
   addSong: function(song){
     var source = new FileAudioSource(this.musicDB, song);
-    this.pageBridge.enqueueIntoCurrentPlaylist(song.metadata.title, source);
+    this.pageBridge.enqueueIntoCurrentPlaylist(song.metadata.title, [ source ]);
   },
 }
