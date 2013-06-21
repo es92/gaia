@@ -71,5 +71,5 @@ var Utils = {
     else if (a > b)
       return 1;
     return 0;
-  }
+  },
 }
