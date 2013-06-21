@@ -100,7 +100,12 @@ MediaLibraryPagePanelView.prototype = {
   setTitle: function(){
     Utils.empty(this.dom.titleText);
     var title = document.createElement('div');
-    title.innerHTML = this.panel.title;
+    if (this.albumKnown)
+      title.innerHTML = this.panel.title || 'Unknown Album';
+    else if (this.artistKnown)
+      title.innerHTML = this.panel.title || 'Unknown Artist';
+    else
+      title.innerHTML = this.panel.title;
     this.currentTitle = this.panel.title 
     this.dom.titleText.appendChild(title);
 
@@ -227,7 +232,14 @@ MediaLibraryPagePanelView.prototype = {
           continue;
       }
       var fieldDiv = document.createElement('div');
-      fieldDiv.innerHTML = item.metadata[this.fields[j]];
+      var field = item.metadata[this.fields[j]];
+      if (this.fields[j] === 'genre')
+        field = field || 'Unknown Genre';
+      if (this.fields[j] === 'artist')
+        field = field || 'Unknown Artist';
+      if (this.fields[j] === 'album')
+        field = field || 'Unknown Album';
+      fieldDiv.innerHTML = field;
       content.appendChild(fieldDiv);
     }
 
@@ -283,14 +295,14 @@ MediaLibraryPagePanelView.prototype = {
           var subCategory = document.createElement('div');
           this.setupOnTapOverridedSubcategory(subCategory, album, 'Albums');
           subCategory.classList.add('gotoPanelButton');
-          subCategory.innerHTML = album;
+          subCategory.innerHTML = album || 'Unknown Album';
           subCategory.item = album;
           this.dom.subCategories.appendChild(subCategory);
         }
       }
       else {
         for (var album in albums){
-          this.addSubtitle(album);
+          this.addSubtitle(album || 'Unknown Album');
         }
       }
     }
@@ -301,14 +313,14 @@ MediaLibraryPagePanelView.prototype = {
           var subCategory = document.createElement('div');
           this.setupOnTapOverridedSubcategory(subCategory, artist, 'Artists');
           subCategory.classList.add('gotoPanelButton');
-          subCategory.innerHTML = artist;
+          subCategory.innerHTML = artist || 'Unknown Artist';
           subCategory.item = artist;
           this.dom.subCategories.appendChild(subCategory);
         }
       }
       else {
         for (var artist in artists){
-          this.addSubtitle(artist);
+          this.addSubtitle(artist || 'Unknown Artist');
         }
       }
     }
@@ -330,14 +342,12 @@ MediaLibraryPagePanelView.prototype = {
 
     this.setTitleToControlView(song, true, true);
 
-
-
     if (!this.artistKnown){
-      this.addLink('see artist ' + song.metadata.artist, 'Artists', song.metadata.artist);
+      this.addLink('see artist ' + (song.metadata.artist || 'Unknown Artist'), 'Artists', song.metadata.artist);
     }
 
     if (!this.albumKnown){
-      this.addLink('see album ' + song.metadata.album, 'Albums', song.metadata.album);
+      this.addLink('see album ' + (song.metadata.album || 'Unknown Album'), 'Albums', song.metadata.album);
     }
   },
   addLink: function(description, type, target){
