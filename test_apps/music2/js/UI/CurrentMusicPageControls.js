@@ -2,7 +2,9 @@ var CurrentMusicPageControls = function(){
   Utils.loadDomIds(this, [
       "playPrev",
       "togglePlay",
-      "playNext"
+      "playNext",
+      "nowPlayingControls",
+      "nowPlayingTogglePlay"
   ]);
   this.seekBar = new SeekBar();
 
@@ -12,7 +14,12 @@ var CurrentMusicPageControls = function(){
   Utils.onButtonTap(this.dom.playPrev, this.playPrev);
   Utils.onButtonTap(this.dom.playNext, this.playNext);
 
-  Utils.onButtonTap(this.dom.togglePlay, function(){
+  Utils.onButtonTap(this.dom.togglePlay, this.onTogglePlayTapped.bind(this));
+  Utils.onButtonTap(this.dom.nowPlayingTogglePlay, this.onTogglePlayTapped.bind(this));
+}
+
+CurrentMusicPageControls.prototype = {
+  onTogglePlayTapped: function(){
     if (this.dom.togglePlay.classList.contains('pause')){
       if (this.onpause)
         this.onpause();
@@ -21,15 +28,14 @@ var CurrentMusicPageControls = function(){
       if (this.onplay)
         this.onplay();
     }
-  }.bind(this));
-}
-
-CurrentMusicPageControls.prototype = {
+  },
   setPlaying: function(){
     this.dom.togglePlay.classList.add('pause');
+    this.dom.nowPlayingTogglePlay.classList.add('pause');
   },
   setPaused: function(){
     this.dom.togglePlay.classList.remove('pause');
+    this.dom.nowPlayingTogglePlay.classList.remove('pause');
   },
   disable: function(){
     this.dom.togglePlay.classList.add('disabled');

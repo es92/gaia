@@ -115,6 +115,11 @@
     
       <div id="selectMusicPage" class="page center fastTransition">
 
+        <div id="nowPlayingControls" class="hidden">
+            <div id="nowPlayingTogglePlay"></div>
+            <div id="nowPlayingInfo"></div>
+            <img src = "" id="nowPlayingSourceImg" onerror="this.src='';"></img>
+        </div>
       </div>
 
       <div id="currentMusicPage" class="page right fastTransition">
@@ -175,7 +180,7 @@
   ====================== -->
   <div id="playlistDrawer" class="drawer right out fastTransition">
     <div class="header">
-      <!-- <div class="rightHeaderElem"></div>-->
+
     </div>
     <div id="playlistDrawerTitle" class="hidden">
       <div id="playlistDrawerTitleBack"></div>
