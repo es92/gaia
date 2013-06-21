@@ -21,7 +21,7 @@
 
 #mediaLibraryPagePanelTitleText {
   min-height: 2em;
-  margin-left: 2em;
+  margin-left: 2.5em;
   padding-top: 1em;
   padding-bottom: 1em;
 }
@@ -74,12 +74,27 @@
   width: 2em;
 }
 
+#mediaLibraryPagePanelPop:after {
+  position: absolute;
+  content: "";
+  display: block;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+  width: 0.25rem;
+  margin-left: -.125rem;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 80%;
+  background-image: url(../../style/headers/images/ui/dark/separator.png);
+}
+
 /*======================================*/
 
 #mediaLibraryPagePanelAlbum {
   position: absolute;
   top: 0;
-  left: 2em;
+  left: 2.5em;
   height: 5em;
   width: 5em;
   margin-top: 1em;
@@ -91,13 +106,13 @@
 }
 
 #mediaLibraryPagePanelControls {
-  padding-left: 2em;
+  padding-left: 2.5em;
   -moz-box-sizing: border-box;
   height: 2.5em;
 }
 
 #mediaLibraryPagePanelControls.right {
-  padding-left: 7em;
+  padding-left: 7.5em;
 }
 
 #mediaLibraryPagePanelControlPlay {

@@ -25,12 +25,27 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 3rem;
+  width: 2.5rem;
 
   background-image: url('../style/headers/images/icons/back.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 80% auto;
+}
+
+#playlistDrawerTitleBack:after {
+  position: absolute;
+  content: "";
+  display: block;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+  width: 0.25rem;
+  margin-left: -.125rem;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 80%;
+  background-image: url(../style/headers/images/ui/dark/separator.png);
 }
 
 #playlistDrawerTitleRename {
