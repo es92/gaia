@@ -14,8 +14,6 @@ core
 
     manually move seekbar
     change appearance of seekbar when controls disabled
-*    allow delete playlist item from playlist drawer
-*    allow move playlist item in playlist drawer
     more performant playlist manipulation
     show tracknumber if doesn't match playlist number
 

@@ -15,6 +15,7 @@ var InternetRadioPage = function(pageBridge){
 
   Utils.onButtonTap(this.dom.internetRadioSearch, function(){
     var search = prompt();
+    this.stations.empty();
     this.icecast.search(search, function(items){
       this.setStations(items);
     }.bind(this));
@@ -26,9 +27,15 @@ var InternetRadioPage = function(pageBridge){
 InternetRadioPage.prototype = {
   name: "Internet Radio",
   setStations: function(stations){
-    this.stations.empty();
-    var items = stations.map(this.addStation.bind(this));
-    items.forEach(this.stations.append.bind(this.stations));
+    if (stations.length === 0){
+      var text = Utils.classDiv('text');
+      text.innerHTML = 'no stations found';
+      this.dom.internetRadioStations.appendChild(text);
+    }
+    else {
+      var items = stations.map(this.addStation.bind(this));
+      items.forEach(this.stations.append.bind(this.stations));
+    }
   },
   addStation: function(station){
     var content = Utils.classDiv('station');

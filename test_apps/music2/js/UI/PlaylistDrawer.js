@@ -1,8 +1,6 @@
 var PlaylistDrawer = function(){
   Utils.loadDomIds(this, [
       "playlistDrawer",
-      //"playlistDrawerPlaylists",
-      //"playlistDrawerPlaylistItems",
       "playlistDrawerTitle",
       "playlistDrawerTitleContent",
       "playlistDrawerTitleBack",
@@ -18,6 +16,7 @@ var PlaylistDrawer = function(){
   this.playlistList = new UIItemList(this.dom.playlistDrawerPlaylists);
 
   this.lastCurrentPlaylist = null;
+  this.lastCurrentPlaylistId = null;
 
   this.selectedPlaylistId = null;
 
@@ -38,12 +37,15 @@ PlaylistDrawer.prototype = {
       var playlist = playlists[playlistId];
       if (playlist.temporary)
         continue;
+      if (playlistId === this.selectedPlaylistId)
+        this.playlist.setPlaylist(playlist, playlistId);
       var item = this.uiItemFromPlaylist(playlist, playlistId);
       this.playlistListItems[playlistId] = item;
       this.playlistList.append(item);
     }
     var newPlaylistItem = this.uiItemNewPlaylist();
     this.playlistList.append(newPlaylistItem);
+    this.setCurrentPlaylist(this.lastCurrentPlaylistId);
   },
   setCurrentPlaylist: function(currentPlaylistId){
     var item = this.playlistListItems[currentPlaylistId];
@@ -56,6 +58,7 @@ PlaylistDrawer.prototype = {
     }
     item.setIcon('currentPlaylist');
     this.lastCurrentPlaylist = item;
+    this.lastCurrentPlaylistId = currentPlaylistId;
   },
   uiItemFromPlaylist: function(playlist, id){
 
@@ -73,24 +76,7 @@ PlaylistDrawer.prototype = {
       this.switchToPlaylistItemView(playlist, id);
     }.bind(this));
 
-    //var more = document.createElement('div');
-    var more = null;
-
-    //var del = document.createElement('div');
-    //Utils.onButtonTap(del, function(){
-    //  this.deletePlaylist(id);
-    //}.bind(this));
-    //del.classList.add('playlistDelete');
-    //more.appendChild(del);
-
-    //var edit = document.createElement('div');
-    //Utils.onButtonTap(edit, function(){
-    //  
-    //}.bind(this));
-    //edit.classList.add('playlistEdit');
-    //more.appendChild(edit);
-
-    var item = new UIItem(null, content, more, gotoPlaylistButton);
+    var item = new UIItem(null, content, null, gotoPlaylistButton);
 
     return item;
   },
@@ -101,7 +87,7 @@ PlaylistDrawer.prototype = {
     this.dom.titleContent.innerHTML = playlist.title;
     this.dom.title.classList.remove('hidden');
 
-    this.playlist.setPlaylist(playlist);
+    this.playlist.setPlaylist(playlist, playlistId);
 
     this.selectedPlaylistId = playlistId;
 

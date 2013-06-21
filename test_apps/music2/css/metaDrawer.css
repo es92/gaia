@@ -15,6 +15,7 @@
 
 #settingsMetaDrawer > * {
   padding-left: 1em;
+  padding-right: 1em;
   padding-top: .5em;
   padding-bottom: .5em;
 }
@@ -22,4 +23,10 @@
 #settingsMetaDrawer > * > input[type="checkbox"] {
   position: absolute;
   right: 1em;
+}
+
+#settingsMetaDrawer .info {
+  text-align: center;
+  width: 100%;
+  -moz-box-sizing: border-box;
 }

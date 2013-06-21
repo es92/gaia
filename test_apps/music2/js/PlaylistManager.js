@@ -29,12 +29,16 @@ var PlaylistManager = function(currentPageUI, playlistDrawerUI){
   this.ui.controls.onpause = this.pause.bind(this);
 
   this.ui.playlist.ondeleteItemFromPlaylist = this.deleteItemFromPlaylist.bind(this);
-  this.ui.playlist.onswitchCurrentPlaylistToItem = this.switchCurrentPlaylistToItem.bind(this);
+  this.ui.playlist.onswitchToPlaylistItem = this.switchToPlaylistItem.bind(this);
   this.ui.playlist.onmovePlaylistItemRelative = this.movePlaylistItemRelative.bind(this);
 
   this.ui.playlists.oncreatePlaylist = this.createPlaylist.bind(this);
   this.ui.playlists.ondeletePlaylist = this.deletePlaylist.bind(this);
   this.ui.playlists.onswitchPlaylist = this.setCurrentPlaylist.bind(this);
+
+  this.ui.playlists.playlist.ondeleteItemFromPlaylist = this.deleteItemFromPlaylist.bind(this);
+  this.ui.playlists.playlist.onswitchToPlaylistItem = this.switchToPlaylistItem.bind(this);
+  this.ui.playlists.playlist.onmovePlaylistItemRelative = this.movePlaylistItemRelative.bind(this);
 
   this.audioPlayer.onisEnded = this.currentEnded.bind(this);
   this.audioPlayer.onisPaused = this.ui.controls.setPaused.bind(this.ui.controls);
@@ -54,7 +58,7 @@ PlaylistManager.prototype = {
     if (playlist.temporary)
       playlist.temporary = false;
     playlist.appendAudioSource(source);
-    this.ui.playlist.setPlaylist(playlist);
+    this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
     this.savePlaylists();
   },
   createTemporaryPlaylistFromSources: function(title, sources){
@@ -68,7 +72,7 @@ PlaylistManager.prototype = {
     if (sources.length > 0){
       this.ui.controls.enable();
     }
-    this.ui.playlist.setPlaylist(playlist);
+    this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
     this.ui.playlists.setCurrentPlaylist(this.currentPlaylistId, 'stop');
     this.play();
   },
@@ -95,7 +99,7 @@ PlaylistManager.prototype = {
     var playlist = this.playlists[this.currentPlaylistId];
     playlist.play(this.audioPlayer);
     this.ui.source.setInfo(playlist.getCurrentSource());
-    this.ui.playlist.setPlaylist(playlist);
+    this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
     this.ui.playlists.setCurrentPlaylist(this.currentPlaylistId, 'play');
   },
   pause: function(){
@@ -103,7 +107,7 @@ PlaylistManager.prototype = {
       return;
     var playlist = this.playlists[this.currentPlaylistId];
     playlist.pause(this.audioPlayer);
-    this.ui.playlist.setPlaylist(playlist);
+    this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
     this.ui.playlists.setCurrentPlaylist(this.currentPlaylistId, 'pause');
   },
   playNext: function(){
@@ -115,7 +119,7 @@ PlaylistManager.prototype = {
     if (!playlist.atEnd()){
       this.play();
     }
-    this.ui.playlist.setPlaylist(playlist);
+    this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
   },
   playPrev: function(){
     if (this.currentPlaylistId === null)
@@ -126,14 +130,15 @@ PlaylistManager.prototype = {
     if (!playlist.atBegin()){
       this.play();
     }
-    this.ui.playlist.setPlaylist(playlist);
+    this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
   },
   currentEnded: function(){
     this.playNext();
   },
-  deleteItemFromPlaylist: function(source, playlist){
+  deleteItemFromPlaylist: function(source, playlistId){
+    var playlist = this.playlists[playlistId];
     if (this.currentPlaylistId !== null &&
-        playlist === this.playlists[this.currentPlaylistId] &&
+        playlist === this.currentPlaylistId &&
         source === playlist.getCurrentSource()
     ){
       var wasPlaying = source.state === 'play';
@@ -147,7 +152,7 @@ PlaylistManager.prototype = {
       this.ui.controls.disable();
     }
     this.ui.source.setInfo(playlist.getCurrentSource());
-    this.ui.playlist.setPlaylist(playlist);
+    this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
     this.savePlaylists();
   },
   movePlaylistItemRelative: function(playlist, source, relativeSource, relativeDir){
@@ -159,30 +164,34 @@ PlaylistManager.prototype = {
     }
 
     if (this.playlists[this.currentPlaylistId] === playlist){
-      this.ui.playlist.setPlaylist(playlist);
+      this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
     }
     this.ui.playlists.setPlaylists(this.playlists);
     this.savePlaylists();
 
   },
-  switchCurrentPlaylistToItem: function(source, playlist){
-    if (this.currentPlaylistId === null)
-      return;
-    var currentPlaylist = this.playlists[this.currentPlaylistId];
-
-    if (playlist === currentPlaylist &&
-        source === playlist.getCurrentSource()
-    ){
-      this.togglePlaying();
+  switchToPlaylistItem: function(source, playlistId){
+    if (playlistId === this.currentPlaylistId){
+      var currentPlaylist = this.playlists[this.currentPlaylistId];
+      if(source === currentPlaylist.getCurrentSource()){
+        this.togglePlaying();
+      }
+      else {
+        this.stop();
+        var currentPlaylist = this.playlists[this.currentPlaylistId];
+        currentPlaylist.setCurrentSource(source);
+        this.play();
+      }
+      this.ui.playlists.playlist.setPlaylist(currentPlaylist, this.currentPlaylistId);
     }
     else {
       this.stop();
+      this.setCurrentPlaylist(playlistId);
       var currentPlaylist = this.playlists[this.currentPlaylistId];
       currentPlaylist.setCurrentSource(source);
       this.play();
+      this.ui.playlists.playlist.setPlaylist(currentPlaylist, this.currentPlaylistId);
     }
-    var currentPlaylist = this.playlists[this.currentPlaylistId];
-    this.ui.playlist.setPlaylist(currentPlaylist);
   },
   loadPlaylists: function(){
     this.playlists = {}; 
@@ -229,7 +238,7 @@ PlaylistManager.prototype = {
     this.stop();
     this.currentPlaylistId = playlistId;
     var currentPlaylist = this.playlists[this.currentPlaylistId];
-    this.ui.playlist.setPlaylist(currentPlaylist);
+    this.ui.playlist.setPlaylist(currentPlaylist, this.currentPlaylistId);
     this.ui.playlists.setCurrentPlaylist(playlistId);
     if (playlistId === null || currentPlaylist.list.length === 0){
       this.ui.controls.disable();

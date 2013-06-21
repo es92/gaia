@@ -8,8 +8,8 @@
   left: 0;
   right: 0;
   border-bottom: 1px solid #aac;
-}
 
+}
 
 #internetRadioStations {
   position: absolute;
@@ -18,6 +18,14 @@
   left: 0;
   right: 0;
   overflow-y: scroll;
+}
+
+#internetRadioStations .text {
+  width: 100%;
+  -moz-box-sizing: border-box;
+  padding: 1em;
+  text-align: center;
+  font-size: 1.5em;
 }
 
 #internetRadioStations .station {

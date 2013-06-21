@@ -19,7 +19,13 @@ var Music = function() {
   this.selectPageBridge.onenqueueIntoCurrentPlaylist = this.playlistManager.appendAudioSourceToCurrent.bind(this.playlistManager);
   this.selectPageBridge.oncreateTemporaryPlaylistFromSources = this.playlistManager.createTemporaryPlaylistFromSources.bind(this.playlistManager);
 
-  var startPage = this.selectPagesByName['Internet Radio'];
+  var startPageName = 'Music Library';
+  if (window.localStorage.lastPageName !== undefined &&
+    this.selectPagesByName[window.localStorage.lastPageName] !== undefined){
+    startPageName = window.localStorage.lastPageName;
+  }
+
+  var startPage = this.selectPagesByName[startPageName];
   this.currentSelectPage = startPage;
   this.ui.activatePage(startPage);
 
@@ -53,6 +59,7 @@ Music.prototype = {
       page,
       function onActivate(){
         page.activate();
+        window.localStorage.lastPageName = page.name;
       }.bind(this),
       function onDeactivate(){
         page.deactivate();
