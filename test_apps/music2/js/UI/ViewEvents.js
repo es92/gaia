@@ -9,7 +9,11 @@ var ViewEvents = function(){
       'gotoSettings',
       'gotoSources',
 
-      'toggleCurrentMusicPageView'
+      'toggleCurrentMusicPageView',
+
+      'contentOverlay',
+
+      'nowPlayingInfo'
   ]);
 
   Utils.setupPassEvent(this, 'gotoCurrentMusicPage');
@@ -23,6 +27,7 @@ var ViewEvents = function(){
 
   Utils.setupPassEvent(this, 'toggleCurrentMusicPageView');
 
+  Utils.setupPassEvent(this, 'exitDrawer');
 
   Utils.onButtonTap(this.dom.gotoCurrentMusicPage, this.gotoCurrentMusicPage);
   Utils.onButtonTap(this.dom.gotoSelectMusicPage, this.gotoSelectMusicPage);
@@ -34,6 +39,12 @@ var ViewEvents = function(){
   Utils.onButtonTap(this.dom.gotoSources, this.gotoSources);
 
   Utils.onButtonTap(this.dom.toggleCurrentMusicPageView, this.toggleCurrentMusicPageView);
+
+  var contentOverlayTapManager = new TapManager(this.dom.contentOverlay);
+  contentOverlayTapManager.ontap = this.exitDrawer;
+
+  Utils.onButtonTap(this.dom.nowPlayingInfo, this.gotoCurrentMusicPage);
+
 }
 
 ViewEvents.prototype = {

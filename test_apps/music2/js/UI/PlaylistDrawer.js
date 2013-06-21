@@ -123,7 +123,7 @@ PlaylistDrawer.prototype = {
 
     Utils.onButtonTap(content, function(){
       var title = prompt("Playlist Name:");
-      if (title === null)
+      if (title === null || title === '')
         return;
       this.createPlaylist(title);
     }.bind(this));

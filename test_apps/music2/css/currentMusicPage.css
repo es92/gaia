@@ -9,6 +9,14 @@
   background: rgba(0, 0, 0, .75);
 }
 
+#nowPlayingInfo { 
+  position: absolute;
+  left: 0;
+  right: 5rem;
+  top: 0;
+  bottom: 0;
+}
+
 #nowPlayingSourceImg {
   position: absolute;
   left: .5rem;
@@ -22,19 +30,19 @@
   display: none;
 }
 
-#nowPlayingInfo {
+#nowPlayingText {
   position: absolute;
   left: 5rem;
-  right: 5rem;
+  right: 0rem;
   top: .5rem;
   bottom: .5rem;
 }
 
-#nowPlayingInfo > * {
+#nowPlayingText > * {
   display: none;
 }
 
-#nowPlayingInfo > *:first-child{
+#nowPlayingText > *:first-child{
   display: block;
   font-size: 1.25rem;
   line-height: 3rem;
@@ -47,10 +55,10 @@
 
 #nowPlayingTogglePlay {
   position: absolute;
-  right: 1rem;
+  right: 0rem;
   top: 0;
   bottom: 0;
-  width: 4rem;
+  width: 5rem;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 60%;

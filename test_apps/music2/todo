@@ -12,7 +12,7 @@ core
 
     manually move seekbar
     change appearance of seekbar when controls disabled
-    more performant playlist manipulation
+*    more performant playlist manipulation
     show tracknumber if doesn't match playlist number
     show info about buffering
     autoresume after wait and canplay
@@ -38,10 +38,11 @@ music library
   ===================== bugs =====================
 
 *    more performant queries
+*    if empty artist/album show unknown artist/album
 
   ===================== enhancements =====================
 
-    better first load indicator
+*    better first load indicator
     loading indicator
 
   ===================== maintainability =====================

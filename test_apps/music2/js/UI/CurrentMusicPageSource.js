@@ -4,30 +4,33 @@ var CurrentMusicPageSource = function(){
       "currentSourceInfo",
       "currentSourceImg",
 
-      "nowPlayingControls",
-      "nowPlayingInfo",
+      "nowPlayingText",
       "nowPlayingSourceImg"
   ]);
   window.router.on('setInfo', this.setInfo.bind(this));
+
+  Utils.setupPassEvent(this, 'hideCurrentSourceView');
+  Utils.setupPassEvent(this, 'showCurrentSourceView');
 }
 
 CurrentMusicPageSource.prototype = {
   setInfo: function(source){
     Utils.empty(this.dom.currentSourceInfo);
-    Utils.empty(this.dom.nowPlayingInfo);
+    Utils.empty(this.dom.nowPlayingText);
     this.dom.currentSourceImg.src = '';
     this.dom.nowPlayingSourceImg.src = '';
 
     if (source === null || source === undefined){
-      this.dom.nowPlayingControls.classList.add('hidden');
+      this.hideCurrentSourceView();
       return;
     }
-    this.dom.nowPlayingControls.classList.remove('hidden');
     source.setInfo(this.dom.currentSourceInfo);
     source.setAlbumArt(this.dom.currentSourceImg);
 
-    source.setInfo(this.dom.nowPlayingInfo);
+    source.setInfo(this.dom.nowPlayingText);
     source.setAlbumArt(this.dom.nowPlayingSourceImg);
+
+    this.showCurrentSourceView();
   },
 }
 

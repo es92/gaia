@@ -46,12 +46,17 @@ var PlaylistManager = function(currentPageUI, playlistDrawerUI){
   this.audioPlayer.onisPlaying = this.ui.controls.setPlaying.bind(this.ui.controls);
   this.audioPlayer.onsetTotalTime = this.ui.controls.seekBar.setTotalTime.bind(this.ui.controls.seekBar);
   this.audioPlayer.onsetCurrentTime = this.ui.controls.seekBar.setCurrentTime.bind(this.ui.controls.seekBar);
+
+  this.ui.source.setInfo(null);
 }
 
 PlaylistManager.prototype = {
   appendAudioSourcesToCurrent: function(title, sources){
     if (this.currentPlaylistId === null){
-      this.createPlaylist(title);
+      var playlistId = this.createPlaylist(title);
+      if (this.currentPlaylistId === null){
+        this.setCurrentPlaylist(playlistId);
+      }
     }
     var playlist = this.playlists[this.currentPlaylistId];
     if (playlist.list.length === 0)
