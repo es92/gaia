@@ -16,6 +16,8 @@ core
     change appearance of seekbar when controls disabled
     more performant playlist manipulation
     show tracknumber if doesn't match playlist number
+    show info about buffering
+    autoresume after wait and canplay
 
   ===================== enhancements =====================
 
