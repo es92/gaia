@@ -6,6 +6,7 @@ IcecastStationSearch.prototype = {
   search: function(search, done){
     if (search === null){
       done([]);
+      return;
     }
     var searchUrl = 'http://dir.xiph.org/search?search=';
     searchUrl += search.replace(/ /g, '+');

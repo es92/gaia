@@ -34,6 +34,7 @@ var PlaylistManager = function(currentPageUI, playlistDrawerUI){
 
   this.ui.playlists.oncreatePlaylist = this.createPlaylist.bind(this);
   this.ui.playlists.ondeletePlaylist = this.deletePlaylist.bind(this);
+  this.ui.playlists.onrenamePlaylist = this.renamePlaylist.bind(this);
   this.ui.playlists.onswitchPlaylist = this.setCurrentPlaylist.bind(this);
 
   this.ui.playlists.playlist.ondeleteItemFromPlaylist = this.deleteItemFromPlaylist.bind(this);
@@ -231,6 +232,11 @@ PlaylistManager.prototype = {
     }
     delete this.playlists[playlistId];
     this.numPlaylists -= 1;
+    this.ui.playlists.setPlaylists(this.playlists);
+    this.savePlaylists();
+  },
+  renamePlaylist: function(playlistId, title){
+    this.playlists[playlistId].title = title;
     this.ui.playlists.setPlaylists(this.playlists);
     this.savePlaylists();
   },

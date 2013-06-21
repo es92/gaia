@@ -13,9 +13,11 @@
   position: absolute;
   font-size: 1.5em;
   top: 3rem;
-  height: 3rem;
+  height: 6rem;
   left: 0;
   right: 0;
+
+  border-bottom: 1px solid #aac;
 }
 
 #playlistDrawerTitleBack {
@@ -31,25 +33,40 @@
   background-size: 80% auto;
 }
 
+#playlistDrawerTitleRename {
+  position: absolute;
+  left: 3rem;
+  right: calc(50% - 1.5rem);
+  top: 3rem;
+  bottom: 0;
+
+  background-image: url('../style/headers/images/icons/compose.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 60%;
+}
+
 #playlistDrawerTitleDel {
   position: absolute;
+  left: calc(50% + 1.5rem);
   right: 0;
-  top: 0;
+  top: 3rem;
   bottom: 0;
-  width: 3rem;
 
   background-image: url('../style/minus-del.png');
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: 60% auto;
+  background-size: auto 60%;
 }
 
 #playlistDrawerTitleContent {
   position: absolute;
   left: 3rem;
-  right: 3rem;
+  height: 3rem;
+  right: 0;
   top: 0;
-  bottom: 0;
+
+  padding-top: 1em;
 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -104,7 +121,7 @@
 
 #playlistDrawerPlaylistItems {
   position: absolute;
-  top: 6rem;
+  top: 9rem;
   bottom: 0;
   left: 0;
   right: 0;

@@ -5,6 +5,7 @@ var PlaylistDrawer = function(){
       "playlistDrawerTitleContent",
       "playlistDrawerTitleBack",
       "playlistDrawerTitleDel",
+      "playlistDrawerTitleRename",
       "playlistDrawerPlaylists",
       "playlistDrawerPlaylistItems",
   ]);
@@ -12,7 +13,8 @@ var PlaylistDrawer = function(){
   this.dom.title = this.dom.playlistDrawerTitle
   this.dom.titleContent = this.dom.playlistDrawerTitleContent;
 
-  this.playlist = new PlaylistView(this.dom.playlistDrawerPlaylistItems);
+  var hideAlbumArt = true;
+  this.playlist = new PlaylistView(this.dom.playlistDrawerPlaylistItems, hideAlbumArt);
   this.playlistList = new UIItemList(this.dom.playlistDrawerPlaylists);
 
   this.lastCurrentPlaylist = null;
@@ -22,10 +24,13 @@ var PlaylistDrawer = function(){
 
   Utils.setupPassEvent(this, 'createPlaylist');
   Utils.setupPassEvent(this, 'deletePlaylist');
+  Utils.setupPassEvent(this, 'renamePlaylist');
   Utils.setupPassEvent(this, 'switchPlaylist');
 
   Utils.onButtonTap(this.dom.playlistDrawerTitleBack, this.switchToPlaylistView.bind(this));
   Utils.onButtonTap(this.dom.playlistDrawerTitleDel, this.deleteCurrentPlaylist.bind(this));
+
+  Utils.onButtonTap(this.dom.playlistDrawerTitleRename, this.renameCurrentPlaylist.bind(this));
 
 }
 
@@ -37,8 +42,10 @@ PlaylistDrawer.prototype = {
       var playlist = playlists[playlistId];
       if (playlist.temporary)
         continue;
-      if (playlistId === this.selectedPlaylistId)
+      if (playlistId === this.selectedPlaylistId){
         this.playlist.setPlaylist(playlist, playlistId);
+        this.dom.titleContent.innerHTML = playlist.title;
+      }
       var item = this.uiItemFromPlaylist(playlist, playlistId);
       this.playlistListItems[playlistId] = item;
       this.playlistList.append(item);
@@ -105,13 +112,19 @@ PlaylistDrawer.prototype = {
     this.switchToPlaylistView();
     this.deletePlaylist(playlist);
   },
+  renameCurrentPlaylist: function(){
+      var title = prompt("Playlist Name:");
+      this.renamePlaylist(this.selectedPlaylistId, title);
+  },
   uiItemNewPlaylist: function(){
     var content = document.createElement('div');
     content.classList.add('playlistTitle');
     content.innerHTML = 'create playlist';
 
     Utils.onButtonTap(content, function(){
-      var title = prompt("Playlist Name:", "new playlist");
+      var title = prompt("Playlist Name:");
+      if (title === null)
+        return;
       this.createPlaylist(title);
     }.bind(this));
     
