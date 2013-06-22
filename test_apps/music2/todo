@@ -24,7 +24,11 @@ core
     edit playlist view w/out switching
     create playlist from template
 
+    apply your * -> html script for faster loading
+
   ===================== maintainability =====================
+
+    refactor playlistManager into manager/saving
 
 =====================
 music library
@@ -34,14 +38,22 @@ music library
     favoriting
     search
     proper sorting
+    album art next to album titles
 
   ===================== bugs =====================
 
+*    better queries for performance
+*    buffer at bottom of lists so now playing doesn't hide items
+
   ===================== enhancements =====================
 
-    loading indicator
+    panel loading indicator
+    way to hide musicdb notifications
+    panel switch transitions
 
   ===================== maintainability =====================
+
+    separate out notification management code from main .js
 
 =====================
 internet radio
@@ -49,6 +61,7 @@ internet radio
   ==================== features =====================
     
     custom urls
+    search besides icecast
 
   ===================== bugs =====================
 
