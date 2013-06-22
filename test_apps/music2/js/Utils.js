@@ -1,5 +1,7 @@
 console.log('=======================================================');
 
+window.startTime = Date.now();
+
 var Utils = {
   size: function(obj){
     var i = 0;

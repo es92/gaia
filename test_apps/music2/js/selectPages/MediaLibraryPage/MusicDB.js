@@ -1,5 +1,5 @@
 var MusicDB = function(){
-  this.db = new MediaDB('music', parseAudioMetadata, {
+  this.mediaDB = new MediaDB('music', parseAudioMetadata, {
     indexes: ['metadata.album', 'metadata.artist', 'metadata.title', 'metadata.genre',
               'metadata.rated', 'metadata.played', 'date'],
     batchSize: 1,
@@ -8,43 +8,51 @@ var MusicDB = function(){
   });
 
   Utils.setupPassEvent(this, 'isReady');
+  Utils.setupPassEvent(this, 'musicChanged');
+  Utils.setupPassEvent(this, 'musicDeleted');
+  Utils.setupPassEvent(this, 'musicCreated');
 
-  this.getFile = this.db.getFile.bind(this.db);
+  this.getFile = this.mediaDB.getFile.bind(this.mediaDB);
 
   this.cache = {};
 
   this.ready = false;
 
-  this.db.onunavailable = function(event) {
-    console.log('unavailable');
-  };
+  this.mediaDB.onunavailable = function(event) { console.log('unavailable'); };
+  this.mediaDB.oncardremoved = function(event){ console.log('removed'); };
 
-  this.db.oncardremoved = function(event){
-    console.log('removed');
-  };
+  this.numberCreated = 0;
+  this.numberDeleted = 0;
 
-  this.db.onready = function() {
+  this.mediaDB.oncreated = function(event) {
+    console.log('created'); 
+    this.numberCreated += 1;
+    this.musicCreated(event);
+  }.bind(this);
+  this.mediaDB.ondeleted = function(event) {
+    console.log('deleted'); 
+    this.numberDeleted += 1;
+    this.musicDeleted(event);
+  }.bind(this);
+
+  this.mediaDB.onready = function() {
     console.log('ready');
-    this.db.scan();
-  }.bind(this);
-
-  this.db.onscanstart = function() {
-    console.log('scanstart');
-  };
-
-  this.db.onscanend = function() {
-    console.log('scanend');
-    this.isReady();
     this.ready = true;
+    this.mediaDB.scan();
+    this.isReady();
   }.bind(this);
 
-  this.db.oncreated = function(event) {
-    console.log('created');
-  };
+  this.mediaDB.onscanstart = function() { console.log('scanstart'); };
 
-  this.db.ondeleted = function(event) {
-    console.log('deleted');
-  };
+  this.mediaDB.onscanend = function() {
+    console.log('scanend');
+    if (this.numberCreated > 0 ||
+        this.numberDeleted > 0){
+      this.cache = {};
+      this.musicChanged(this.numberCreated, this.numberDeleted);
+    }
+  }.bind(this);
+
 }
 
 MusicDB.prototype = {
@@ -53,7 +61,7 @@ MusicDB.prototype = {
       setTimeout(function(){ this.getGenres(done); }.bind(this), 100);
       return;
     }
-    this.db.enumerateAll('metadata.genre', null, 'nextunique', 
+    this.mediaDB.enumerateAll('metadata.genre', null, 'nextunique', 
         function(items){
           var genres = [];
           for (var i = 0; i < items.length; i++){
@@ -68,7 +76,7 @@ MusicDB.prototype = {
       setTimeout(function(){ this.getArtists(genre, done); }.bind(this), 100);
       return;
     }
-    this.db.enumerateAll('metadata.artist', null, 'nextunique', 
+    this.mediaDB.enumerateAll('metadata.artist', null, 'nextunique', 
         function(items){
           var artists = [];
           for (var i = 0; i < items.length; i++){
@@ -85,7 +93,7 @@ MusicDB.prototype = {
       setTimeout(function(){ this.getAlbums(genre, artist, done); }.bind(this), 100);
       return;
     }
-    this.db.enumerateAll('metadata.album', null, 'nextunique', 
+    this.mediaDB.enumerateAll('metadata.album', null, 'nextunique', 
         function(items){
           var albums = [];
           for (var i = 0; i < items.length; i++){
@@ -114,7 +122,7 @@ MusicDB.prototype = {
       }, 0);
       return;
     }
-    this.db.enumerateAll('metadata.title', null, 'nextunique', 
+    this.mediaDB.enumerateAll('metadata.title', null, 'nextunique', 
         function(items){
           var songs = [];
           for (var i = 0; i < items.length; i++){
@@ -136,17 +144,13 @@ MusicDB.prototype = {
       setTimeout(function(){ this.getSong(title, done); }.bind(this), 100);
       return;
     }
-    this.db.enumerateAll('metadata.title', null, 'nextunique', 
-        function(items){
-          for (var i = 0; i < items.length; i++){
-            var item = items[i];
-            if (item.metadata.title === title){
-              done(item);
-              return;
-            }
-          }
-          done(null);
-        }.bind(this));
+    var store = this.mediaDB.db.transaction('files').objectStore('files');
+    store = store.index('metadata.title');
+    var request = store.get(title);
+    request.onerror = this.logError.bind(this);
+    request.onsuccess = function(event) {
+      done(request.result);
+    };
   },
   getAlbumArtAsURL: function(song, done){
     if (!this.ready){
@@ -159,5 +163,8 @@ MusicDB.prototype = {
       }
       done(url); 
     });
+  },
+  logError: function(event){
+      console.warn('ERROR:', event);
   }
 }

@@ -27,6 +27,9 @@ MediaLibraryPagePanelManager.prototype = {
     if (this.panels.length > 1)
       this.dom.mediaLibraryPagePanelPop.classList.remove('hidden');
   },
+  refresh: function(){
+    this.setPanel(this.currentPanel);
+  },
   popPanel: function(){
     if (this.panels.length > 1){
       var oldPanel = this.panels.pop();

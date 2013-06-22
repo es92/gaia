@@ -4,6 +4,7 @@
 }
 
 
+
 #mediaLibraryPagePanel {
   position: absolute;
   left: 0;
@@ -14,9 +15,81 @@
 
 /*======================================*/
 
+#mediaLibraryPagePanelNotifications {
+  position: absolute;
+  top: 0rem;
+  height: 3.5rem;
+  left: 1rem;
+  right: 1rem;
+  border: 1px solid #445;
+  border-top: none;
+  background: rgba(0, 0, 0, .75);
+  z-index: 3;
+}
+
+#mediaLibraryPagePanelNotifications.up {
+  top: -4rem;
+}
+
+#mediaLibraryPagePanelNotifications .text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  text-align: center;
+  line-height: 3.5rem;
+  font-size: 1.333333em;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#mediaLibraryPagePanelNotifications .question {
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  bottom: 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+#mediaLibraryPagePanelNotifications .no,
+#mediaLibraryPagePanelNotifications .yes {
+  position: absolute;
+  top: 0;
+  width: 20%;
+  bottom: 0;
+}
+
+
+#mediaLibraryPagePanelNotifications .no {
+  left: 0;
+  background-image: url('../../style/up.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 50%;
+}
+
+#mediaLibraryPagePanelNotifications .yes {
+  right: 0;
+  background-image: url('../../style/images/IconAction_Media_RepeatList_30x30.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 80%;
+}
+
+/*======================================*/
+
 #mediaLibraryPagePanelTitle {
   border-bottom: 1px solid #aac;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 #mediaLibraryPagePanelTitleText {
