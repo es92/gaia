@@ -29,6 +29,7 @@
 
 #mediaLibraryPagePanelNotifications.up {
   top: -4rem;
+  opacity: 0;
 }
 
 #mediaLibraryPagePanelNotifications .text {
