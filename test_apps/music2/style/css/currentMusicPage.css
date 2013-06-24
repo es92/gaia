@@ -62,11 +62,11 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 60%;
-  background-image: url('../style/images/IconAction_Media_Play_30x30.png');
+  background-image: url('../images/IconAction_Media_Play_30x30.png');
 }
 
 #nowPlayingTogglePlay.pause {
-  background-image: url('../style/images/IconAction_Media_Pause_30x30.png');
+  background-image: url('../images/IconAction_Media_Pause_30x30.png');
 }
 
 
@@ -82,11 +82,11 @@
   background-repeat: no-repeat;
   background-position: center top;
   background-size: auto 200%;
-  background-image: url('../style/images/iconaction_media_playlistfilter.png');
+  background-image: url('../images/iconaction_media_playlistfilter.png');
 }
 
 #toggleCurrentMusicPageView.switchSong {
-  background-image: url('../style/images/iconaction_media_albumfilter.png');
+  background-image: url('../images/iconaction_media_albumfilter.png');
 }
 
 #currentSourceView {

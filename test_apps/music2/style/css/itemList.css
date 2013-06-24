@@ -56,14 +56,14 @@
   top: 3em;
   width: 3em;
   height: 3em;
-  background-image: url('../style/down.png');
+  background-image: url('../down.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 50% auto;
 }
 
 .uiItem > .toggleMore.unhide {
-  background-image: url('../style/up.png');
+  background-image: url('../up.png');
 }
 
 .uiItem > .more {

@@ -14,7 +14,7 @@
   width: 100%;
   -moz-box-sizing: border-box;
 
-  background-image: url('../style/images/scroll_bar_bg.png');
+  background-image: url('../images/scroll_bar_bg.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
@@ -43,31 +43,31 @@
 }
 
 #playPrev {
-  background-image: url('../style/images/IconAction_Media_SkipBackwards_30x30.png');
+  background-image: url('../images/IconAction_Media_SkipBackwards_30x30.png');
 }
 
 #playNext {
-  background-image: url('../style/images/IconAction_Media_SkipForward_30x30.png');
+  background-image: url('../images/IconAction_Media_SkipForward_30x30.png');
 }
 
 #togglePlay {
-  background-image: url('../style/images/IconAction_Media_Play_30x30.png');
+  background-image: url('../images/IconAction_Media_Play_30x30.png');
 }
 
 #togglePlay.pause {
-  background-image: url('../style/images/IconAction_Media_Pause_30x30.png');
+  background-image: url('../images/IconAction_Media_Pause_30x30.png');
 }
 
 #togglePlay.disabled {
-  background-image: url('../style/play_disabled.png');
+  background-image: url('../play_disabled.png');
 }
 
 #playNext.disabled {
-  background-image: url('../style/forward_disabled.png');
+  background-image: url('../forward_disabled.png');
 }
 
 #playPrev.disabled {
-  background-image: url('../style/backwards_disabled.png');
+  background-image: url('../backwards_disabled.png');
 }
 
 #seekBar {
@@ -81,7 +81,7 @@
 }
 
 #seekBarProgress {
-  background-image: url("../style/images/timeline.png");
+  background-image: url("../images/timeline.png");
   position: absolute;
   width: 100%;
   left: 0;
@@ -94,7 +94,7 @@
 }
 
 #seekBarProgress::-moz-progress-bar {
-  background: url("../style/images/timeline_filled.png");
+  background: url("../images/timeline_filled.png");
   border-radius: 0.5rem;
 }
 
@@ -104,7 +104,7 @@
   height: 2em;
   width: 2em;
   top: calc(50% - 1em);
-  background-image: url("../style/images/scrubber.png");
+  background-image: url("../images/scrubber.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto 70%;

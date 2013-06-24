@@ -62,12 +62,12 @@
 }
 
 .playlistViewItem .beingPlayedIcon {
-  background-image: url('../style/images/IconAction_Media_Play_30x30.png');
+  background-image: url('../images/IconAction_Media_Play_30x30.png');
   background-size: 80% auto;
 }
 
 .playlistViewItem .beingPausedIcon {
-  background-image: url('../style/images/IconAction_Media_Pause_30x30.png');
+  background-image: url('../images/IconAction_Media_Pause_30x30.png');
   background-size: 80% auto;
 }
 

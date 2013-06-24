@@ -27,7 +27,7 @@
   bottom: 0;
   width: 2.5rem;
 
-  background-image: url('../style/headers/images/icons/back.png');
+  background-image: url('../headers/images/icons/back.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 80% auto;
@@ -45,7 +45,7 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 80%;
-  background-image: url(../style/headers/images/ui/dark/separator.png);
+  background-image: url(../headers/images/ui/dark/separator.png);
 }
 
 #playlistDrawerTitleRename {
@@ -55,7 +55,7 @@
   top: 3rem;
   bottom: 0;
 
-  background-image: url('../style/headers/images/icons/compose.png');
+  background-image: url('../headers/images/icons/compose.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 60%;
@@ -68,7 +68,7 @@
   top: 3rem;
   bottom: 0;
 
-  background-image: url('../style/minus-del.png');
+  background-image: url('../minus-del.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 60%;
@@ -105,11 +105,11 @@
 
 #playlistDrawerPlaylists .icon {
   background-size: 60% auto;
-  background-image: url('../style/radio-unchecked.png');
+  background-image: url('../radio-unchecked.png');
 }
 
 #playlistDrawerPlaylists .currentPlaylist {
-  background-image: url('../style/radio-checked.png');
+  background-image: url('../radio-checked.png');
 }
 
 .playlistTitle {
@@ -124,7 +124,7 @@
 }
 
 #playlistDrawerPlaylists .gotoPlaylistButton {
-  background-image: url('../style/headers/images/icons/back-rtl.png');
+  background-image: url('../headers/images/icons/back-rtl.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 80% auto;
@@ -151,7 +151,7 @@
   left: 0;
   width: 50%;
   height: 100%;
-  background-image: url('../style/minus-del.png');
+  background-image: url('../minus-del.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 80%;
@@ -163,7 +163,7 @@
   right: 0;
   width: 50%;
   height: 100%;
-  background-image: url('../style/headers/images/icons/compose.png');
+  background-image: url('../headers/images/icons/compose.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 80%;
