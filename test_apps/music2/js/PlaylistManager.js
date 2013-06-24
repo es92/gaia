@@ -27,6 +27,7 @@ var PlaylistManager = function(currentPageUI, playlistDrawerUI){
   this.ui.controls.onplayNext = this.playNext.bind(this);
   this.ui.controls.onplay = this.play.bind(this);
   this.ui.controls.onpause = this.pause.bind(this);
+  this.ui.controls.seekBar.onrequestSetTime = this.setTime.bind(this);
 
   this.ui.playlist.ondeleteItemFromPlaylist = this.deleteItemFromPlaylist.bind(this);
   this.ui.playlist.onswitchToPlaylistItem = this.switchToPlaylistItem.bind(this);
@@ -44,10 +45,12 @@ var PlaylistManager = function(currentPageUI, playlistDrawerUI){
   this.audioPlayer.onisEnded = this.currentEnded.bind(this);
   this.audioPlayer.onisPaused = this.ui.controls.setPaused.bind(this.ui.controls);
   this.audioPlayer.onisPlaying = this.ui.controls.setPlaying.bind(this.ui.controls);
+  this.audioPlayer.onisStopped = this.ui.controls.seekBar.disable.bind(this.ui.controls.seekBar);
   this.audioPlayer.onsetTotalTime = this.ui.controls.seekBar.setTotalTime.bind(this.ui.controls.seekBar);
   this.audioPlayer.onsetCurrentTime = this.ui.controls.seekBar.setCurrentTime.bind(this.ui.controls.seekBar);
 
   this.ui.source.setInfo(null);
+  this.ui.controls.seekBar.disable();
 }
 
 PlaylistManager.prototype = {
@@ -120,6 +123,9 @@ PlaylistManager.prototype = {
     playlist.pause(this.audioPlayer);
     this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
     this.ui.playlists.setCurrentPlaylist(this.currentPlaylistId, 'pause');
+  },
+  setTime: function(time){
+    this.audioPlayer.setTime(time);
   },
   playNext: function(){
     if (this.currentPlaylistId === null)

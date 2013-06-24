@@ -1,23 +1,45 @@
 var SeekBar = function(){
-  this.init();
+  Utils.loadDomIds(this, [
+      'seekElapsed',
+      'seek',
+      'seekBar',
+      'seekBarProgress',
+      'seekBarIndicator',
+      'seekRemaining'
+  ]);
+
+  Utils.setupPassEvent(this, 'requestSetTime');
+
+  this.dom.seek.addEventListener('touchstart', this.touchstart.bind(this));
+  this.dom.seek.addEventListener('touchend', this.touchend.bind(this));
+  this.dom.seek.addEventListener('touchmove', this.touchmove.bind(this));
+
   this.total = 0;
   this.current = 0;
 }
 
 SeekBar.prototype = {
-  init: function(){
-    this.dom = {};
-    var ids = [
-      'seekElapsed',
-      'seekBar',
-      'seekBarProgress',
-      'seekBarIndicator',
-      'seekRemaining'
-    ];
-    for (var i = 0; i < ids.length; i++){
-      var id = ids[i];
-      this.dom[id] = document.getElementById(id);
-    }
+  touchstart: function(e){
+    if (this.dom.seekBarIndicator.disabled)
+      return;
+    this.dom.seekBarIndicator.classList.add('highlight');
+  },
+  touchend: function(e){
+    if (this.dom.seekBarIndicator.disabled)
+      return;
+    this.dom.seekBarIndicator.classList.remove('highlight');
+  },
+  touchmove: function(e){
+    if (this.dom.seekBarIndicator.disabled)
+      return;
+    var x = e.touches[0].clientX;
+    var percent = (x - this.dom.seekBar.offsetLeft)/this.dom.seekBarProgress.offsetWidth;
+    if (percent < 0)
+      percent = 0;
+    if (percent > 1)
+      percent = 1;
+    var newCurrentTime = this.total*percent;
+    this.requestSetTime(newCurrentTime);
   },
   setCurrentTime: function(seconds){
     this.current = seconds;
@@ -38,10 +60,10 @@ SeekBar.prototype = {
     var progressPercent = 0;
     if (this.total !== 0)
       progressPercent = this.current / this.total;
+    if (window.isNaN(progressPercent))
+      progressPercent = 0;
     var x = progressPercent * this.dom.seekBarProgress.offsetWidth - this.dom.seekBarIndicator.offsetWidth/2;
-    if (!window.isNaN(x)){
-      this.dom.seekBarIndicator.style.transform = 'translateX(' + x + 'px)';
-    }
+    this.dom.seekBarIndicator.style.transform = 'translateX(' + x + 'px)';
   },
   setTime: function(elem, seconds){
     var mins = Math.floor(seconds/60);
@@ -55,5 +77,15 @@ SeekBar.prototype = {
     else if (secs < 10)
       secs = '0' + secs;
     elem.innerHTML = mins + ':' + secs;
+  },
+  disable: function(){
+    this.dom.seekBarIndicator.classList.add('disabled');
+    this.dom.seekBarIndicator.disabled = true;
+    this.setTotalTime(null);
+    this.setCurrentTime(null);
+  },
+  enable: function(){
+    this.dom.seekBarIndicator.classList.remove('disabled');
+    this.dom.seekBarIndicator.disabled = false;
   }
 }

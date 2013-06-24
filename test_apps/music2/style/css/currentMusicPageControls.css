@@ -7,12 +7,13 @@
   -moz-box-sizing: border-box;
 }
 
-#currentMusicPage .controls .seek {
+#seek {
   position: absolute;
   height: 2em;
   top: 0;
   width: 100%;
   -moz-box-sizing: border-box;
+  overflow: hidden;
 
   background-image: url('../images/scroll_bar_bg.png');
   background-repeat: no-repeat;
@@ -101,18 +102,28 @@
 #seekBarIndicator {
   position: absolute;
   -moz-box-sizing: border-box;
-  height: 2em;
-  width: 2em;
-  top: calc(50% - 1em);
+  height: 4em;
+  width: 4em;
+  top: calc(50% - 2em);
   background-image: url("../images/scrubber.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: auto 70%;
+  background-size: auto 60%;
   border-radius: 50%;
   background-color: transparent;
   transition: background-color 300ms ease,
               border 300ms ease;
   pointer-events: none;
+  border: solid 0.8rem rgba(0, 0, 0, 0.0);
+}
+
+#seekBarIndicator.disabled {
+  background-image: url("../scrubber_disable.png");
+}
+
+#seekBarIndicator.highlight {
+  background-color: rgba(0, 180, 225, 0.85);
+  border: solid 0.8rem rgba(0, 0, 0, 0.3);
 }
 
 #seekElapsed {

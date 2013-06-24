@@ -32,6 +32,7 @@ CurrentMusicPageControls.prototype = {
   setPlaying: function(){
     this.dom.togglePlay.classList.add('pause');
     this.dom.nowPlayingTogglePlay.classList.add('pause');
+    this.seekBar.enable();
   },
   setPaused: function(){
     this.dom.togglePlay.classList.remove('pause');
@@ -45,6 +46,7 @@ CurrentMusicPageControls.prototype = {
     this.dom.togglePlay.disabled = true;
     this.dom.playPrev.disabled = true;
     this.dom.playNext.disabled = true;
+    this.seekBar.disable();
   },
   enable: function(){
     this.dom.togglePlay.classList.remove('disabled');
