@@ -48,7 +48,6 @@ music library
   ===================== bugs =====================
 
 *    better queries for performance
-*    buffer at bottom of lists so now playing doesn't hide items
 
   ===================== enhancements =====================
 
@@ -71,8 +70,6 @@ internet radio
     categories
 
   ===================== bugs =====================
-
-*    buffer at bottom of lists so now playing doesn't hide items
 
   ===================== enhancements =====================
 

@@ -42,3 +42,7 @@
   background-size: auto 60%;
   background-image: url('../../images/IconAction_Media_Play_30x30.png');
 }
+
+#internetRadioStations > *:last-child {
+  margin-bottom: 4rem;
+}

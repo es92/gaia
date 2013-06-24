@@ -230,6 +230,7 @@
   overflow-y: auto;
 }
 
+
 #mediaLibraryPagePanelSubCategories {
   font-size: 1.5em;
   padding-left: 1em;
@@ -288,6 +289,10 @@
   padding-left: 0;
   color: white;
   padding-bottom: .25em;
+}
+
+#mediaLibraryPagePanelItems > *:last-child {
+  margin-bottom: 4rem;
 }
 
 #mediaLibraryPagePanelItems .gotoPanelButton {
