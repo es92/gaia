@@ -1,4 +1,6 @@
-var MediaLibraryPagePanelView = function(musicDB, panel){
+var MediaLibraryPagePanelView = function(musicDB, panel, done){
+
+  this.done = done;
 
   this.musicDB = musicDB;
   Utils.loadDomIds(this, [
@@ -203,20 +205,25 @@ MediaLibraryPagePanelView.prototype = {
     if (items.length > MAX_ITEMS_SYNCHRONOUS){ 
       var i = 0;
       var next = function(){
-        if (i >= items.length || this.inactive)
+        if (i >= items.length || this.inactive){
           return;
+        }
         var item = items[i];
         this.renderItem(item);
         i++;
         setTimeout(next, 0);
       }.bind(this);
       setTimeout(next, 0);
+      if (this.done) 
+        this.done();
     }
     else {
       for (var i = 0; i < items.length; i++){
         var item = items[i];
         this.renderItem(item);
       }
+      if (this.done) 
+        this.done();
     }
   },
   renderItem: function(item){

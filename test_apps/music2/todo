@@ -18,6 +18,7 @@ core
     autoresume after wait and canplay
 *    add temporary playlist as 'now playing' in playlist list
     possibly inconsistant album art
+    showing sources as unavailable
 
   ===================== enhancements =====================
 
@@ -47,14 +48,13 @@ music library
   ===================== bugs =====================
 
 *    better queries for performance
+    show source as unavailable
 
   ===================== enhancements =====================
 
     panel loading indicator
     way to hide musicdb notifications
     panel switch transitions
-    don't show resync first time
-    hide refreshing when its actually done refreshing
 
   ===================== maintainability =====================
 

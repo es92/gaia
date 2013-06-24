@@ -27,8 +27,8 @@ MediaLibraryPagePanelManager.prototype = {
     if (this.panels.length > 1)
       this.dom.mediaLibraryPagePanelPop.classList.remove('hidden');
   },
-  refresh: function(){
-    this.setPanel(this.currentPanel);
+  refresh: function(done){
+    this.setPanel(this.currentPanel, done);
   },
   popPanel: function(){
     if (this.panels.length > 1){
@@ -58,11 +58,11 @@ MediaLibraryPagePanelManager.prototype = {
     }
     this.pageBridge.createTemporaryPlaylistFromSources(this.panelView.currentTitle, sources);
   },
-  setPanel: function(panel){
+  setPanel: function(panel, done){
     if (this.panelView)
       this.panelView.inactive = true;
     this.currentPanel = panel;
-    this.panelView = new MediaLibraryPagePanelView(this.musicDB, panel);
+    this.panelView = new MediaLibraryPagePanelView(this.musicDB, panel, done);
     this.panelView.ongotoSubcategory = this.gotoSubcategoryPanel.bind(this);
     this.panelView.ongotoItem = this.gotoItemPanel.bind(this);
     this.panelView.onplaySong = this.playSong.bind(this);

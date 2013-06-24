@@ -34,49 +34,39 @@ var MediaLibraryPage = function(pageBridge){
     this.notifications.alert('found: ' + event.detail[0].metadata.title, 2000);
   }.bind(this);
 
-  this.musicDB.onmusicChanged = function(numberCreated, numberDeleted){
-    var question = Utils.classDiv('question');
-    var text = '';
-    if (numberCreated > 0){
-      if (numberCreated === 1)
-        text += ' song added,<br>'
-      else 
-        text += numberCreated + ' songs added,<br>'
-    }
-    if (numberDeleted > 0){
-      if (numberDeleted === 1)
-        text += '1 song removed,<br>'
-      else 
-        text += numberDeleted + ' songs removed,<br>'
-    }
-    text += 'refresh?';
-    question.innerHTML = text;
-    var yes = Utils.classDiv('yes');
-    var no = Utils.classDiv('no');
-
-    this.notifications.empty();
-    this.notifications.append(no);
-    this.notifications.append(question);
-    this.notifications.append(yes);
-    this.notifications.show();
-
-    Utils.onButtonTap(yes, function(){
-      this.panelManager.refresh();
-      this.notifications.hide();
-      setTimeout(function(){
-        this.notifications.alert('refreshing... (please wait a moment)', 2000);
-      }.bind(this), 500);
-    }.bind(this));
-
-    Utils.onButtonTap(no, function(){
-      this.notifications.hide();
-    }.bind(this));
-  }.bind(this);
-
+  this.musicDB.onmusicChanged = this.musicChanged.bind(this);
 }
 
 MediaLibraryPage.prototype = {
   name: "Music Library",
+  musicChanged: function(numberCreated, numberDeleted){
+    if (window.localStorage.hasBeenLaunched){
+      this.notifications.askForRefresh(numberCreated, numberDeleted, function(){
+
+        var hideNotification = null;
+        var onDone = function(){
+          if (hideNotification)
+            hideNotification();
+        }
+        this.panelManager.refresh(onDone);
+
+        this.notifications.hide();
+
+        setTimeout(function(){
+          hideNotification = this.showRefreshing();
+        }.bind(this), 500);
+      }.bind(this));
+    }
+    else {
+      window.localStorage.hasBeenLaunched = true;
+      var onDone = this.showRefreshing();
+      this.panelManager.refresh(onDone);
+    }
+  },
+  showRefreshing: function(){
+      this.notifications.alert('refreshing music...');
+      return this.notifications.hide.bind(this.notifications);
+  },
   unserialize: function(serializedSource){
     return new FileAudioSource(this.musicDB, serializedSource);
   },
