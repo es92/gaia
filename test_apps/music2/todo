@@ -8,8 +8,8 @@ core
 
   ===================== bugs =====================
 
-    manually move seekbar
-    change appearance of seekbar when controls disabled
+**    manually move seekbar
+*    change appearance of seekbar when controls disabled
 *    more performant playlist manipulation
     show tracknumber if doesn't match playlist number
     show info about buffering
@@ -19,14 +19,15 @@ core
 
   ===================== enhancements =====================
 
-    add animation for switch playlist/source
+*    add animation for switch playlist/source
     save inactive pages to canvas, use canvas for transitions
     edit playlist view w/out switching
-    create playlist from template
+**    create playlist from template
 
     apply your * -> html script for faster loading
 
     replace trash can with item signifying remove, not delete
+    change playlist list playlist order
 
   ===================== maintainability =====================
 
@@ -40,7 +41,7 @@ music library
     favoriting
     search
     proper sorting
-    album art next to album titles
+**    album art next to album titles
 
   ===================== bugs =====================
 
@@ -64,7 +65,7 @@ internet radio
     
     custom urls
     search besides icecast
-    categories
+**    categories
 
   ===================== bugs =====================
 
