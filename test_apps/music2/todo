@@ -16,6 +16,10 @@ core
     show tracknumber if doesn't match playlist number
     show info about buffering
     autoresume after wait and canplay
+*    replace red line with better delete icon
+*    add temporary playlist as 'now playing' in playlist list
+*    possibly inconsistant album art
+*    switch music source on tap
 
   ===================== enhancements =====================
 
@@ -23,6 +27,7 @@ core
     save inactive pages to canvas, use canvas for transitions
     edit playlist view w/out switching
     create playlist from template
+    tap album art to hide track data
 
     apply your * -> html script for faster loading
 
@@ -50,6 +55,7 @@ music library
     panel loading indicator
     way to hide musicdb notifications
     panel switch transitions
+    change resync wording
 
   ===================== maintainability =====================
 
@@ -62,8 +68,11 @@ internet radio
     
     custom urls
     search besides icecast
+    categories
 
   ===================== bugs =====================
+
+*    buffer at bottom of lists so now playing doesn't hide items
 
   ===================== enhancements =====================
 
