@@ -136,6 +136,9 @@ PlaylistManager.prototype = {
     if (!playlist.atEnd()){
       this.play();
     }
+    else {
+      this.ui.controls.setPaused();
+    }
     this.ui.playlist.setPlaylist(playlist, this.currentPlaylistId);
   },
   playPrev: function(){
