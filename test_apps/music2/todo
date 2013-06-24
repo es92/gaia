@@ -6,8 +6,6 @@ core
 =====================
   ==================== features =====================
 
-    add titles to headers
-
   ===================== bugs =====================
 
     manually move seekbar
@@ -58,8 +56,6 @@ music library
     A-Z view for songs (with skip to letter)
 
   ===================== maintainability =====================
-
-    separate out notification management code from main .js
 
 =====================
 internet radio

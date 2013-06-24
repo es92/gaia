@@ -13,6 +13,7 @@ ViewVisibility.prototype = {
       'settingsMetaDrawer',
       'playlistDrawer',
       'currentMusicPage',
+      'currentMusicPageHeaderTitle',
       'selectMusicPage',
 
       'gotoCurrentMusicPage',
@@ -48,6 +49,7 @@ ViewVisibility.prototype = {
       this.dom.currentMusicPage.classList.add('center');
 
       TransitionUtils.fadeIn(this.dom.gotoSelectMusicPage);
+      TransitionUtils.fadeIn(this.dom.currentMusicPageHeaderTitle);
       TransitionUtils.fadeIn(this.dom.togglePlaylistDrawer, function(){
         this.locked = false;
       }.bind(this));
@@ -90,7 +92,7 @@ ViewVisibility.prototype = {
 
     this.dom.selectMusicPage.classList.remove('hidden');
 
-    var numTodo = 3;
+    var numTodo = 4;
     var next = function(){
       numTodo -= 1
       if (numTodo === 0)
@@ -100,6 +102,7 @@ ViewVisibility.prototype = {
     TransitionUtils.fadeIn(this.dom.contentOverlay, next);
     TransitionUtils.fadeOut(this.dom.togglePlaylistDrawer, next);
     TransitionUtils.fadeOut(this.dom.gotoSelectMusicPage, next);
+    TransitionUtils.fadeOut(this.dom.currentMusicPageHeaderTitle, next);
   },
   toggleMetaDrawer: function(){
     if (this.locked)

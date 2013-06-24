@@ -262,6 +262,12 @@ PlaylistManager.prototype = {
     else {
       this.ui.controls.enable();
     }
+    if (playlistId === null){
+      this.ui.setTitle('');
+    }
+    else {
+      this.ui.setTitle(currentPlaylist.title);
+    }
   },
   savePlaylists: function(){
     var serializedPlaylists = {};
