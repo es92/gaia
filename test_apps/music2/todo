@@ -16,7 +16,6 @@ core
     show tracknumber if doesn't match playlist number
     show info about buffering
     autoresume after wait and canplay
-*    replace red line with better delete icon
 *    add temporary playlist as 'now playing' in playlist list
     possibly inconsistant album art
 
@@ -29,6 +28,8 @@ core
     tap album art to hide track data
 
     apply your * -> html script for faster loading
+
+    replace trash can with item signifying remove, not delete
 
   ===================== maintainability =====================
 

@@ -106,6 +106,8 @@ UIItemDrag.prototype = {
     if (!next)
       return;
 
+    if (next.getBoundingClientRect === undefined)
+      return;
     var nextRect = next.getBoundingClientRect();
     var center = nextRect.top + nextRect.height/2;
 

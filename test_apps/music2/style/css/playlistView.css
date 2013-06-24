@@ -55,10 +55,10 @@
 .playlistViewItem .playlistItemDelete {
   width: 100%;
   height: 100%;
-  background-image: url('../style/minus-del.png');
+  background-image: url('../iconaction_delete_30x30.png');
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: 50% auto;
+  background-size: 60% auto;
 }
 
 .playlistViewItem .beingPlayedIcon {
