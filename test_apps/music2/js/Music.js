@@ -60,6 +60,9 @@ Music.prototype = {
       function onActivate(){
         page.activate();
         window.localStorage.lastPageName = page.name;
+        setTimeout(function(){
+          this.ui.viewVisibility.hideMetaDrawer();
+        }.bind(this), 250);
       }.bind(this),
       function onDeactivate(){
         page.deactivate();

@@ -141,7 +141,10 @@ ViewVisibility.prototype = {
       slide(); 
     }
 
-
+  },
+  hideMetaDrawer: function(){
+    if (this.dom.content.classList.contains('partialRight'))
+      this.toggleMetaDrawer();
   },
   togglePlaylistDrawer: function(){
     if (this.locked)

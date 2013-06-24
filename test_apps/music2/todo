@@ -18,8 +18,7 @@ core
     autoresume after wait and canplay
 *    replace red line with better delete icon
 *    add temporary playlist as 'now playing' in playlist list
-*    possibly inconsistant album art
-*    switch music source on tap
+    possibly inconsistant album art
 
   ===================== enhancements =====================
 
@@ -54,7 +53,8 @@ music library
     panel loading indicator
     way to hide musicdb notifications
     panel switch transitions
-    change resync wording
+    don't show resync first time
+    hide refreshing when its actually done refreshing
 
   ===================== maintainability =====================
 
