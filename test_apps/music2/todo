@@ -16,7 +16,6 @@ core
     show tracknumber if doesn't match playlist number
     show info about buffering
     autoresume after wait and canplay
-*    add temporary playlist as 'now playing' in playlist list
     possibly inconsistant album art
     showing sources as unavailable
 
@@ -55,6 +54,8 @@ music library
     panel loading indicator
     way to hide musicdb notifications
     panel switch transitions
+
+    A-Z view for songs (with skip to letter)
 
   ===================== maintainability =====================
 

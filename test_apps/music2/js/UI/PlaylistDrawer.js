@@ -40,8 +40,6 @@ PlaylistDrawer.prototype = {
     this.playlistList.empty();
     for (var playlistId in playlists){
       var playlist = playlists[playlistId];
-      if (playlist.temporary)
-        continue;
       if (playlistId === this.selectedPlaylistId){
         this.playlist.setPlaylist(playlist, playlistId);
         this.dom.titleContent.innerHTML = playlist.title;
@@ -76,8 +74,14 @@ PlaylistDrawer.prototype = {
       this.switchPlaylist(id);
     }.bind(this));
 
+
     var gotoPlaylistButton = document.createElement('div');
     gotoPlaylistButton.classList.add('gotoPlaylistButton');
+
+    if (playlist.temporary){
+      gotoPlaylistButton.classList.add('temporary');
+      content.classList.add('temporary');
+    }
 
     Utils.onButtonTap(gotoPlaylistButton, function(){
       this.switchToPlaylistItemView(playlist, id);
