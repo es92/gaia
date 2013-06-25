@@ -158,9 +158,9 @@ MediaLibraryPagePanelView.prototype = {
     var albums = {};
     for (var i = 0; i < items.length; i++){
       var item = items[i];
-      genres[item.metadata.genre] = '';
-      artists[item.metadata.artist] = '';
-      albums[item.metadata.album] = '';
+      genres[item.metadata.genre] = item;
+      artists[item.metadata.artist] = item;
+      albums[item.metadata.album] = item;
     }
     this.rerenderCategories(genres, artists, albums);
     if (Utils.size(artists) === 1){
@@ -252,9 +252,17 @@ MediaLibraryPagePanelView.prototype = {
 
     var icon = null;
     if (!this.panel.select && (this.artistKnown || this.albumKnown) && item.metadata.tracknum >= 0){
-      var icon = document.createElement('div');
+      icon = document.createElement('div');
       icon.classList.add('track');
       icon.innerHTML = item.metadata.tracknum;
+    }
+    else if (this.panel.select === 'Albums'){
+      icon = document.createElement('img');
+      icon.classList.add('albumCover');
+      icon.onerror="this.src='';";
+      this.musicDB.getAlbumArtAsURL(item, function(url){
+        icon.src = url;
+      }.bind(this));
     }
 
     if (this.panel.select){
@@ -265,8 +273,11 @@ MediaLibraryPagePanelView.prototype = {
       }.bind(this));
       gotoPanelButton.appendChild(content);
 
-      var item = new UIItem(null, gotoPanelButton, null, null);
+      var item = new UIItem(icon, gotoPanelButton, null, null);
       this.dom.itemList.append(item);
+      if (this.panel.select === 'Albums'){
+        item.dom.content.classList.add('right');
+      }
     }
     else {
       Utils.onButtonTap(content, function(){
@@ -279,9 +290,7 @@ MediaLibraryPagePanelView.prototype = {
         this.addSong(item);
       }.bind(this));
 
-      var more = null;
-
-      var uiItem = new UIItem(icon, content, more, add);
+      var uiItem = new UIItem(icon, content, null, add);
       this.dom.itemList.append(uiItem);
 
     }
@@ -305,6 +314,16 @@ MediaLibraryPagePanelView.prototype = {
           subCategory.innerHTML = album || 'Unknown Album';
           subCategory.item = album;
           this.dom.subCategories.appendChild(subCategory);
+
+          var icon = document.createElement('img');
+          icon.classList.add('albumCover');
+          icon.onerror="this.src='';";
+          this.musicDB.getAlbumArtAsURL(albums[album], function(url){
+            icon.src = url;
+          }.bind(this));
+          subCategory.appendChild(icon);
+          subCategory.classList.add('hasAlbumCover');
+
         }
       }
       else {

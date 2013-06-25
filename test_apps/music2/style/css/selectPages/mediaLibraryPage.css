@@ -233,16 +233,18 @@
 
 #mediaLibraryPagePanelSubCategories {
   font-size: 1.5em;
-  padding-left: 1em;
 
 }
 
 #mediaLibraryPagePanelSubCategories > * {
-  padding-top: .5em;
-  padding-bottom: .5em;
-  padding-right: 1.5em;
-  padding-left: 1em;
+  position: relative;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  padding-right: 1.5rem;
+  padding-left: 4rem;
   color: white;
+  height: 2rem;
+  line-height: 2rem;
 
   background-image: url('../../headers/images/icons/back-rtl.png');
   background-repeat: no-repeat;
@@ -253,6 +255,25 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+#mediaLibraryPagePanelSubCategories > *.hasAlbumCover {
+  min-height: 3rem;
+  line-height: 3rem;
+}
+
+
+#mediaLibraryPagePanelSubCategories .albumCover {
+  position: absolute;
+  left: .5rem;
+  top: .5rem;
+  height: 3rem;
+  width: 3rem;
+}
+
+#mediaLibraryPagePanelSubCategories .albumCover[src=''] {
+  display: none;
+}
+
 
 /*======================================*/
 
@@ -272,6 +293,10 @@
 #mediaLibraryPagePanelItems .fields {
   padding-top: .75em;
   padding-bottom: .75em;
+}
+
+#mediaLibraryPagePanelItems .content.right {
+  padding-left: 4rem;
 }
 
 #mediaLibraryPagePanelItems .fields > * {
@@ -320,3 +345,14 @@
   padding-left: 0;
 }
 
+#mediaLibraryPagePanelItems .albumCover {
+  position: absolute;
+  left: .5em;
+  top: .5em;
+  height: 3em;
+  width: 3em;
+}
+
+#mediaLibraryPagePanelItems .albumCover[src=''] {
+  display: none;
+}
