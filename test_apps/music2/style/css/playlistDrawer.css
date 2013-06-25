@@ -100,6 +100,22 @@
   overflow-y: scroll;
 }
 
+#playlistDrawerPlaylists > .newPlaylist {
+  border-top: 1px solid #445;
+  background-image: url('../headers/images/icons/back-rtl.png');
+  background-repeat: no-repeat;
+  background-position: right .375em center;
+  background-size: auto 80%;
+}
+
+#playlistDrawerPlaylists > .text {
+  width: 100%;
+  -moz-box-sizing: border-box;
+  padding: 1em;
+  text-align: center;
+  font-size: 1.5em;
+}
+
 #playlistDrawerPlaylists .noicon {
   display: none;
 }
@@ -121,7 +137,6 @@
 
   padding-top: .75em;
   padding-bottom: .75em;
-  min-height: 2em;
 }
 
 .playlistTitle.temporary {

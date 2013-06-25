@@ -48,8 +48,14 @@ PlaylistDrawer.prototype = {
       this.playlistListItems[playlistId] = item;
       this.playlistList.append(item);
     }
+    if (Utils.size(playlists) === 0){
+      var text = Utils.classDiv('text');
+      text.innerHTML = 'no playlists';
+      this.dom.playlistDrawerPlaylists.appendChild(text);
+    }
     var newPlaylistItem = this.uiItemNewPlaylist();
     this.playlistList.append(newPlaylistItem);
+    newPlaylistItem.dom.div.classList.add('newPlaylist');
     this.setCurrentPlaylist(this.lastCurrentPlaylistId);
   },
   setCurrentPlaylist: function(currentPlaylistId){
@@ -132,8 +138,7 @@ PlaylistDrawer.prototype = {
       this.createPlaylist(title);
     }.bind(this));
     
-    var more = null;
-    var item = new UIItem('noIcon', content, more);
+    var item = new UIItem('noicon', content, null, null);
     return item;
   }
 }
