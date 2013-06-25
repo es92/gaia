@@ -159,15 +159,15 @@
 #playlistDrawerPlaylists .gotoPlaylistButton.temporary:after {
   content: "";
   position: absolute;
+  top: 0em;
+  bottom: 0em;
   right: 3em;
-  bottom: 1em;
 
   background-image: url('../nosave.png'); /*Cris Dobbins, from The Noun Project*/
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 80% auto;
   width: 2em;
-  height: 2em;
 }
 
 /*=========================*/

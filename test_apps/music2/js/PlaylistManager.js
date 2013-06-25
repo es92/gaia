@@ -255,7 +255,12 @@ PlaylistManager.prototype = {
     this.savePlaylists();
   },
   renamePlaylist: function(playlistId, title){
-    this.playlists[playlistId].title = title;
+    var playlist = this.playlists[playlistId];
+    playlist.title = title;
+    if (playlist.temporary){
+      playlist.temporary = false;
+    }
+
     this.ui.playlists.setPlaylists(this.playlists);
     this.savePlaylists();
   },
