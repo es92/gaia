@@ -1,0 +1,117 @@
+
+#stations {
+  position: absolute;
+  top: 3em;
+  left: 0;
+  right: 0;
+  bottom: 0em;
+  background: #222;
+}
+
+.stationPanel {
+  position: absolute;
+  top: 0em;
+  left: 0;
+  right: 0;
+  bottom: 0em;
+  display: none;
+}
+
+.stationPanelTitle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  color: #ddd;
+  font-size: 1.25em;
+  line-height: 3rem;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, .5);
+}
+
+.stationPanelTitle .back {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3rem;
+
+  background-image: url('../back.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 70%;
+}
+
+.stationPanelTitle .text {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 3rem;
+  right: 0;
+}
+
+.stationItems {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+}
+
+.stationPanelTitle:not(.hidden) + .stationItems {
+  top: 3rem;
+}
+
+.stationItems > * {
+  position: relative;
+  color: #bbb;
+  padding: .5rem;
+  padding-left: 1rem;
+  min-height: 1.5rem;
+  font-size: 1.125rem;
+}
+
+.stationItems > .text {
+  text-align: center;
+}
+
+.stationItems > *:last-child {
+  margin-bottom: 4rem;
+}
+
+.stationItems > * > .text {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  padding: .5rem;
+  padding-left: 1rem;
+  right: 3rem;
+  bottom: 0;
+}
+
+.stationItems > * > .toggleFavorite {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 3rem;
+  background-size: 60% auto;
+  background-position: center center;
+}
+
+#stations[current="searchStations"] #searchStations {
+  display: block;
+}
+
+#stations[current="favoriteStations"] #favoriteStations {
+  display: block;
+}
+
+#stations[current="countryStations"] #countryStations {
+  display: block;
+}
+
+#stations[current="genreStations"] #genreStations {
+  display: block;
+}

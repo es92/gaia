@@ -1,0 +1,73 @@
+
+#controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4em;
+  background: rgba(24, 24, 24, .75);
+  box-shadow: 0 -5px 5px rgba(0, 0, 0, .5);
+  z-index: 1;
+}
+
+#currentTitle {
+  position: absolute;
+  top: .5rem;
+  left: 1rem;
+  right: 9rem;
+  bottom: .5rem;
+  color: #ccc;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#controls > .toggleFavorite {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 4rem;
+  width: 4rem;
+  background-size: 60% auto;
+}
+
+#togglePlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: .5rem;
+  width: 4rem;
+  background-image: url('../play.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 70% auto;
+}
+
+#togglePlay.pause {
+  background-image: url('../pause.png');
+}
+
+#togglePlay.buffering {
+  background-image: none;
+  overflow: hidden;
+}
+
+#togglePlay.buffering:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  background-image: url('../spinner.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 60%;
+  animation: 0.9s rotate infinite steps(30);
+}
+
+@keyframes rotate {
+  from { transform: rotate(1deg); }
+  to   { transform: rotate(360deg); }
+}

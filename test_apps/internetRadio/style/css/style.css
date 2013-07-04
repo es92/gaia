@@ -1,0 +1,31 @@
+body, input {
+  font-family: Helvetica;
+  letter-spacing: 1px;
+}
+
+app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #222;
+}
+
+.toggleFavorite {
+  background-image: url('../star_off.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.toggleFavorite.favorited {
+  background-image: url('../star_on.png');
+}
+
+.toggleFavorite[disabled] {
+  display: none;
+}
+
+.hidden {
+  display: none !important;
+}

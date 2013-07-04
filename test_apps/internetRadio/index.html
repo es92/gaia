@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8"></meta>
+
+  <link rel="stylesheet" type="text/css" href="style/css/reset.css"></link>
+  <link rel="stylesheet" type="text/css" href="style/css/style.css"></link>
+  <link rel="stylesheet" type="text/css" href="style/css/ui.css"></link>
+  <link rel="stylesheet" type="text/css" href="style/css/header.css"></link>
+  <link rel="stylesheet" type="text/css" href="style/css/stations.css"></link>
+  <link rel="stylesheet" type="text/css" href="style/css/controls.css"></link>
+
+  <script src="js/Utils.js"></script>
+  <script src="js/TapManager.js"></script>
+
+  <script src="js/UIRules.js"></script>
+  <script src="js/UICustomEvents.js"></script>
+  <script src="js/UI.js"></script>
+
+  <script src="js/Genres.js"></script>
+  <script src="js/Countries.js"></script>
+
+  <script src="js/IcecastStationSearch.js"></script>
+  <script src="js/AudioPlayer.js"></script>
+
+  <script src="js/InternetRadio.js"></script>
+
+</head>
+
+<body>
+  <app>
+    <div id="header" class="search" current="gotoSearch">
+      <div id="types" class="hidden">
+        <div id="gotoSearch" class="tappable" rules="ontap:switchType"></div>
+        <div id="gotoCountries" class="tappable" rules="ontap:switchType"></div>
+        <div id="gotoGenres" class="tappable" rules="ontap:switchType"></div>
+        <div id="gotoFavorites" class="tappable" rules="ontap:switchType"></div>
+      </div>
+      <div id="typeSwitcher" class="tappable" rules="ontap:toggleTypes"></div>
+      <div id="type">
+        <input id="searchInput" placeholder="Search..." rules="onenter:search"></input>
+        <div id="title"></div>
+      </div>
+    </div>
+    <div id="stations">
+      <div id="searchStations" class="stationPanel">
+        <div class="stationItems"></div>
+      </div>
+      <div id="genreStations" class="stationPanel">
+        <div class="stationPanelTitle hidden">
+          <div id="genrePanelBack" class="back tappable" rules="ontap:panelBack"></div>
+          <div class="text"></div>
+        </div>
+        <div class="stationItems"></div>
+      </div>
+      <div id="countryStations" class="stationPanel">
+        <div class="stationPanelTitle hidden">
+          <div id="countryStationBack" class="back tappable" rules="ontap:panelBack"></div>
+          <div class="text"></div>
+        </div>
+        <div class="stationItems"></div>
+      </div>
+      <div id="favoriteStations" class="stationPanel">
+        <div class="stationItems"></div>
+      </div>
+      <!--
+      <div> some jazz station <div class="toggleFavorite tappable"></div></div>
+      <div> <station, techno <div class="toggleFavorite tappable"></div></div>
+      <div> <div id="stationTitle">classical piano</div> <div class="toggleFavorite tappable"></div></div>
+      -->
+    </div>
+    <div id="controls" class="hidden">
+      <div id="currentTitle"></div>
+      <div id="currentToggleFavorite" class="toggleFavorite tappable" rules="ontap:toggleCurrentFavorite"></div>
+      <div id="togglePlay" class="tappable pause" rules="ontap:togglePlay"></div>
+      <audio id="audioPlayer"></audio>
+    </div>
+  </app>
+</body>
+
+</html>

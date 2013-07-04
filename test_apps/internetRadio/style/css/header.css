@@ -1,0 +1,176 @@
+
+#header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  background: #181818;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, .5);
+  z-index: 1;
+}
+
+#type {
+  position: absolute;
+  top: 0;
+  left: 3.5rem;
+  width: calc(100% - 3.5rem - .5rem);
+  height: 100%;
+}
+
+#type > * {
+  display: none;
+}
+
+#typeSwitcher {
+  position: absolute;
+  top: 0;
+  left: 0rem;
+  width: 3rem;
+  bottom: 0;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 50%;
+}
+
+#typeSwitcher:after {
+  content: '';
+  position: absolute;
+  width: 25%;
+  height: 25%;
+  right: 0;
+  bottom: 0;
+  background-image: url('../down.png');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: auto 100%;
+}
+
+#typeSwitcher.hide:after {
+  background-image: url('../up.png');
+}
+
+/*=================================*/
+
+#types {
+  position: fixed;
+  top: 3rem;
+  left: 1rem;
+  width: 6rem;
+  height: auto;
+  background: #181818;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, .5);
+  border-top: 1px solid #111;
+}
+
+#types > * {
+  width: 100%;
+  height: 3rem;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 75%;
+}
+
+/*=================================*/
+
+#gotoSearch {
+  background-image: url('../search-dark.png');
+  background-size: auto 70%;
+}
+
+#gotoFavorites {
+  background-image: url('../star_on.png');
+  background-size: auto 65%;
+}
+
+#gotoCountries {
+  background-image: url('../flag.png');
+  background-size: auto 70%;
+}
+
+#gotoGenres {
+  background-image: url('../note.png'); /* The Noun Project */
+  background-size: auto 80%;
+}
+
+/*=================================*/
+
+#header[current="gotoSearch"] #gotoSearch {
+  background-color: #282828;
+}
+
+#header[current="gotoFavorites"] #gotoFavorites {
+  background-color: #282828;
+}
+
+#header[current="gotoCountries"] #gotoCountries {
+  background-color: #282828;
+}
+
+#header[current="gotoGenres"] #gotoGenres {
+  background-color: #282828;
+}
+
+/*=================================*/
+
+#header[current="gotoSearch"] #typeSwitcher {
+  background-image: url('../search-dark.png');
+}
+
+#header[current="gotoFavorites"] #typeSwitcher {
+  background-image: url('../star_on.png');
+  background-size: auto 60%;
+}
+
+#header[current="gotoCountries"] #typeSwitcher {
+  background-image: url('../flag.png');
+  background-size: auto 60%;
+}
+
+#header[current="gotoGenres"] #typeSwitcher {
+  background-image: url('../note.png');
+  background-size: auto 65%;
+}
+
+/*=================================*/
+
+#searchInput {
+  height: 100%;
+  width: 100%;
+  color: white;
+
+  background: none;
+  border: none;
+  font-size: 1.5em;
+}
+
+#searchInput:focus {
+  text-decoration: underline;
+}
+
+#searchInput:-moz-placeholder {
+  color: #999;
+}
+#searchInput:focus:-moz-placeholder {
+  color: transparent;
+}
+
+/*=================================*/
+
+#title {
+  height: 100%;
+  width: 100%;
+  font-size: 1.5rem;
+  color: white;
+  line-height: 3rem;
+}
+
+/*=================================*/
+
+#header[current="gotoSearch"] #searchInput {
+  display: block;
+}
+
+#header:not([current="gotoSearch"]) #title {
+  display: block;
+}
