@@ -1,6 +1,7 @@
-var MediaLibraryPagePanelView = function(musicDB, panel, done){
+var MediaLibraryPagePanelView = function(musicDB, panel, done, readyToSet){
 
   this.done = done;
+  this.readyToSet = readyToSet;
 
   this.musicDB = musicDB;
   Utils.loadDomIds(this, [
@@ -39,10 +40,11 @@ var MediaLibraryPagePanelView = function(musicDB, panel, done){
   this.albumKnown = panel.query.album !== '*';
   this.songKnown = panel.query.song !== '*';
 
-  Utils.setupPassEvent(this, 'gotoSubcategory');
-  Utils.setupPassEvent(this, 'gotoItem');
-  Utils.setupPassEvent(this, 'playSong');
-  Utils.setupPassEvent(this, 'addSong');
+  Utils.setupPassParent(this, 'gotoSubcategory');
+  Utils.setupPassParent(this, 'gotoItem');
+  Utils.setupPassParent(this, 'playSong');
+  Utils.setupPassParent(this, 'addSong');
+  Utils.setupPassParent(this, 'addSongToCustom');
   
   this.panel = panel;
 
@@ -53,10 +55,38 @@ var MediaLibraryPagePanelView = function(musicDB, panel, done){
   'select: ' + this.panel.select + '\n' + 
   '=====================================================');
 
-  this.setPanel();
+  this.prepPanel();
 }
 
 MediaLibraryPagePanelView.prototype = {
+  prepPanel: function(){
+    if (this.panel.select === 'Genres'){
+      this.musicDB.getGenres(this.gotPrepResults.bind(this));
+    }
+    else if (this.panel.select === 'Artists'){
+      this.musicDB.getArtists(this.panel.query.genre, this.gotPrepResults.bind(this));
+    }
+    else if (this.panel.select === 'Albums'){
+      this.musicDB.getAlbums(
+        this.panel.query.genre, 
+        this.panel.query.artist, 
+        this.gotPrepResults.bind(this));
+    }
+    else if (this.songKnown){
+      this.musicDB.getSong(this.panel.query.song, this.gotPrepResults.bind(this));
+    }
+    else {
+      this.musicDB.getSongs(
+          this.panel.query.genre, 
+          this.panel.query.artist,
+          this.panel.query.album,
+          this.gotPrepResults.bind(this));
+    }
+  },
+  gotPrepResults: function(items){
+    this.items = items;
+    this.readyToSet();
+  },
   setPanel: function(){
 
     this.setTitle();
@@ -73,29 +103,22 @@ MediaLibraryPagePanelView.prototype = {
     this.dom.itemList.empty();
     if (this.panel.select === 'Genres'){
       this.fields.push('genre');
-      this.musicDB.getGenres(this.setItems.bind(this));
+      this.setItems(this.items);
     }
     else if (this.panel.select === 'Artists'){
       this.fields.push('artist');
-      this.musicDB.getArtists(this.panel.query.genre, this.setItems.bind(this));
+      this.setItems(this.items);
     }
     else if (this.panel.select === 'Albums'){
       this.fields.push('album', 'artist');
-      this.musicDB.getAlbums(
-        this.panel.query.genre, 
-        this.panel.query.artist, 
-        this.setItems.bind(this));
+      this.setItems(this.items);
     }
     else if (this.songKnown){
-      this.musicDB.getSong(this.panel.query.song, this.setSongPage.bind(this));
+      this.setSongPage(this.items);
     }
     else {
       this.fields.push('title', 'artist', 'album');
-      this.musicDB.getSongs(
-          this.panel.query.genre, 
-          this.panel.query.artist,
-          this.panel.query.album,
-          this.setItems.bind(this));
+      this.setItems(this.items);
     }
 
   },
@@ -111,7 +134,7 @@ MediaLibraryPagePanelView.prototype = {
     this.currentTitle = this.panel.title 
     this.dom.titleText.appendChild(title);
 
-    this.dom.mediaLibraryPagePanelList.style.top = '4em';
+    this.dom.mediaLibraryPagePanelList.style.top = '4rem';
 
     this.dom.controls.classList.add('hidden');
     this.dom.controls.classList.remove('right');
@@ -201,16 +224,24 @@ MediaLibraryPagePanelView.prototype = {
       this.songs = items;
     }
 
+    this.dom.items.style.minHeight = items.length*4 + 'rem';
+
     var MAX_ITEMS_SYNCHRONOUS = 30; // determined experimentally
     if (items.length > MAX_ITEMS_SYNCHRONOUS){ 
+
       var i = 0;
+      var jSize = 40;
       var next = function(){
         if (i >= items.length || this.inactive){
+          this.dom.items.style.minHeight = 0;
           return;
         }
-        var item = items[i];
-        this.renderItem(item);
-        i++;
+        for (var j = 0; j < jSize && i+j < items.length; j++){
+          var item = items[i+j];
+          this.renderItem(item);
+        }
+        jSize = Math.max(jSize/2, 5);
+        i += j;
         setTimeout(next, 0);
       }.bind(this);
       setTimeout(next, 0);
@@ -222,6 +253,7 @@ MediaLibraryPagePanelView.prototype = {
         var item = items[i];
         this.renderItem(item);
       }
+      this.dom.items.style.minHeight = 0;
       if (this.done) 
         this.done();
     }
@@ -286,8 +318,10 @@ MediaLibraryPagePanelView.prototype = {
       }.bind(this));
 
       var add = Utils.classDiv('add');
-      Utils.onButtonTap(add, function(){
+      Utils.onButtonLongTap(add, function(){
         this.addSong(item);
+      }.bind(this), function(){
+        this.addSongToCustom(item);
       }.bind(this));
 
       var uiItem = new UIItem(icon, content, null, add);

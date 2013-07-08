@@ -70,12 +70,4 @@ MediaLibraryPage.prototype = {
   unserialize: function(serializedSource){
     return new FileAudioSource(this.musicDB, serializedSource);
   },
-  activate: function(){
-    this.dom.selectSourcePages.removeChild(this.dom.page);
-    this.pageBridge.setPageDiv(this.dom.page);
-  },
-  deactivate: function(){
-    this.dom.page.parentNode.removeChild(this.dom.page);
-    this.dom.selectSourcePages.appendChild(this.dom.page);
-  }
 }
