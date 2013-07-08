@@ -1,0 +1,22 @@
+
+*priority
+
+==================== features =====================
+  
+  search besides icecast
+  
+===================== bugs =====================
+
+  show message when type unsupported
+
+===================== enhancements =====================
+
+  longer station titles
+  more info with station titles
+  current song info
+  remove empty genres/countries
+
+===================== maintainability =====================
+
+  refactor architecture (UI structure experiment did not work out)
+

@@ -21,7 +21,6 @@ UIRules.prototype = {
   },
   toggleFavorite: function(elem, station){
     elem.classList.toggle('favorited');
-    //TODO favorites
   },
   switchType: function(elem){
     this.ui.dom.header.setAttribute('current', elem.id);
@@ -29,8 +28,7 @@ UIRules.prototype = {
     this.ui.dom.title.innerHTML = this.typeTitleById[elem.id];
     this.ui.dom.stations.setAttribute('current', this.ui.stationPanelIdById[elem.id]);
   },
-  gotoCategory: function(switcherId, category, search){
-    var panel = this.ui.getPanelBySwitcherId(switcherId);
+  gotoCategory: function(panel, category, search){
     panel.text.innerHTML = category;
     panel.title.classList.remove('hidden');
 

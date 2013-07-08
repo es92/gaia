@@ -1,4 +1,5 @@
 var InternetRadio = function(){
+
   this.ui = new UI();
 
   this.ui.rules.onsearch = this.search.bind(this);
@@ -23,10 +24,27 @@ var InternetRadio = function(){
 
   this.icecast = new IcecastStationSearch();
 
-  this.audioPlayer.onplaying = this.ui.setPlaying();
-  this.audioPlayer.onpaused = this.ui.setPaused();
+  this.audioPlayer.onplaying = this.ui.setPlaying.bind(this.ui);
+  this.audioPlayer.onpaused = this.ui.setPaused.bind(this.ui);
+  this.audioPlayer.onwaiting = this.ui.setBuffering.bind(this.ui);
+  this.audioPlayer.onnotWaiting = this.ui.setNotBuffering.bind(this.ui);
 
   this.ui.rules.ontogglePlay = this.audioPlayer.togglePlay.bind(this.audioPlayer);
+
+  this.favorites = new Favorites();
+  this.ui.ongetIsFavorite = this.favorites.isFavorite.bind(this.favorites);
+  this.ui.rules.ontoggleFavorite = function(elem, station){
+      this.favorites.toggleFavorite(station);
+      if (this.currentStation !== null)
+        this.ui.setStation(this.currentStation);
+  }.bind(this);
+  this.ui.rules.ontoggleCurrentFavorite = function(){
+    this.favorites.toggleFavorite(this.currentStation);
+    this.ui.refreshStations();
+    this.switchFavorites();
+  }.bind(this);
+
+  this.currentStation = null;
 }
 
 InternetRadio.prototype = {
@@ -46,6 +64,7 @@ InternetRadio.prototype = {
     }.bind(this));
   },
   playStation: function(station){
+    this.currentStation = station;
     this.playM3U(station);
   },
   playM3U: function(station){
@@ -59,20 +78,25 @@ InternetRadio.prototype = {
 
   },
   switchFavorites: function(elem){
-
+    var stations = [];
+    for (var title in this.favorites.favorites){
+      var station = this.favorites.favorites[title];
+      stations.push(station);
+    }
+    var panel = this.ui.getPanelBySwitcherId("gotoFavorites");
+    this.ui.setStations(panel, stations);
   },
   switchCountries: function(elem){
-    if (this.ui.panelAtSubcategory(this.ui.dom.countryStations)){
-      this.ui.setCategories(elem.id, Countries);
+    if (this.ui.isPanelAtCategory(this.ui.dom.countryStations)){
+      var panel = this.ui.getPanelBySwitcherId("gotoCountries");
+      this.ui.setCategories(panel, Countries);
     }
   },
   switchGenres: function(elem){
-    if (this.ui.panelAtSubcategory(this.ui.dom.genreStations)){
-      this.ui.setCategories(elem.id, Genres);
+    if (this.ui.isPanelAtCategory(this.ui.dom.genreStations)){
+      var panel = this.ui.getPanelBySwitcherId("gotoGenres");
+      this.ui.setCategories(panel, Genres);
     }
-  },
-  gotoCategory: function(switcherId, category, search){
-    console.log(category);
   }
 }
 

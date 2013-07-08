@@ -30,8 +30,8 @@ var Utils = {
         return;
       var oldFn = view[eventName].bind(view);
       view[eventName] = function(){
-        wrapper.apply(null, arguments);
         var val = oldFn.apply(null, arguments);
+        wrapper.apply(null, arguments);
         return val;
       }
       view[eventName].isPassEvent = true;
@@ -42,9 +42,16 @@ var Utils = {
       
     function wrapper(){
       if (view['on' + eventName])
-        view['on' + eventName].apply(view, arguments);
+        return view['on' + eventName].apply(view, arguments);
       else if (Utils.DebugPassEvent)
         console.log('@' + (view.name || view) + ' dropped: on' + eventName);
+    }
+  },
+  dropFirst: function(fn){
+    return function(){
+      var args = Array.prototype.slice.call(arguments);
+      args.shift();
+      fn.apply(this, args);
     }
   },
   empty: function(node){

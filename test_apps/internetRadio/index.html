@@ -23,6 +23,8 @@
   <script src="js/IcecastStationSearch.js"></script>
   <script src="js/AudioPlayer.js"></script>
 
+  <script src="js/Favorites.js"></script>
+
   <script src="js/InternetRadio.js"></script>
 
 </head>
@@ -63,17 +65,12 @@
       <div id="favoriteStations" class="stationPanel">
         <div class="stationItems"></div>
       </div>
-      <!--
-      <div> some jazz station <div class="toggleFavorite tappable"></div></div>
-      <div> <station, techno <div class="toggleFavorite tappable"></div></div>
-      <div> <div id="stationTitle">classical piano</div> <div class="toggleFavorite tappable"></div></div>
-      -->
     </div>
     <div id="controls" class="hidden">
       <div id="currentTitle"></div>
       <div id="currentToggleFavorite" class="toggleFavorite tappable" rules="ontap:toggleCurrentFavorite"></div>
       <div id="togglePlay" class="tappable pause" rules="ontap:togglePlay"></div>
-      <audio id="audioPlayer"></audio>
+      <audio id="audioPlayer" class="hidden"></audio>
     </div>
   </app>
 </body>

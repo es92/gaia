@@ -9,7 +9,10 @@ var UI = function(){
     gotoGenres: "genreStations"
   };
 
+  this.stationsById = {};
+
   Utils.setupPassEvent(this, 'playStation');
+  Utils.setupPassEvent(this, 'getIsFavorite');
 }
 
 UI.prototype = {
@@ -49,19 +52,19 @@ UI.prototype = {
     }.bind(this));
   },
   
-  setCategories: function(switcherId, categories){
+  setCategories: function(panel, categories){
     Utils.setupPassEvent(this.rules, 'gotoCategory');
-    var stationItems = this.dom[this.stationPanelIdById[switcherId]].querySelector('.stationItems');
-    Utils.empty(stationItems);
+    this.stationsById[panel.id] = null;
+    Utils.empty(panel.items);
     for (var category in categories){
       var div = document.createElement('div');
       div.classList.add('tappable');
       div.innerHTML = category;
-      stationItems.appendChild(div);
+      panel.items.appendChild(div);
       Utils.makeTappable(div);
       div.ontap = (function(category, search){
         return function(){
-          this.rules.gotoCategory(switcherId, category, search);
+          this.rules.gotoCategory(panel, category, search);
         }.bind(this);
       }.bind(this))(category, categories[category]);
     }
@@ -73,8 +76,18 @@ UI.prototype = {
     Utils.empty(panel.items);
     panel.items.appendChild(text);
   },
+  refreshStations: function(){
+    for (var id in this.stationsById){
+      var stations = this.stationsById[id];
+      if (stations === null)
+        continue;
+      var panel = this.getPanelBySwitcherId(id);
+      this.setStations(panel, stations);
+    }
+  },
   setStations: function(panel, stations){
     Utils.empty(panel.items);
+    this.stationsById[panel.id] = stations;
     var items = stations.map(this.createStationElem.bind(this));
     items.forEach(panel.items.appendChild.bind(panel.items));
   },
@@ -85,8 +98,11 @@ UI.prototype = {
     toggleFavorite.classList.add('toggleFavorite');
     toggleFavorite.classList.add('tappable');
     elem.appendChild(toggleFavorite);
+    if (this.getIsFavorite(station))
+      toggleFavorite.classList.add('favorited');
 
     Utils.makeTappable(toggleFavorite);
+    Utils.setupPassEvent(this.rules, 'toggleFavorite');
     toggleFavorite.ontap = function(){
       this.rules.toggleFavorite(toggleFavorite, station);
     }.bind(this);
@@ -115,23 +131,31 @@ UI.prototype = {
        title: title,
        text: text,
        back: back,
-       items: panel.querySelector('.stationItems')
+       items: panel.querySelector('.stationItems'),
+       id: id
     };
   },
-  panelAtSubcategory: function(panel){
+  isPanelAtCategory: function(panel){
     return panel.querySelector('.stationPanelTitle').classList.contains('hidden');
   },
   setStation: function(station){
     this.dom.controls.classList.remove('hidden');
+    this.dom.currentToggleFavorite.classList.remove('favorited');
+    if (this.getIsFavorite(station))
+      this.dom.currentToggleFavorite.classList.add('favorited');
     this.dom.currentTitle.innerHTML = station.title;
   },
   setPlaying: function(){
     this.dom.togglePlay.classList.add('pause');
+    this.dom.togglePlay.classList.remove('buffering');
   },
   setPaused: function(){
     this.dom.togglePlay.classList.remove('pause');
   },
   setBuffering: function(){
-
+    this.dom.togglePlay.classList.add('buffering');
+  },
+  setNotBuffering: function(){
+    this.dom.togglePlay.classList.remove('buffering');
   }
 }

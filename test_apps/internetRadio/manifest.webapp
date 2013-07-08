@@ -2,7 +2,7 @@
   "name": "InternetRadio",
   "description": "Internet Radio",
   "type": "certified",
-  "launch_path": "index.html",
+  "launch_path": "/index.html",
   "developer": {
     "name": "Evan Shapiro",
     "url": "https://github.com/mozilla-b2g/gaia"
@@ -11,6 +11,16 @@
     "deprecated-hwvideo": {},
     "audio-channel-content": {},
     "systemXHR": {}
+  },
+  "locales": {
+    "en-US": {
+      "name": "Internet Radio",
+      "description": "Gaia Internet Radio"
+    }
+  },
+  "default_locale": "en-US",
+  "icons": {
+    "120": "/style/icons/InternetRadio.png"
   },
   "orientation": "portrait-primary"
 }
