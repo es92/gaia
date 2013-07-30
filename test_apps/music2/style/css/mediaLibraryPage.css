@@ -1,15 +1,9 @@
 
-#mediaLibraryPage {
-
-}
-
-
-
 #mediaLibraryPagePanel {
   position: absolute;
   left: 0;
   right: 0;
-  top: 3.0rem;
+  top: 0rem;
   bottom: 0;
 }
 

@@ -60,10 +60,6 @@ PlaylistManager.prototype = {
       var playlistId = this.createPlaylist(title);
     }
     var playlist = this.playlists[this.currentPlaylistId];
-    if (playlist.temporary){
-      playlist.temporary = false;
-      this.ui.refreshPlaylists(this.playlists);
-    }
     for (var i = 0; i < sources.length; i++){
       playlist.appendAudioSource(sources[i]);
     }
@@ -76,10 +72,6 @@ PlaylistManager.prototype = {
     }
     else {
       var playlist = this.playlists[playlistId];
-      if (playlist.temporary){
-        playlist.temporary = false;
-        this.ui.refreshPlaylists(this.playlists);
-      }
       for (var i = 0; i < sources.length; i++){
         playlist.appendAudioSource(sources[i]);
       }

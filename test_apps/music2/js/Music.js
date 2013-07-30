@@ -20,7 +20,6 @@ var Music = function() {
   this.selectPageBridge.oncreateTemporaryPlaylistFromSources = this.playlistManager.createTemporaryPlaylistFromSources.bind(this.playlistManager);
   this.selectPageBridge.onenqueueIntoCustomPlaylist = this.playlistManager.ui.enqueueIntoCustomPlaylist.bind(this.playlistManager.ui);
 
-  //on error, reset img src
   var imgs = document.getElementsByTagName('img');
   for (var i = 0; i < imgs.length; i++){
     var img = imgs[i];
@@ -30,11 +29,6 @@ var Music = function() {
       };
     })(img);
   }
-  
-  //this.ui.viewVisibility.showCurrentMusicPage();
-  //setTimeout(function(){
-  //  this.ui.viewVisibility.togglePlaylistDrawer();
-  //}.bind(this), 750);
 
 }
 

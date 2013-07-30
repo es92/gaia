@@ -67,6 +67,7 @@
       <script src="js/MediaLibraryPage/MusicDB.js"></script>
       <script src="js/MediaLibraryPage/MediaLibraryPageNotifications.js"></script>
       <script src="js/MediaLibraryPage/MediaLibraryPagePanel.js"></script>
+      <script src="js/MediaLibraryPage/PlaylistsPanel.js"></script>
       <script src="js/MediaLibraryPage/MediaLibraryPagePanelView.js"></script>
       <script src="js/MediaLibraryPage/MediaLibraryPagePanelManager.js"></script>
       <script src="js/MediaLibraryPage/MediaLibraryPage.js"></script>
@@ -81,21 +82,8 @@
     <script src="js/Music.js"></script> 
 </head>
 <body>
-    <!-- =====================
-        PAGES
-    ====================== -->
-    
       <div id="selectMusicPage" class="page center fastTransition">
         <div id="selectPageContentOverlay" class="contentOverlay hidden fastTransition"></div>
-
-        <div class="header">
-          <div class="leftHeaderElem">
-            <div id="toggleSettingsDrawer"></div>
-          </div>
-          <div class="rightHeaderElem">
-            <div id="gotoCurrentMusicPage"></div>
-          </div>
-        </div>
 
         <div id="mediaLibraryPage" class="selectSourcePage">
           <div id="mediaLibraryPagePanel">
@@ -115,8 +103,31 @@
               <div id="mediaLibraryPagePanelSubCategories"></div>
               <div id="mediaLibraryPagePanelItems"></div>
             </div>
+          
+            <div id="playlists" class="hidden">
+              <div id="playlistDrawerTitle" class="hidden">
+                <div id="playlistDrawerTitleBack"></div>
+                <div id="playlistDrawerTitleContent"></div>
+                <div id="playlistDrawerTitleEdit"></div>
+                <div id="playlistDrawerTitleDel"></div>
+              </div>
+              <div id="playlistDrawerPlaylists">
+
+              </div>
+              <div id="playlistDrawerPlaylistItems" class="hidden">
+
+              </div>
+              <div id="playlistDrawerNewPlaylist">
+                new playlist
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div id="currentMusicPage" class="page bottom fastTransition">
+        <div id="currentMusicContentOverlay" class="contentOverlay hidden fastTransition"></div>
+
         <div id="nowPlayingControls" class="hidden">
             <div id="nowPlayingInfo">
               <img src = "" id="nowPlayingSourceImg"></img>
@@ -124,20 +135,10 @@
             </div>
             <div id="nowPlayingTogglePlay"></div>
         </div>
-      </div>
-
-      <div id="currentMusicPage" class="page right fastTransition">
-      <div id="currentMusicContentOverlay" class="contentOverlay hidden fastTransition"></div>
 
         <div class="header">
-          <div class="leftHeaderElem">
-            <div id="gotoSelectMusicPage"></div>
-          </div>
-          <div id="currentMusicPageHeaderTitle" class="headerTitle center"></div>
-          <div class="rightHeaderElem">
-            <div id="togglePlaylistDrawer"></div>
-
-          </div>
+          <div id="gotoSelectMusicPage" class="leftHeaderElem"></div>
+          <div id="currentMusicPageHeaderTitle" class="headerTitle centerRight"></div>
         </div>
 
         <audio id="audioPlayer" class="hidden"></audio>
@@ -165,44 +166,6 @@
           </div>
         </div>
       </div>
-
-  <!-- =====================
-      META DRAWER
-  ====================== -->
-  <div id="settingsDrawer" class="drawer left out fastTransition">
-    <div class="header">
-      <div class="headerTitle left"> Settings </div>
-    </div>
-
-    <div id="settings">
-      <div class="version"> version: 0.1.1 </div>
-    </div>
-
-  </div>
-
-  <!-- =====================
-      PLAYLIST DRAWER
-  ====================== -->
-  <div id="playlistDrawer" class="drawer right out fastTransition">
-    <div class="header">
-      <div class="headerTitle left"> Playlists </div>
-    </div>
-    <div id="playlistDrawerTitle" class="hidden">
-      <div id="playlistDrawerTitleBack"></div>
-      <div id="playlistDrawerTitleContent"></div>
-      <div id="playlistDrawerTitleEdit"></div>
-      <div id="playlistDrawerTitleDel"></div>
-    </div>
-    <div id="playlistDrawerPlaylists">
-
-    </div>
-    <div id="playlistDrawerPlaylistItems" class="hidden">
-
-    </div>
-    <div id="playlistDrawerNewPlaylist">
-      new playlist
-    </div>
-  </div>
 
 </body>
 </html>

@@ -4,7 +4,11 @@ var CurrentMusicPageControls = function(){
       "togglePlay",
       "playNext",
       "nowPlayingControls",
-      "nowPlayingTogglePlay"
+      "nowPlayingTogglePlay",
+
+      'nowPlayingControls',
+      "nowPlayingText",
+      "nowPlayingSourceImg"
   ]);
   this.seekBar = new SeekBar();
 
@@ -47,6 +51,9 @@ CurrentMusicPageControls.prototype = {
     this.dom.playPrev.disabled = true;
     this.dom.playNext.disabled = true;
     this.seekBar.disable();
+
+    this.dom.nowPlayingControls.classList.add('hidden');
+
   },
   enable: function(){
     this.dom.togglePlay.classList.remove('disabled');
@@ -56,6 +63,14 @@ CurrentMusicPageControls.prototype = {
     this.dom.togglePlay.disabled = false;
     this.dom.playPrev.disabled = false;
     this.dom.playNext.disabled = false;
+
+    if (this.dom.nowPlayingControls.classList.contains('hidden')){
+      Utils.empty(this.dom.nowPlayingText);
+      this.dom.nowPlayingSourceImg.src = '';
+
+      this.dom.nowPlayingControls.classList.remove('hidden');
+    }
+
   }
 }
 

@@ -44,6 +44,12 @@
   text-align: center;
 }
 
+.header .headerTitle.centerRight {
+  left: 4rem;
+  right: 0rem;
+  text-align: center;
+}
+
 .leftHeaderElem,
 .rightHeaderElem {
   height: 100%;
@@ -96,44 +102,9 @@
   width: 100%;
 }
 
-#toggleSettingsDrawer {
-  background-image: url('../headers/images/icons/menu.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto 60%;
-}
-
-#gotoCurrentMusicPage {
-  background-image: url('../images/now_playing.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto 60%;
-}
-
 #gotoSelectMusicPage {
-  background-image: url('../headers/images/icons/back.png');
+  background-image: url('../down.png');
   background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto 60%;
-}
-
-#togglePlaylistDrawer {
-  background-image: url('../iconaction_media_playlist.png');
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: auto 200%;
-}
-
-#gotoSettings {
-  background-image: url('../settings.png'); /*Clément Thorez, from The Noun Project*/
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto 60%;
-}
-
-#gotoSources {
-  background-image: url('../sources.png'); /*Nicola Felaco, from The Noun Project*/
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto 60%;
+  background-position: center center;
+  background-size: auto 40%;
 }

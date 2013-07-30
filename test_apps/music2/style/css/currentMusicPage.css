@@ -1,7 +1,12 @@
+#currentMusicPage {
+  background: -moz-linear-gradient(center top, #303030 0%, #000000 100%) repeat scroll 0 0 transparent;
+  z-index: 1000;
+}
+
 #nowPlayingControls {
-  position: fixed;
+  position: absolute;
   height: 3.5rem;
-  bottom: 0;
+  bottom: 100%;
   left: 0;
   right: 0;
   z-index: 3;

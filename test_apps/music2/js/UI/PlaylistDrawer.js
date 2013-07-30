@@ -1,6 +1,6 @@
 var PlaylistDrawer = function(){
   Utils.loadDomIds(this, [
-      "playlistDrawer",
+      "playlists",
       "playlistDrawerTitle",
       "playlistDrawerTitleContent",
       "playlistDrawerTitleBack",

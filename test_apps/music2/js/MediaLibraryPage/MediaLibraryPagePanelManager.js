@@ -73,15 +73,23 @@ MediaLibraryPagePanelManager.prototype = {
     this.pageBridge.createTemporaryPlaylistFromSources(this.panelView.currentTitle, sources);
   },
   setPanel: function(panel, done){
-    if (this.panelView)
+    if (this.panelView){
       this.panelView.inactive = true;
+      if (this.panelView.unload)
+        this.panelView.unload();
+    }
     this.currentPanel = panel;
-    this.panelView = new MediaLibraryPagePanelView(this.musicDB, panel, done, this.changePanel.bind(this));
-    this.panelView.ongotoSubcategory = this.gotoSubcategoryPanel.bind(this);
-    this.panelView.ongotoItem = this.gotoItemPanel.bind(this);
-    this.panelView.onplaySong = this.playSong.bind(this);
-    this.panelView.onaddSong = this.addSong.bind(this);
-    this.panelView.onaddSongToCustom = this.addSongToCustom.bind(this);
+    if (panel.select === 'Playlists'){
+      this.panelView = new PlaylistsPanel(done, this.changePanel.bind(this));
+    }
+    else {
+      this.panelView = new MediaLibraryPagePanelView(this.musicDB, panel, done, this.changePanel.bind(this));
+      this.panelView.ongotoSubcategory = this.gotoSubcategoryPanel.bind(this);
+      this.panelView.ongotoItem = this.gotoItemPanel.bind(this);
+      this.panelView.onplaySong = this.playSong.bind(this);
+      this.panelView.onaddSong = this.addSong.bind(this);
+      this.panelView.onaddSongToCustom = this.addSongToCustom.bind(this);
+    }
     this.preppingPanel = true;
   },
   changePanel: function(){

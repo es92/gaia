@@ -80,10 +80,16 @@ MediaLibraryPagePanelView.prototype = {
         this.panel.query.genre, 
         this.panel.query.artist, 
         function(items){
+          items = Utils.copyArray(items);
           Utils.shuffleArray(items);
           items.splice(9, Math.max(items.length-10, 0));
           this.gotPrepResults(items);
         }.bind(this));
+    }
+    else if (this.panel.select === 'Playlists'){
+      setTimeout(function(){
+        this.gotPrepResults([]);
+      }.bind(this), 0);
     }
     else {
       if (this.panel.stage === 'filter') {
@@ -183,6 +189,7 @@ MediaLibraryPagePanelView.prototype = {
     }
     if (this.panel.stage === 'home'){
       this.addSubCategory('Discover');
+      this.addSubCategory('Playlists');
       this.addSubCategory('All Songs');
     }
   },
@@ -270,8 +277,8 @@ MediaLibraryPagePanelView.prototype = {
           var item = items[i+j];
           renderItem(item);
         }
-        jSize = Math.max(jSize/2, 5);
         i += j;
+        jSize = Math.max(jSize/2, 5);
         setTimeout(next, 0);
       }.bind(this);
       setTimeout(next, 0);
@@ -381,28 +388,6 @@ MediaLibraryPagePanelView.prototype = {
     this.dom.itemList.append(item);
     item.dom.div.classList.add('albumItem');
 
-    //var content = Utils.classDiv('fields');
-    //var fieldDiv = document.createElement('div');
-    //fieldDiv.innerHTML = item.metadata.album || 'Unknown Genre';
-    //content.appendChild(fieldDiv);
-
-    //var icon = document.createElement('img');
-    //icon.classList.add('albumCover');
-    //icon.onerror="this.src='';";
-    //this.musicDB.getAlbumArtAsURL(item, function(url){
-    //  icon.src = url;
-    //}.bind(this));
-
-    //var gotoPanelButton = Utils.classDiv('gotoPanelButton');
-    //var target = item.metadata.album;
-    //Utils.onButtonTap(gotoPanelButton, function(){
-    //  this.gotoItem(target, 'Albums');
-    //}.bind(this));
-    //gotoPanelButton.appendChild(content);
-
-    //var item = new UIItem(icon, gotoPanelButton, null, null);
-    //this.dom.itemList.append(item);
-    //item.dom.content.classList.add('right');
   },
   setupOnTapOverridedSubcategory: function(div, item, override){
     Utils.onButtonTap(div, function(){
@@ -523,5 +508,5 @@ MediaLibraryPagePanelView.prototype = {
     var titleHeight = this.dom.title.clientHeight;
     if (titleHeight !== 0)
       this.dom.mediaLibraryPagePanelList.style.top = titleHeight + 'px'
-  }
+  },
 }

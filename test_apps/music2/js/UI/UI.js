@@ -5,7 +5,6 @@ var UI = function() {
       'gotoSelectMusicPage',
       'content',
       'toggleCurrentMusicPageView',
-      'nowPlayingControls',
 
   ]);
 
@@ -25,7 +24,6 @@ var UI = function() {
   }.bind(this);
 
   this.currentMusicPage.source.onhideCurrentSourceView = function(){
-    this.dom.nowPlayingControls.classList.add('hidden');
     this.dom.toggleCurrentMusicPageView.classList.add('hidden');
     if (!this.dom.toggleCurrentMusicPageView.classList.contains('switchSong')){
       this.viewVisibility.toggleCurrentMusicPageView();
@@ -33,7 +31,6 @@ var UI = function() {
   }.bind(this);
 
   this.currentMusicPage.source.onshowCurrentSourceView = function(){
-    this.dom.nowPlayingControls.classList.remove('hidden');
     this.dom.toggleCurrentMusicPageView.classList.remove('hidden');
   }.bind(this);
 
@@ -44,9 +41,6 @@ UI.prototype = {
     var eventViewTable = {
       'ongotoCurrentMusicPage': 'showCurrentMusicPage',
       'ongotoSelectMusicPage': 'showSelectMusicPage',
-
-      'ontoggleSettingsDrawer': 'toggleSettingsDrawer',
-      'ontogglePlaylistDrawer': 'togglePlaylistDrawer',
 
       'ontoggleCurrentMusicPageView': 'toggleCurrentMusicPageView'
     }
