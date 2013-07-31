@@ -6,8 +6,6 @@ var CurrentMusicPage = function(){
 
   this.controls = new CurrentMusicPageControls();
 
-  this.options = new CurrentMusicPageOptions();
-
   var currentPlaylistView = document.getElementById('currentPlaylistView');
   this.playlist = new PlaylistView(currentPlaylistView);
 

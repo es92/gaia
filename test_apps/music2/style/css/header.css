@@ -47,7 +47,7 @@
 .header .headerTitle.centerRight {
   left: 4rem;
   right: 0rem;
-  text-align: center;
+  text-align: left;
 }
 
 .leftHeaderElem,
@@ -66,6 +66,7 @@
   width: 4em;
   right: 0;
 }
+
 
 .rightHeaderElem:after {
   right: 100%;
@@ -107,4 +108,75 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 40%;
+}
+
+#playingPlaylistButtons {
+  width: 3rem;
+}
+
+#playingPlaylistButtons.big {
+  width: 6rem;
+}
+
+#playingPlaylistButtons > * {
+  float: left;
+  border: none !important;
+  margin: none !important;
+  -moz-box-sizing: border-box;
+  height: 100%;
+}
+
+#playingPlaylistButtons.big > * {
+  width: 50% !important;
+}
+
+#playingPlaylistButtons + .headerTitle {
+  right: 3.5rem;
+}
+
+#playingPlaylistButtons.big + .headerTitle {
+  right: 6.5rem;
+}
+
+#playlistOptionsButton {
+  background-image: url('../headers/images/icons/menu.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 50%;
+}
+
+#savePlaylist {
+  background-image: url('../save.png'); /*Cris Dobbins, from The Noun Project*/
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 50%;
+}
+
+#playlistOptions {
+  position: fixed;
+  right: 0;
+  top: 3rem;
+  height: 9rem;
+  width: 6rem;
+  z-index: 1000;
+  background: #222;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, .5);
+  border-top: 1px solid #111;
+}
+
+#playlistOptions > * {
+  height: 3rem;
+  width: 100%;
+  line-height: 3rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+#playlistOptionsOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 750;
 }

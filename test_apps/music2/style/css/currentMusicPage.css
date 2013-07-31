@@ -1,6 +1,6 @@
 #currentMusicPage {
   background: -moz-linear-gradient(center top, #303030 0%, #000000 100%) repeat scroll 0 0 transparent;
-  z-index: 1000;
+  z-index: 500;
 }
 
 #nowPlayingControls {

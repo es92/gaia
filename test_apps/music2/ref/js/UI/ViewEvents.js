@@ -1,5 +1,4 @@
 var ViewEvents = function(){
-
   Utils.loadDomIds(this, [
       'selectPageContentOverlay',
       'currentMusicContentOverlay',
@@ -21,9 +20,9 @@ var ViewEvents = function(){
   Utils.onButtonTap(this.dom.nowPlayingInfo, this.gotoCurrentMusicPage);
   Utils.onButtonTap(this.dom.gotoSelectMusicPage, this.gotoSelectMusicPage);
 
+
 }
 
 ViewEvents.prototype = {
-  name: "ViewEvents",
 
 }

@@ -1,43 +1,46 @@
 var CurrentMusicPageControls = function(){
   Utils.loadDomIds(this, [
-    "playPrev",
-    "togglePlay",
-    "playNext",
+      "playPrev",
+      "togglePlay",
+      "playNext",
+      "nowPlayingControls",
+      "nowPlayingTogglePlay",
+
+      'nowPlayingControls',
+      "nowPlayingText",
+      "nowPlayingSourceImg"
   ]);
   this.seekBar = new SeekBar();
 
-  this.nowPlaying = new NowPlaying();
-
-  Utils.setupPassParent(this, 'play');
-  Utils.setupPassParent(this, 'pause');
   Utils.setupPassParent(this, 'playPrev');
   Utils.setupPassParent(this, 'playNext');
 
   Utils.onButtonTap(this.dom.playPrev, this.playPrev);
   Utils.onButtonTap(this.dom.playNext, this.playNext);
 
-  this.nowPlaying.ontogglePlaying = this.togglePlaying.bind(this);
-
-  Utils.onButtonTap(this.dom.togglePlay, this.togglePlaying.bind(this));
+  Utils.onButtonTap(this.dom.togglePlay, this.onTogglePlayTapped.bind(this));
+  Utils.onButtonTap(this.dom.nowPlayingTogglePlay, this.onTogglePlayTapped.bind(this));
 }
 
 CurrentMusicPageControls.prototype = {
-  togglePlaying: function(){
+  onTogglePlayTapped: function(){
     if (this.dom.togglePlay.classList.contains('pause')){
-      this.pause();
+      if (this.onpause)
+        this.onpause();
     }
     else {
-      this.play();
+      if (this.onplay)
+        this.onplay();
     }
   },
   setPlaying: function(){
     this.dom.togglePlay.classList.add('pause');
-    this.nowPlaying.setPlaying();
+    this.dom.nowPlayingTogglePlay.classList.add('pause');
     this.seekBar.enable();
   },
   setPaused: function(){
     this.dom.togglePlay.classList.remove('pause');
-    this.nowPlaying.setPaused();
+    this.dom.nowPlayingTogglePlay.classList.remove('pause');
   },
   disable: function(){
     this.dom.togglePlay.classList.add('disabled');
@@ -49,6 +52,8 @@ CurrentMusicPageControls.prototype = {
     this.dom.playNext.disabled = true;
     this.seekBar.disable();
 
+    this.dom.nowPlayingControls.classList.add('hidden');
+
   },
   enable: function(){
     this.dom.togglePlay.classList.remove('disabled');
@@ -58,6 +63,13 @@ CurrentMusicPageControls.prototype = {
     this.dom.togglePlay.disabled = false;
     this.dom.playPrev.disabled = false;
     this.dom.playNext.disabled = false;
+
+    if (this.dom.nowPlayingControls.classList.contains('hidden')){
+      Utils.empty(this.dom.nowPlayingText);
+      this.dom.nowPlayingSourceImg.src = '';
+
+      this.dom.nowPlayingControls.classList.remove('hidden');
+    }
 
   }
 }

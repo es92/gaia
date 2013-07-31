@@ -75,4 +75,3 @@ PlaylistsView.prototype = {
     this.lastCurrentPlaylistId = currentPlaylistId;
   }
 }
-

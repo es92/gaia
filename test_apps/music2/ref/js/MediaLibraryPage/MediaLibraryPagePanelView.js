@@ -264,11 +264,7 @@ MediaLibraryPagePanelView.prototype = {
     else if (this.panel.view === 'album'){
       renderItem = this.renderAlbumItem.bind(this);
     }
-    if (items.length === 0){
-      this.dom.mediaLibraryPagePanelItems.classList.add('hidden');
-    }
-    else if (items.length > MAX_ITEMS_SYNCHRONOUS){ 
-      this.dom.mediaLibraryPagePanelItems.classList.remove('hidden');
+    if (items.length > MAX_ITEMS_SYNCHRONOUS){ 
 
       var i = 0;
       var jSize = 40;
@@ -290,7 +286,6 @@ MediaLibraryPagePanelView.prototype = {
         this.done();
     }
     else {
-      this.dom.mediaLibraryPagePanelItems.classList.remove('hidden');
       for (var i = 0; i < items.length; i++){
         var item = items[i];
         renderItem(item);

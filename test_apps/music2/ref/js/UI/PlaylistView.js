@@ -21,8 +21,7 @@ var PlaylistView = function(list, hideAlbumArt){
 }
 
 PlaylistView.prototype = {
-  name: "PlaylistView",
-  setPlaylist: function(playlist){
+  setPlaylist: function(playlist, playlistId){
     this.currentPlaylist = playlist;
     this.playlist.empty();
 
@@ -49,30 +48,12 @@ PlaylistView.prototype = {
           showAlbumArt = !source.hasSameAlbumArt(other);
         }
       }
-      var item = this.uiItemFromPlaylistItem(source, i+1, showAlbumArt);
+      var item = this.uiItemFromPlaylistItem(source, playlistId, i+1, showAlbumArt);
       this.playlist.append(item);
       item.dom.div.classList.add('playlistViewItem');
     }
   },
-  setSongState: function(index, state){
-    var item = this.playlist.itemByIndex(index);
-    if (!item)
-      return;
-    var icon = item.dom.icon;
-    icon.classList.remove('beingPlayedIcon');
-    icon.classList.remove('beingPausedIcon');
-    icon.classList.remove('tracknum');
-    icon.innerHTML = '';
-    if (state === 'paused')
-      icon.classList.add('beingPausedIcon');
-    else if (state === 'playing')
-      icon.classList.add('beingPlayedIcon');
-    else {
-      icon.classList.add('tracknum');
-      icon.innerHTML = index;
-    }
-  },
-  uiItemFromPlaylistItem: function(source, index, showAlbum){
+  uiItemFromPlaylistItem: function(source, playlistId, index, showAlbum){
     var content = document.createElement('div');
     var contentText = Utils.classDiv('info');
 
@@ -87,10 +68,7 @@ PlaylistView.prototype = {
 
     content.appendChild(contentText);
     source.setInfo(contentText);
-    Utils.onButtonTap(content, function(){
-      this.switchToPlaylistItem(item.index);
-    }.bind(this));
-    //this.setupOnSwitchEvent(content, source, playlistId);
+    this.setupOnSwitchEvent(content, source, playlistId);
 
     var more = null;
 
@@ -111,11 +89,7 @@ PlaylistView.prototype = {
 
     var item = new UIItem(icon, content, more, del);
     item.data.source = source;
-    //this.setupOnDeleteClick(del, item, source);
-    Utils.onButtonTap(del, function(){
-      this.deleteItemFromPlaylist(item.index);
-      this.playlist.remove(item);
-    }.bind(this));
+    this.setupOnDeleteClick(del, item, source, playlistId);
 
     return item;
   },
@@ -125,4 +99,15 @@ PlaylistView.prototype = {
     var relativeDir = moveData.relativeDir;
     this.movePlaylistItemRelative(this.currentPlaylist, item.data.source, relativeItem.data.source, relativeDir);
   },
+  setupOnDeleteClick: function(rm, item, source, playlistId){
+    Utils.onButtonTap(rm, function(){
+      this.playlist.remove(item);
+      this.deleteItemFromPlaylist(source, playlistId);
+    }.bind(this));
+  },
+  setupOnSwitchEvent: function(clickable, source, playlistId){
+    Utils.onButtonTap(clickable, function(){
+      this.switchToPlaylistItem(source, playlistId);
+    }.bind(this));
+  }
 }

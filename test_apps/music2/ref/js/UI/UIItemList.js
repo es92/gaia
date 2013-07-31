@@ -27,18 +27,10 @@ UIItemList.prototype = {
       this.setupHold(item);
     }
     this.dom.list.appendChild(div);
-    item.index = this.items.length;
     this.items.push(item);
   },
   remove: function(item){
-    var index = this.items.indexOf(item);
     this.dom.list.removeChild(item.dom.div);
-    for (var i = index; i < this.items.length; i++){
-      this.items[i].index = i;
-    }
-  },
-  itemByIndex: function(index){
-    return this.items[index];
   },
   setupHold: function(item){
     var drag = new UIItemDrag(item.dom.div, this.dom.list);

@@ -72,5 +72,6 @@ FileAudioSource.prototype = {
     return {  'data': this.song,
               'parentPageName': 'Music Library'
     };
+
   }
 }

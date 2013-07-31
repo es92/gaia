@@ -22,7 +22,6 @@ function TapManager(dom){
 }
 
 TapManager.prototype = {
-  name: "tapManager",
   //========================
   //  STATE
   //========================

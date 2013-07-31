@@ -5,6 +5,8 @@ var AudioPlayer = function(){
   Utils.setupPassParent(this, 'isStopped');
   Utils.setupPassParent(this, 'isEnded');
   Utils.setupPassParent(this, 'isPaused');
+  Utils.setupPassParent(this, 'setCurrentTime');
+  Utils.setupPassParent(this, 'setTotalTime');
 
   this.audioPlayer.addEventListener('play', this.isPlaying);
   this.audioPlayer.addEventListener('pause', this.isPaused);
@@ -13,7 +15,6 @@ var AudioPlayer = function(){
 }
 
 AudioPlayer.prototype = {
-  name: "AudioPlayer",
   play: function(source){
     if (source !== undefined){
       source.play(this.audioPlayer);
@@ -34,7 +35,7 @@ AudioPlayer.prototype = {
       this.audioPlayer.currentTime = time;
   },
   timeupdateEvent: function(){
-    window.ui.setCurrentTime(Math.round(this.audioPlayer.currentTime));
-    window.ui.setTotalTime(Math.round(this.audioPlayer.duration));
+    this.setTotalTime(Math.round(this.audioPlayer.duration));
+    this.setCurrentTime(Math.round(this.audioPlayer.currentTime));
   },
 }

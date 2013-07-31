@@ -141,4 +141,3 @@ PlaylistDrawer.prototype = {
     }.bind(this));
   }
 }
-

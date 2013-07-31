@@ -8,7 +8,6 @@ var SelectPageBridge = function(){
 }
 
 SelectPageBridge.prototype = {
-  name: "SelectPageBridge",
   setPageDiv: function(pageDiv){
     this.dom.selectPageDiv.appendChild(pageDiv);
   }

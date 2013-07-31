@@ -19,7 +19,6 @@ var SeekBar = function(){
 }
 
 SeekBar.prototype = {
-  name: "SeekBar",
   touchstart: function(e){
     if (this.dom.seekBarIndicator.disabled)
       return;

@@ -42,11 +42,10 @@ var Utils = {
     }
       
     function wrapper(){
-      console.log('@' + (view.name || view) + ': ' + eventName);
       if (view['on' + eventName])
         return view['on' + eventName].apply(view, arguments);
       else
-        console.log('@' + (view.name || view) + ' dropped: ' + eventName);
+        console.log('@' + (view || view.name) + ' dropped: ' + eventName);
     }
   },
   copyArray: function(array){

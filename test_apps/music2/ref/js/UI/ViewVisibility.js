@@ -11,9 +11,8 @@ function ViewVisibility() {
 }
 
 ViewVisibility.prototype = {
-  name: "ViewVisibility",
   showCurrentMusicPage: function(){
-    if (this.locked || this.dom.currentMusicPage.classList.contains('center'))
+    if (this.locked)
       return;
     this.locked = true;
 
@@ -36,7 +35,7 @@ ViewVisibility.prototype = {
 
   },
   showSelectMusicPage: function(){
-    if (this.locked || this.dom.currentMusicPage.classList.contains('bottom'))
+    if (this.locked)
       return;
     this.locked = true;
 
